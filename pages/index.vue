@@ -1,38 +1,41 @@
 <template>
   <div class="login-form">
       <div class="container" >
-        <label for="name">
-          <b>UserName</b>
+        <label for="name" v-if="name">
+          <b> {{ name.email }}</b>
         </label>
-        <input
-          type="text"
+        <input 
+          v-else
+          type="text" 
+          v-model="name"
           placeholder="Enter Username"
-          name="uname"
+          name="name"
           required
-        
-        >
+        > 
 
           <label for="email">
-            <b>Email</b>
+            <b>Email: </b>
           </label>
           <input
             type="text"
+            v-model="email"
             placeholder="Enter Email"
             name="email"
             required
           >
 
-            <label for="psw">
-              <b>Password</b>
+            <label for="password">
+              <b>Password:</b>
             </label>
             <input
               type="password"
+              v-model="password"
               placeholder="Enter Password"
-              name="psw"
+          
               required
             >
 
-              <button type="submit" @click="loginForm()">Login</button>
+              <button type="submit" @click="login">Login</button>
               <label>
                 <input
                   type="checkbox"
@@ -50,7 +53,7 @@
           type="button"
           class="cancelbtn"
         >Cancel</button>
-          <span class="psw">Forgot
+          <span class="password">Forgot
             <a href="#">password?</a>
           </span>
   </div>
@@ -58,34 +61,45 @@
 
 </template>
 <script>
-import firebase from 'firebase/compat/app'
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
  export default {
    data() {
     return {
-      name: '',
+      name: null,
       email: '',
       password: ''
     }
    },
 
+   created() {
+    firebase.auth().createUserWithEmailAndPassword(name => {
+      if(name) {
+        this.name = name
+      } else {
+        this.name = null
+      }
+    })
+   },
 
    methods: {
-      loginForm() {
-        console.log('hrrr');
+    login() {
+      try {
         firebase
         .auth()
-      .createWithUserNameAndEmailAndPassword(this.name, this.email, this.password)
-        
-      then(() => {
-        alert('Successfully registered! Please login.');
+      .createUserWithEmailAndPassword(this.email, this.password)
+      alert('Successfully registered! Please login.');
         this.$router.push('/feed');
-      })
-      .catch(error => {
+      }
+        catch (error) {
         alert(error.message);
-      });
-      },
-
-
+      } finally{
+      //   this.name = '';
+      // this.email = '';
+      // this.password = '';
+      }
+      
+  }
    }
  }
   
@@ -133,7 +147,8 @@ button:hover {
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #ee36f4;
+  border-radius: 10px;
 }
 
 /* Center the avatar image inside this container */
@@ -149,14 +164,14 @@ button:hover {
 }
 
 /* The "Forgot password" text */
-span.psw {
+span.password {
   float: right;
   padding-top: 16px;
 }
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-  span.psw {
+  span.password {
     display: block;
     float: none;
   }

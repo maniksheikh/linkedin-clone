@@ -164,8 +164,8 @@
           <div class="img-title">M</div>
           <br>
           <div class="align">
-            <span class="post-header">Md Manik Sheak</span> <br>
-            <span class="email">Email: Test@test1.com</span> <br>
+            <span class="post-header">Name: </span> <br>
+            <span class="email">Email: </span> <br>
             <span class="id"> I Am A FrontEnd Developer</span>
           </div>
         </div>

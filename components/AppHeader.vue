@@ -193,7 +193,7 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: medium;
   background: hwb(0 95% 3%);
 }
@@ -205,7 +205,7 @@ body {
   display: flex;
   text-align: center;
   justify-content: space-between;
-  padding: 5px;
+  /* padding: 5px; */
   margin-bottom: -10px;
   /* background: rgb(241, 238, 238); */
   width: 100%;
@@ -214,19 +214,22 @@ body {
 .content {
   display: flex;
   justify-content: space-between;
+  /* margin: auto; */
 }
 #main-logo {
   color: rgb(49, 123, 184);
-  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  /* padding-top: 5px; */
 }
 .search-bar {
-  margin-top: 7px;
-  padding: 10px;
+  margin: 3px 0 0 5px;
+  padding-left: 5px;
   display: flex;
   align-items: center;
   text-align: center;
   color: rgb(8, 8, 8);
-  background: #e2e7e7;
+  background: #d2d3e6;
   border-radius: 5px;
   height: 41px;
   width: 100%;
@@ -248,9 +251,9 @@ body {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 0;
-  margin-left: 13rem;
   border-right: 1px gray solid;
+  margin-left: 13rem;
+  /* margin: auto; */
 }
 .navber-contents {
   cursor: pointer;
@@ -258,8 +261,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 5px 9px;
+  padding: 0 11px;
+  margin: auto;
 }
+
 span {
   font-size: 0.8rem;
   color: rgb(139, 136, 136);
@@ -275,6 +280,7 @@ span {
 .outside {
   display: flex;
   justify-content: space-between;
+  
 }
 .outside-content {
   margin-top: 7px;
@@ -283,6 +289,7 @@ span {
 .work {
   display: flex;
   align-items: center;
+  
 }
 p {
   font-size: 0.8rem;
