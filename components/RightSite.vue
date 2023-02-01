@@ -1,138 +1,139 @@
 <template>
   <div>
     <div class="right-container">
-    <div class="right">
-      <span class="right-title">Add to your Fees</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 16 16"
-        data-supported-dps="16x16"
-        fill="currentColor"
-        class="right-match"
-        width="16"
-        height="16"
-        focusable="false"
-      >
-        <path d="M12 2H4a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zm-3 8v2H7.5A1.5 1.5 0 016 10.5a1.56 1.56 0 01.1-.5l1.08-3h2.13l-1.09 3zm0-3.75A1.25 1.25 0 1110.25 5 1.25 1.25 0 019 6.25z"></path>
-        </svg>
-    </div>
-    <div class="right-section">
-      <div class="right-body">
-        <img
-          width="48"
-          src="https://media-exp1.licdn.com/dms/image/C510BAQFybdyJxnwFQA/company-logo_100_100/0/1552144829593?e=1671667200&amp;v=beta&amp;t=kirhaS7Jak3RygVv-b_Sek5Cc4RGHhMnnbdbR_-GR18"
-          loading="lazy"
-          height="48"
-          alt="JavaScript"
-          id="ember478"
-          class="body-img"
+      <div class="right">
+        <span class="right-title">Add to your Fees</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          data-supported-dps="16x16"
+          fill="currentColor"
+          class="right-match"
+          width="16"
+          height="16"
+          focusable="false"
         >
+          <path d="M12 2H4a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zm-3 8v2H7.5A1.5 1.5 0 016 10.5a1.56 1.56 0 01.1-.5l1.08-3h2.13l-1.09 3zm0-3.75A1.25 1.25 0 1110.25 5 1.25 1.25 0 019 6.25z"></path>
+          </svg>
       </div>
-      <div class="body-list">
-        <span class="type">JavaScript</span> <br>
-        <span class="para">Company. E-Larnign</span> <br>
-        <butto class="btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            data-supported-dps="16x16"
-            fill="currentColor"
-            class="follow-match"
-            width="16"
-            height="16"
-            focusable="false"
+      <div class="right-section">
+        <div class="right-body">
+          <img
+            width="48"
+            src="https://media.licdn.com/dms/image/C4D07AQF4WxChWYZOUA/group-logo_image-shrink_48x48/0/1630999996424?e=1675663200&amp;v=beta&amp;t=y_DmE_0S2nILFDusVgWSZnWKVBLG-8KM0ndwwc5yAGo"
+            loading="lazy"
+            height="48"
+            alt="Java Full Stack JavaScript Angular Nodejs React VueJs Developer  Architect Careers Jobs"
+            id="ember2422"
+            class="ivm-view-attr__img--centered EntityPhoto-square-3  lazy-image ember-view"
           >
-            <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
-            </svg>
-            <span class="follow">Follow</span>
-        </butto>
+        </div>
+        <div class="body-list">
+          <span class="type">JavaScript</span> <br>
+          <span class="para">Company. E-Larnign</span> <br>
+          <butto class="btn-follow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              data-supported-dps="16x16"
+              fill="currentColor"
+              class="follow-match"
+              width="16"
+              height="16"
+              focusable="false"
+            >
+              <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
+              </svg>
+              <span class="follow">Follow</span>
+          </butto>
+        </div>
       </div>
-    </div>
-    <div class="right-section">
-      <div class="right-body">
-        <img
-          width="200"
-          title="Nasim Uddin"
-          src="../img/nasim.jpg"
-          height="200"
-          alt="Nasim Uddin"
-          id="ember43"
-          class="ceo-img"
+      <div class="right-section">
+        <div class="right-body">
+          <img
+            width="200"
+            title="Nasim Uddin"
+            src="../img/nasim.jpg"
+            height="200"
+            alt="Nasim Uddin"
+            id="ember43"
+            class="ceo-img"
+          >
+        </div>
+        <div class="body-list">
+          <span class="type">Nasim Uddin</span> <br>
+          <span class="para">CEO @ MulloKoto & CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
+          <butto class="btn-follow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              data-supported-dps="16x16"
+              fill="currentColor"
+              class="follow-match"
+              width="16"
+              height="16"
+              focusable="false"
+            >
+              <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
+              </svg>
+              <span class="follow">Follow</span>
+          </butto>
+        </div>
+      </div>
+      <div class="right-section">
+        <div class="right-body">
+          <img
+            width="200"
+            title="Md. Nasir Uddin"
+            src="../img/nasir.jpg"
+            height="200"
+            alt="Md. Nasir Uddin"
+            id="ember305"
+            class="coo-img"
+          >
+        </div>
+        <div class="body-list">
+          <span class="type">Md Nasir Uddin</span> <br>
+          <span class="para">COO Founder @ CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
+          <butto class="btn-follow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              data-supported-dps="16x16"
+              fill="currentColor"
+              class="follow-match"
+              width="16"
+              height="16"
+              focusable="false"
+            >
+              <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
+              </svg>
+              <span class="follow">Follow</span>
+          </butto>
+        </div>
+      </div>
+      <div class="bottom-view">
+        <span class="viw-bottom">View all Recommendations</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          class="icon-match"
+          data-supported-dps="16x16"
+          fill="currentColor"
+          width="16"
+          height="16"
+          focusable="false"
         >
-      </div>
-      <div class="body-list">
-        <span class="type">Nasim Uddin</span> <br>
-        <span class="para">CEO @ MulloKoto & CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
-        <butto class="btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            data-supported-dps="16x16"
-            fill="currentColor"
-            class="follow-match"
-            width="16"
-            height="16"
-            focusable="false"
-          >
-            <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
-            </svg>
-            <span class="follow">Follow</span>
-        </butto>
+          <path d="M11.45 3L15 8l-3.55 5H9l2.84-4H2V7h9.84L9 3z"></path>
+          </svg>
       </div>
     </div>
-    <div class="right-section">
-      <div class="right-body">
-        <img
-          width="200"
-          title="Md. Nasir Uddin"
-          src="../img/nasir.jpg"
-          height="200"
-          alt="Md. Nasir Uddin"
-          id="ember305"
-          class="coo-img"
-        >
-      </div>
-      <div class="body-list">
-        <span class="type">Md Nasir Uddin</span> <br>
-        <span class="para">COO Founder @ CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
-        <butto class="btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            data-supported-dps="16x16"
-            fill="currentColor"
-            class="follow-match"
-            width="16"
-            height="16"
-            focusable="false"
-          >
-            <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
-            </svg>
-            <span class="follow">Follow</span>
-        </butto>
-      </div>
-    </div>
-    <div class="bottom-view">
-      <span class="viw-bottom">View all Recommendations</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 16 16"
-        class="icon-match"
-        data-supported-dps="16x16"
-        fill="currentColor"
-        width="16"
-        height="16"
-        focusable="false"
-      >
-        <path d="M11.45 3L15 8l-3.55 5H9l2.84-4H2V7h9.84L9 3z"></path>
-        </svg>
-    </div>
-  </div>
     <!-- Right Bottom  -->
 
     <div class="right-bottom">
       <div class="bottom-body">
-        <img class="add"
+        <img
+          class="add"
           src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
           alt="Advertise on LinkedIn"
           border="0"
@@ -160,17 +161,16 @@
           </div>
       </div>
     </div>
-</div>
- 
- 
+  </div>
+
 </template>
 
 <style>
-  div {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+div {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 .right-container {
   font-family: Arial, Helvetica, sans-serif;
   background: white !important;
@@ -216,16 +216,18 @@
 .para {
   font-size: 0.9rem;
   font-weight: bold;
+  line-height: normal;
 }
-.btn {
+.btn-follow {
   padding: 8px 15px;
   margin-bottom: 10px;
   align-items: center;
   align-items: center;
   border: 1px gray solid;
   border-radius: 5rem;
+
 }
-.btn:hover {
+.btn-follow:hover {
   background: rgb(236, 229, 229);
   font-weight: bold;
   /* color: white; */
@@ -238,7 +240,7 @@
   padding-left: 4px;
   font-weight: bold;
   color: gray;
-  margin-bottom: 10px !important;
+  margin-top: 30px;
 }
 .ceo-img {
   height: 50px;
@@ -255,10 +257,7 @@
   align-items: center;
   padding: 10px 17px;
 }
-/* .bottom-view:hover {
-  background: gray;
-  color: white;
-} */
+
 .viw-bottom {
   font-size: 15px;
   font-weight: bold;
@@ -274,27 +273,27 @@
   font-weight: bold;
 }
 /* Right Bottom  */
-   .right-bottom {
-    border: 1px rgb(211, 209, 209) solid;
-    margin-top: 10px;
-    border-radius: 10px;
-   }
-   .add {
-    width: 100%;
-    height: 100%;
-   }
-   .footer {
-    padding: 10px 0;
-    text-align: center;
-    align-items: center;
-   }
-   .linkedIn-match {
-    color: rgb(24, 94, 199);
-    font-weight: bold;
-   }
-   .footer-body {
-    font-size: 12px;
-    font-weight: bold;
-    color: black;
-   }
+.right-bottom {
+  border: 1px rgb(211, 209, 209) solid;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.add {
+  width: 100%;
+  height: 100%;
+}
+.footer {
+  padding: 10px 0;
+  text-align: center;
+  align-items: center;
+}
+.linkedIn-match {
+  color: rgb(24, 94, 199);
+  font-weight: bold;
+}
+.footer-body {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+}
 </style>

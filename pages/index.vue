@@ -1,51 +1,167 @@
 <template>
-  <div class="container">
-    <div class="grid">
-      <div class="sidebar">
-        <SidebarVue></SidebarVue>
-      </div>
-      <div class="midlebar">
-        <MidlebarVue></MidlebarVue>
-      </div>
-      <div class="rightbar">
-        <RightSite></RightSite>
+  <div class="login-form">
+      <div class="container" >
+        <label for="name">
+          <b>UserName</b>
+        </label>
+        <input
+          type="text"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        
+        >
+
+          <label for="email">
+            <b>Email</b>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Email"
+            name="email"
+            required
+          >
+
+            <label for="psw">
+              <b>Password</b>
+            </label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              name="psw"
+              required
+            >
+
+              <button type="submit" @click="loginForm()">Login</button>
+              <label>
+                <input
+                  type="checkbox"
+                  checked="checked"
+                  name="remember"
+                > Remember me
+              </label>
       </div>
 
-      <nuxt></nuxt>
-    </div>
+      <div
+        class="container"
+        style="background-color:#f1f1f1"
+      >
+        <button
+          type="button"
+          class="cancelbtn"
+        >Cancel</button>
+          <span class="psw">Forgot
+            <a href="#">password?</a>
+          </span>
   </div>
+  </div>
+
 </template>
-
 <script>
-import SidebarVue from "~/components/Sidebar.vue";
-import MidlebarVue from "~/components/Midlebar.vue";
-import RightSite from "~/components/RightSite.vue";
+import firebase from 'firebase/compat/app'
+ export default {
+   data() {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    }
+   },
 
-export default {
-  components: {
-    SidebarVue,
-    MidlebarVue,
-    RightSite,
-  },
-};
+
+   methods: {
+      loginForm() {
+        console.log('hrrr');
+        firebase
+        .auth()
+      .createWithUserNameAndEmailAndPassword(this.name, this.email, this.password)
+        
+      then(() => {
+        alert('Successfully registered! Please login.');
+        this.$router.push('/feed');
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+      },
+
+
+   }
+ }
+  
 </script>
 
 <style>
+/* Bordered form */
+.login-form {
+   width: 700px;
+   align-items: center;
+   justify-content: center;
+   margin:auto;
+}
+form {
+  border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+
+/* Add padding to containers */
 .container {
-  width: 1200px !important;
+  padding: 16px;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr) !important;
-  grid-gap: 2rem;
+
+/* The "Forgot password" text */
+span.psw {
+  float: right;
+  padding-top: 16px;
 }
-.sidebar {
-  width:200px;
-}
-.midlebar {
-  width:550px !important;
-}
-.rightbar {
-  width: 300px;
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
 }
 </style>
