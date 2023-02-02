@@ -104,7 +104,7 @@ import "firebase/compat/auth";
   
 </script>
 
-<style>
+<style scoped>
 /* Bordered form */
 .login-form {
    width: 700px;

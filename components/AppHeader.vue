@@ -198,23 +198,21 @@ body {
   background: hwb(0 95% 3%);
 }
 .container {
-  max-width: 1200px;
   margin: auto;
 }
 .main-container {
   display: flex;
   text-align: center;
-  justify-content: space-between;
-  margin-top: -10px;
+  justify-content: center;
   margin-bottom: -10px;
   width: 100%;
   font-weight: bold;
+  background: #FFFFFF !important;
 }
 .content {
   
   display: flex;
   justify-content: space-between;
-  /* margin: auto; */
 }
 #main-logo {
   margin-top: 5px;
@@ -224,13 +222,13 @@ body {
   /* padding-top: 5px; */
 }
 .search-bar {
-  margin: 6px 0 0 5px;
-  padding-left: 5px;
+  margin: 7px 0 0 5px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
   text-align: center;
   color: rgb(8, 8, 8);
-  background: #dadae9;
+  background: #e3e3ec;
   border-radius: 5px;
   height: 41px;
   width: 100%;
