@@ -25,7 +25,7 @@
             height="48"
             alt="Java Full Stack JavaScript Angular Nodejs React VueJs Developer  Architect Careers Jobs"
             id="ember2422"
-            class="ivm-view-attr__img--centered EntityPhoto-square-3  lazy-image ember-view"
+            class="js-img EntityPhoto-square-3  lazy-image ember-view"
           >
         </div>
         <div class="body-list">
@@ -202,6 +202,7 @@ div {
 }
 .body-img {
   border-radius: 50%;
+
 }
 .body-list {
   box-sizing: border-box;
@@ -242,15 +243,21 @@ div {
   color: gray;
   margin-top: 30px;
 }
+.js-img {
+  border-radius: 50%;
+  margin-top: 10px;
+}
 .ceo-img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  margin-top: 1.5rem;
 }
 .coo-img {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  margin-top: 1.5rem;
 }
 
 .bottom-view {

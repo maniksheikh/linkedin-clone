@@ -158,14 +158,14 @@
       </div>
     </div>
     <!-- second time  -->
-    <div class="post">
+    <div class="post" v-for="items in userData" :key="items.id" >
       <div class="post-body">
         <div class="post-section">
           <div class="img-title">M</div>
           <br>
           <div class="align">
-            <span class="post-header">Name: </span> <br>
-            <span class="email">Email: </span> <br>
+            <span class="post-header">Name: {{ items.title }} </span> <br>
+            <span class="email">Email: {{ items.email }} </span> <br>
             <span class="id"> I Am A FrontEnd Developer</span>
           </div>
         </div>
@@ -446,17 +446,17 @@
   padding: 8px 10px;
 }
 .section input {
+  text-align: center;
   width: 80%;
   box-sizing: border-box;
   font-size: 1rem;
+  padding: 10px;
   text-decoration: none;
-  margin-left: 1.5rem;
-  padding: 1.5rem;
-  height: 15px;
-  border: 1px gray solid;
+   margin-left:1rem !important;
+  border: 1px rgb(128, 125, 125) solid !important;
   color: black !important;
   font-weight: bold;
-  border-radius: 5rem;
+  border-radius: 5rem; 
 }
 .midle-img {
   height: 50px;
@@ -504,6 +504,7 @@
 .img-title {
   padding-top: 15px;
   text-align: center;
+ margin-top: 5px;
   justify-content: center;
   height: 50px;
   width: 50px;

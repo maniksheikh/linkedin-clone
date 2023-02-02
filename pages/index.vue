@@ -1,11 +1,10 @@
 <template>
   <div class="login-form">
       <div class="container" >
-        <label for="name" v-if="name">
-          <b> {{ name.email }}</b>
+        <label for="name">
+          <b> UserName</b>
         </label>
         <input 
-          v-else
           type="text" 
           v-model="name"
           placeholder="Enter Username"

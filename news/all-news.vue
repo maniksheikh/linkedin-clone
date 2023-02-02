@@ -1,5 +1,6 @@
 <template>
-        <div class="grid">
+  <div class="container">
+    <div class="grid">
       <div class="sidebar">
         <SidebarVue></SidebarVue>
       </div>
@@ -10,6 +11,8 @@
         <RightSite></RightSite>
       </div>
     </div>
+  </div>
+       
 </template>
 
 <script>
@@ -29,11 +32,12 @@ export default {
 <style>
  .container {
   width: 1200px !important;
+  margin: auto;
 }
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr) !important;
-  grid-gap: 2rem;
+  grid-gap: 1.5rem;
 }
 .sidebar {
   width:200px;

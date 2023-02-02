@@ -110,15 +110,17 @@ export default {};
 </script>
 
 <style>
-/* .container {
-  background: gainsboro;
-} */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
 .side-container {
   width: 20%;
   height: 100%;
   background: white !important;
   border-radius: 5px;
-  padding-top: 5px;
+  margin-top: -15px;
+  margin-left: 1.5rem;
 }
 .sidebar-img {
   width: 100%;
@@ -259,6 +261,7 @@ p {
   border-radius: 5px;
   padding-top: 5px;
   line-height: 1;
+  margin-left: 1.5rem;
 }
 
 .bottom-body {

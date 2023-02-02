@@ -32,19 +32,24 @@ export default {
 <style>
 .container {
   width: 1200px !important;
+  margin: auto;
+  margin-top: 1rem;
 }
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr) !important;
-  grid-gap: 2rem;
+  grid-gap: 1.5rem !important;
 }
 .sidebar {
-  width: 200px;
+  width: 220px;
+  /* margin-left: 10px; */
 }
 .midlebar {
   width: 550px !important;
+  margin-right: 20px;
 }
 .rightbar {
   width: 300px;
+  /* margin-right: 20px; */
 }
 </style>
