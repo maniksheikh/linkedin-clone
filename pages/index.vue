@@ -1,123 +1,90 @@
 <template>
-  <div class="login-form">
-      <div class="container" >
-        <label for="name">
-          <b> UserName</b>
-        </label>
-        <input 
-          type="text" 
-          v-model="name"
-          placeholder="Enter Username"
-          name="name"
-          required
-        > 
+  <div id="login-form">
+    <div class="container">
+      <label for="name">
+        <b> UserName</b>
+      </label>
+      <input type="text" v-model="name" placeholder="Enter Username" name="name" required>
 
-          <label for="email">
-            <b>Email: </b>
-          </label>
-          <input
-            type="text"
-            v-model="email"
-            placeholder="Enter Email"
-            name="email"
-            required
-          >
+      <label for="email">
+        <b>Email: </b> 
+      </label>
+      <input type="text" v-model="email" placeholder="Enter Email" name="email" required>
 
-            <label for="password">
-              <b>Password:</b>
-            </label>
-            <input
-              type="password"
-              v-model="password"
-              placeholder="Enter Password"
-          
-              required
-            >
+      <label for="password">
+        <b>Password:</b>
+      </label>
+      <input type="password" v-model="password" placeholder="Enter Password" required>
 
-              <button type="submit" @click="login">Login</button>
-              <label>
-                <input
-                  type="checkbox"
-                  checked="checked"
-                  name="remember"
-                > Remember me
-              </label>
-      </div>
+      <button type="submit" @click="login">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
 
-      <div
-        class="container"
-        style="background-color:#f1f1f1"
-      >
-        <button
-          type="button"
-          class="cancelbtn"
-        >Cancel</button>
-          <span class="password">Forgot
-            <a href="#">password?</a>
-          </span>
-  </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn">Cancel</button>
+      <span class="password">Forgot
+        <a href="#">password?</a>
+      </span>
+    </div>
   </div>
 
 </template>
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
- export default {
-   data() {
+
+export default {
+
+  data() {
     return {
       name: null,
       email: '',
       password: ''
     }
-   },
+  },
 
-   created() {
-    firebase.auth().createUserWithEmailAndPassword(name => {
-      if(name) {
-        this.name = name
-      } else {
-        this.name = null
-      }
-    })
-   },
+  methods: {
 
-   methods: {
     login() {
       try {
         firebase
-        .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
-      alert('Successfully registered! Please login.');
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+        alert('Successfully registered! Please login.');
         this.$router.push('/feed');
       }
-        catch (error) {
+      catch (error) {
         alert(error.message);
-      } finally{
-      //   this.name = '';
-      // this.email = '';
-      // this.password = '';
+      } finally {
+        this.name = '';
+        this.email = '';
+        this.password = '';
       }
-      
+
+    }
   }
-   }
- }
-  
+}
+
 </script>
 
 <style scoped>
 /* Bordered form */
-.login-form {
-   width: 700px;
-   align-items: center;
-   justify-content: center;
-   margin:auto;
+#login-form {
+  width: 700px;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
+
 form {
   border: 3px solid #f1f1f1;
 }
 
 /* Full-width inputs */
-input[type=text], input[type=password] {
+input[type=text],
+input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -174,6 +141,7 @@ span.password {
     display: block;
     float: none;
   }
+
   .cancelbtn {
     width: 100%;
   }

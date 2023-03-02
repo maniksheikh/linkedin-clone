@@ -115,6 +115,7 @@ export default {};
   box-sizing: border-box;
 }
 .side-container {
+  cursor: pointer;
   width: 20%;
   height: 100%;
   background: white !important;
@@ -285,6 +286,7 @@ p {
   font-weight: bold;
 }
 .plus:hover {
+  cursor: pointer;
   border-radius: 100%;
   background-color:  rgb(221, 218, 218);
   height: 100%;

@@ -446,6 +446,7 @@
   padding: 8px 10px;
 }
 .section input {
+ 
   text-align: center;
   width: 80%;
   box-sizing: border-box;
@@ -458,7 +459,12 @@
   font-weight: bold;
   border-radius: 5rem; 
 }
+.section input:hover {
+  cursor: pointer;
+  background: #EBEBEB;
+}
 .midle-img {
+  cursor: pointer;
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -469,10 +475,16 @@
   justify-content: space-between;
   margin-bottom: 5px;
 }
+
 .middle-section {
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  border-radius: 7px;
+}
+.middle-section:hover {
+  cursor: pointer;
+  background: #EBEBEB;
 }
 .middle-photo {
   color: rgb(52, 160, 211);
@@ -502,6 +514,7 @@
   padding: 8px 10px;
 }
 .img-title {
+  cursor: pointer;
   padding-top: 15px;
   text-align: center;
  margin-top: 5px;
@@ -520,6 +533,7 @@
    background-color: rgb(211, 205, 205);
 }
 .align {
+  cursor: pointer;
   padding: 6px 0 0 10px;
   line-height: 1.2;
 }
@@ -547,7 +561,12 @@
 .post-space {
   display: flex;
   align-items: center;
-  padding: 7px 0 0 7px;
+  padding: 7px 2px 4px 7px;
+}
+.post-space:hover {
+  cursor: pointer;
+  border-radius: 6px;
+  background: #dfd9d9;
 }
 .wish-match {
   padding: 0 6px;
@@ -560,6 +579,7 @@
 }
 /* third title  */
 .pro-img {
+  cursor: pointer;
   /* padding-top: 15px; */
   text-align: center;
   justify-content: center;
@@ -578,6 +598,7 @@
 
   } */
   .last-image {
+    cursor: pointer;
     height: 50px;
     width: 70px;
     font-weight: bold;
