@@ -175,7 +175,6 @@
           </div>
         </div>
         <p>
-        
           Try Premium for <br/> Free
         </p>
       </div>
@@ -215,6 +214,7 @@ body {
   justify-content: space-between;
 }
 #main-logo {
+  cursor: pointer;
   margin-top: 5px;
   color: rgb(49, 123, 184);
   align-items: center;
@@ -277,6 +277,7 @@ span {
   border-radius: 50%;
 }
 .outside {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   
@@ -291,6 +292,8 @@ span {
   
 }
 p {
+  text-decoration: underline;
+  color: #9B8667;
   font-size: 0.8rem;
   margin-left: 1rem;
 }
