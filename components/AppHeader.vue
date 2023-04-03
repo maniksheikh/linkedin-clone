@@ -125,14 +125,7 @@
           <span>Notifications</span>
         </div>
         <div class="navber-contents">
-          <img
-            width="25"
-            src="../img/manin.jpg"
-            height="25"
-            alt="Md Manik"
-            id="ember17"
-            class="global-nav__me-photo ember-view"
-          />
+            <img class="sml-profile" src="../img/IMG_20221031_215233.jpg" alt="">
           <div class="profile-icon">
             <span>Me</span>
               
@@ -229,7 +222,7 @@ body {
   text-align: center;
   color: rgb(8, 8, 8);
   background: #e3e3ec;
-  border-radius: 5px;
+  border-radius: 10px;
   height: 41px;
   width: 100%;
 }
@@ -271,6 +264,12 @@ span {
 .profile-icon {
   display: flex !important;
   align-items: center;
+}
+
+.sml-profile {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }
 
 #ember17 {

@@ -8,7 +8,7 @@
       />
       <div class="center">
         <img
-          src="../img/manin.jpg"
+          src="../img/IMG_20221031_215233.jpg"
           alt=""
           class="main-img"
         />

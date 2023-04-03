@@ -48,4 +48,14 @@ export default {
 .rightbar {
   width: 300px;
 }
+
+@media screen {
+     .contaier {
+      display: inline;
+     }
+
+     .grid {
+       display: inline;
+     }
+}
 </style>
