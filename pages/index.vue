@@ -72,10 +72,12 @@ export default {
 <style scoped>
 /* Bordered form */
 #login-form {
-  width: 700px;
+  width: 650px;
   align-items: center;
   justify-content: center;
   margin: auto;
+  margin-top: 7rem;
+  background: rgb(153, 150, 150);
 }
 
 form {
