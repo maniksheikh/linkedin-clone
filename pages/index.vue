@@ -2,70 +2,63 @@
   <div id="login-form">
     <h2> Linked<span><img class="linkedin-img" src="../img/linkedin.png" alt=""></span></h2>
     <div class="container">
-      <label for="name">
-        <b> UserName</b>
-      </label>
-      <input type="text" v-model="name" placeholder="Enter Username" name="name" required>
-
-      <label for="email">
-        <b>Email: </b>
-      </label>
-      <input type="text" v-model="email" placeholder="Enter Email" name="email" required>
-
-      <label for="password">
-        <b>Password:</b>
-      </label>
-      <input type="password" v-model="password" placeholder="Enter Password" required>
-
       <button type="submit" @click="login">Agree & Join</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
-
       <footer>
-        <p>Already on LinkedIn?</p>   <span class="footer-p"> Sign in</span>
+        <p>Already on LinkedIn?</p> <span class="footer-p"> Sign in</span>
       </footer>
-
     </div>
-
+    <Signin v-if="show" @toggole-order-form="showModal"></Signin>
+    <SignUp v-if="visible" @toggle-order-form="showSignup"></SignUp>
   </div>
 </template>
 <script>
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import SigninPage from '../components/SigninPage.vue';
+import SignUpVue from '../components/SignUpVue.vue'
 
 export default {
-
+  components: {
+    SigninPage,
+    SignUpVue,
+  },
   data() {
     return {
-      name: null,
-      email: '',
-      password: ''
+      show: false,
+      visible: false,
+      error: '',
+      user: {
+        email: '',
+        password: '',
+      },
     }
   },
-
   methods: {
-
-    login() {
+    showModal() {
+      this.show = !this.show
+    },
+    showSignup() {
+      this.visible = !this.visible
+    },
+    async loginUser() {
       try {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-        alert('Successfully registered! Please login.');
-        this.$router.push('/feed');
+        const userData = await this.$store.dispatch('login', {
+          email: this.user.email,
+          password: this.user.password,
+        });
+        if (userData && userData.hasAccount) {
+          alert('You are successfully logged in! Click here');
+          await this.$router.push('/feed');
+        } else {
+          this.error = 'You need to create an account before logging in!';
+        }
+      } catch (error) {
+        this.error = 'Failed login!';
       }
-      catch (error) {
-        alert(error.message);
-      } finally {
-        this.name = '';
-        this.email = '';
-        this.password = '';
-      }
-
-    }
-  }
+    },
+  },
 }
-
 </script>
 
 <style scoped>
@@ -84,7 +77,6 @@ h2 {
   width: 35px;
 }
 
-/* Bordered form */
 #login-form {
   border-radius: 15px;
   width: 500px;
@@ -130,7 +122,7 @@ button {
 /* Add a hover effect for buttons */
 button:hover {
   transition: 1s;
-  background:#11587e;
+  background: #11587e;
   color: white;
 }
 
@@ -189,17 +181,18 @@ footer {
   justify-content: center;
   padding: 0 3px;
 }
-p {
-    font-size: 1rem;
-    color: black;
-    font-weight: bold;
-    text-decoration: none;
-  }
 
-  .footer-p {
-    cursor: pointer;
-      color: blue;
-      font-size: 14px;
-      font-weight: bold;
-  }
+p {
+  font-size: 1rem;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-p {
+  cursor: pointer;
+  color: blue;
+  font-size: 14px;
+  font-weight: bold;
+}
 </style>
