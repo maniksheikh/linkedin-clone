@@ -15,13 +15,13 @@
   </div>
 </template>
 <script>
-import SigninPage from '../components/SigninPage.vue';
-import SignUpVue from '../components/SignUpVue.vue'
+import Signin from '../components/Signin.vue';
+import SignUp from '../components/SignUp.vue'
 
 export default {
   components: {
-    SigninPage,
-    SignUpVue,
+    Signin,
+    SignUp,
   },
   data() {
     return {

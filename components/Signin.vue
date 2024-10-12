@@ -9,8 +9,7 @@
                     <div class="text-center title">
                         <span>Log in to LinkedIn</span>
                     </div>
-                    <img src="../assets/image/icons-question-mark-img.png" alt="" class="cross-icon"
-                        @click="hideorderform" />
+                    <img src="../img/icons-question-mark-img.png" alt="" class="cross-icon" @click="hideorderform" />
                     <div class="signinwrap">
                         <form @submit.prevent="loginUser">
                             <input v-model="user.email" type="email" placeholder="Email address or phone number"
@@ -72,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .modalBody {
     position: absolute;
     top: 50%;

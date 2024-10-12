@@ -134,7 +134,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 .signup {
     position: absolute;
     top: 50%;
