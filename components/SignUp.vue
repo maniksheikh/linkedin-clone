@@ -7,13 +7,12 @@
                     {{ error }}
                 </p>
                 <h1>Sign Up</h1>
-                <span>It's quick and easy.</span>
             </div>
             <div class="signup-group">
                 <form action="#" @submit.prevent="registerUser">
                     <div class="flex">
                         <input v-model="user.username" class="input" type="text" placeholder="FirstName" required />
-                        <input class="input" type="text" placeholder="Surname" />
+                        <input class="input" type="text" placeholder="LastName" />
                     </div>
                     <input v-model="user.email" class="input" type="email" required placeholder="Email address" />
                     <input v-model="user.password" class="input" type="password" required placeholder="New password" />
@@ -82,12 +81,12 @@ export default {
                 email: '',
                 password: '',
             },
-            selectedays: 20,
+            selectedays: 1,
             selectedmonths: 'Jan',
             selectedYear: 2024,
             days: [
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+                '1', '2', '3', '4', ' 5', '6', ' 7', ' 8', ' 9', '10', '11', '12', ' 13', '14', '15', '16', '17', '18', '19', '20',
+                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'
             ],
             months: [
                 'Jan',
@@ -140,180 +139,169 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 450px;
+    width: 500px;
     z-index: 99999;
     background: white;
     box-shadow: 0 0 5px #ccc;
-
     border-radius: 10px;
-
-    .delete-img {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        cursor: pointer;
-    }
-
-    .content {
-        padding: 1rem;
-        border: 1px solid rgba(99, 96, 96, 0.3);
-
-        h1 {
-            text-align: center;
-            font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
-        }
-
-        span {
-            font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
-            color: SFProText-Regular, Helvetica, Arial, sans-serif;
-            color: #606770;
-            font-weight: 400;
-            font-size: 14px;
-        }
-    }
-
-    .signup-group {
-        padding: 1rem;
-
-        .input {
-            width: 100%;
-            display: block;
-            padding: 0.6rem;
-            font-size: 15px;
-            border: none;
-            outline: none;
-            border: 1px solid #ccc;
-            font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
-            box-sizing: border-box;
-            border-radius: 5px;
-            background: #f5f6f7;
-            margin: 10px auto;
-        }
-
-        .flex {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .birth {
-            .flex {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                select {
-                    width: 200px;
-                    padding: 0.6rem;
-                    font-weight: 400;
-                    font-size: 15px;
-                    outline: none;
-                    cursor: pointer;
-                    border: 1px solid rgba(0, 0, 0, 0.3);
-                    border-radius: 5px;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-                    option {
-                        padding: 10px;
-                    }
-                }
-            }
-
-            a {
-                display: flex;
-                align-items: center;
-                font-size: 12px;
-                padding: 0.4rem 0;
-                color: #606770;
-                font-weight: 400;
-                text-decoration: none;
-                font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
-
-                .question-png {
-                    width: 10px;
-                    height: 10px;
-                    color: white;
-                }
-            }
-        }
-
-        .gender {
-            a {
-                display: flex;
-                align-items: center;
-                font-size: 12px;
-                padding: 0.4rem 0;
-                color: #606770;
-                font-weight: 400;
-                text-decoration: none;
-
-                font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
-
-                .question-png {
-                    width: 10px;
-                    height: 10px;
-                    color: white;
-                }
-            }
-
-            .flex-items {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                .form-control {
-                    border: 1px solid #ccc;
-                    padding: 0.6rem;
-                    display: flex;
-                    align-items: center;
-                    border-radius: 5px;
-                    font-weight: 400;
-                    font-size: 15px;
-                    cursor: pointer;
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    gap: 1.9rem;
-
-                    label {
-                        cursor: pointer;
-                        font-size: 1rem;
-                        font-family: Arial, Helvetica, sans-serif;
-                    }
-                }
-            }
-        }
-
-        .terms {
-            a {
-                text-decoration: none;
-                margin-top: 3rem;
-                color: #777777;
-                font-size: 11px;
-                font-weight: 400;
-                font-family: Helvetica, Arial, sans-serif;
-
-                span {
-                    color: #92d2ff;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        .btn-primary {
-            display: inline;
-            margin: 1rem 0;
-            padding: 0.4rem 3.5rem;
-            color: white;
-            font-size: 1.3rem;
-            background: #00a400;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-                'Lucida Sans', Arial, sans-serif;
-            border-radius: 10px;
-        }
-    }
 }
+
+.signup .delete-img {
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.signup .content {
+    padding: 1rem;
+    border: 1px solid rgba(99, 96, 96, 0.3);
+}
+
+.signup .content h1 {
+    text-align: center;
+    font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+}
+
+.signup .content span {
+    font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
+    color: #606770;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.signup .signup-group {
+    padding: 1rem;
+}
+
+.signup .signup-group .input {
+    width: 100%;
+    display: block;
+    padding: 0.6rem;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    border: 1px solid #ccc;
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: #f5f6f7;
+    margin: 10px auto;
+}
+
+.signup .signup-group .flex {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.signup .signup-group .birth .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signup .signup-group .birth select {
+    width: 200px;
+    padding: 0.6rem;
+    font-weight: 400;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.signup .signup-group .birth select option {
+    padding: 10px;
+}
+
+.signup .signup-group .birth a {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 0.4rem 0;
+    color: #606770;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+}
+
+.signup .signup-group .birth a .question-png,
+.signup .signup-group .gender a .question-png {
+    width: 10px;
+    height: 10px;
+    color: white;
+}
+
+.signup .signup-group .gender a {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 0.4rem 0;
+    color: #606770;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+}
+
+.signup .signup-group .gender .flex-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signup .signup-group .gender .flex-items .form-control {
+    border: 1px solid #ccc;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 1.9rem;
+}
+
+.signup .signup-group .gender .flex-items .form-control label {
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signup .signup-group .terms a {
+    text-decoration: none;
+    margin-top: 3rem;
+    color: #777777;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.signup .signup-group .terms a span {
+    color: #92d2ff;
+}
+
+.signup .signup-group .terms a span:hover {
+    text-decoration: underline;
+}
+
+.signup .signup-group .btn-primary {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.4rem 3.5rem;
+    color: white;
+    font-size: 1.3rem;
+    background: #00a400;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
 
 .error {
     margin-top: 2rem;
@@ -340,18 +328,14 @@ export default {
 @media screen and (max-width: 500px) {
     .signup {
         width: 350px;
+    }
 
-        .signup-group {
-            .gender {
-                .flex-items {
-                    gap: 0.3rem;
+    .signup .signup-group .gender .flex-items {
+        gap: 0.3rem;
+    }
 
-                    .form-control {
-                        gap: 0.5rem;
-                    }
-                }
-            }
-        }
+    .signup .signup-group .gender .flex-items .form-control {
+        gap: 0.5rem;
     }
 }
 </style>

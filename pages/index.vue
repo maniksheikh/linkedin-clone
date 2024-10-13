@@ -18,7 +18,7 @@
         </label>
         <footer>
           <p>Already on LinkedIn?</p>
-          <span class="create-content" @click="showModal">Create an Account</span>
+          <span class="create-content" @click="showSignup">Create an Account</span>
         </footer>
       </div>
       <Signin v-if="show" @toggle-order-form="showModal"></Signin>
