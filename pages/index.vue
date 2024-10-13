@@ -1,22 +1,34 @@
 <template>
   <div id="login-form">
-    <h2> Linked<span><img class="linkedin-img" src="../img/linkedin.png" alt=""></span></h2>
-    <div class="container">
-      <button type="submit" @click="login">Agree & Join</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-      <footer>
-        <p>Already on LinkedIn?</p> <span class="footer-p"> Sign in</span>
-      </footer>
+    <div class="login-container">
+      <h2>Linked<span><img class="linkedin-img" src="../img/linkedin.png" alt="LinkedIn Logo"></span></h2>
+      <div class="container">
+        <div v-if="error" class="error">
+          {{ error }}
+        </div>
+        <form @submit.prevent="loginUser">
+          <input v-model="user.email" type="email" placeholder="Email address or phone number" required />
+          <input v-model="user.password" type="password" placeholder="Password" required />
+          <div class="text-center">
+            <button type="submit">Agree & Join</button>
+          </div>
+        </form>
+        <label>
+          <input v-model="rememberMe" type="checkbox" name="remember"> Remember me
+        </label>
+        <footer>
+          <p>Already on LinkedIn?</p>
+          <span class="create-content" @click="showModal">Create an Account</span>
+        </footer>
+      </div>
+      <Signin v-if="show" @toggle-order-form="showModal"></Signin>
+      <SignUp v-if="visible" @toggle-order-form="showSignup"></SignUp>
     </div>
-    <Signin v-if="show" @toggole-order-form="showModal"></Signin>
-    <SignUp v-if="visible" @toggle-order-form="showSignup"></SignUp>
   </div>
 </template>
 <script>
 import Signin from '../components/Signin.vue';
-import SignUp from '../components/SignUp.vue'
+import SignUp from '../components/SignUp.vue';
 
 export default {
   components: {
@@ -32,36 +44,71 @@ export default {
         email: '',
         password: '',
       },
+      rememberMe: false,
     }
   },
   methods: {
     showModal() {
-      this.show = !this.show
+      this.show = !this.show;
     },
     showSignup() {
-      this.visible = !this.visible
+      this.visible = !this.visible;
     },
     async loginUser() {
+      this.error = '';
+      if (!this.user.email || !this.user.password) {
+        this.error = 'Please enter both email and password';
+        return;
+      }
+
       try {
         const userData = await this.$store.dispatch('login', {
           email: this.user.email,
           password: this.user.password,
         });
+
         if (userData && userData.hasAccount) {
-          alert('You are successfully logged in! Click here');
+          alert('You are successfully logged in! Redirecting...');
           await this.$router.push('/feed');
+          this.clearForm();
         } else {
           this.error = 'You need to create an account before logging in!';
         }
       } catch (error) {
-        this.error = 'Failed login!';
+        console.error('Login failed:', error);
+        this.error = 'Failed login! Please check your credentials and try again.';
+        this.clearForm();
       }
+    },
+
+    clearForm() {
+      this.user.email = '';
+      this.user.password = '';
+      this.rememberMe = false;
     },
   },
 }
+
+
 </script>
 
 <style scoped>
+#login-form {
+  border-radius: 15px;
+  width: 500px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 10rem;
+  background: white;
+  box-shadow: border-box;
+}
+
+.login-container {
+  padding: 20px;
+}
+
 h2 {
   text-align: center;
   justify-content: center;
@@ -77,35 +124,28 @@ h2 {
   width: 35px;
 }
 
-#login-form {
-  border-radius: 15px;
-  width: 500px;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  margin-top: 8rem;
-  background: white;
-  box-shadow: border-box;
+.error {
+  color: red;
+  margin-top: 10px;
 }
 
 form {
-  border: 3px solid #f1f1f1;
+  margin-bottom: 7px;
 }
 
-/* Full-width inputs */
-input[type=text],
+input[type=email],
 input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
+  font-size: 17px;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
   border-radius: 8px;
+  outline: none;
 }
 
-/* Set a style for all buttons */
 button {
   background-color: #04a3f8;
   color: white;
@@ -119,14 +159,12 @@ button {
   border-radius: 10px;
 }
 
-/* Add a hover effect for buttons */
 button:hover {
   transition: 1s;
   background: #11587e;
   color: white;
 }
 
-/* Extra style for the cancel button (red) */
 .cancelbtn {
   width: auto;
   padding: 10px 18px;
@@ -134,14 +172,6 @@ button:hover {
   border-radius: 10px;
 }
 
-/* Center the avatar image inside this container */
-.imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-}
-
-
-/* Add padding to containers */
 .container {
   box-shadow: border-box;
   border-radius: 15px;
@@ -150,7 +180,6 @@ button:hover {
   margin-top: -15px;
 }
 
-/* The "Forgot password" text */
 span.password {
   font-size: 14px;
   font-weight: bold;
@@ -162,7 +191,6 @@ span.password {
   color: black;
 }
 
-/* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
   span.password {
     display: block;
@@ -180,19 +208,22 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 0 3px;
+  margin-top: 20px;
 }
 
 p {
   font-size: 1rem;
-  color: black;
+  color: gray;
   font-weight: bold;
   text-decoration: none;
 }
 
-.footer-p {
+.create-content {
   cursor: pointer;
   color: blue;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
+  margin-left: 20px;
+  text-decoration: underline;
 }
 </style>
