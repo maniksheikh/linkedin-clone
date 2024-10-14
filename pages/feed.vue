@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <div class="grid">
-    <div class="sidebar">
-      <SidebarVue></SidebarVue>
-    </div>
-    <div class="midlebar">
-      <MidlebarVue></MidlebarVue>
-    </div>
-    <div class="rightbar">
-      <RightSite></RightSite>
+      <div class="sidebar">
+        <SidebarVue></SidebarVue>
+      </div>
+      <div class="midlebar">
+        <MidlebarVue></MidlebarVue>
+      </div>
+      <div class="rightbar">
+        <RightSite></RightSite>
+      </div>
     </div>
   </div>
-  </div>
-  
+
 </template>
 
 <script>
@@ -35,21 +35,24 @@ export default {
   margin: auto;
   margin-top: 1rem;
 }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr) !important;
   grid-gap: 1.5rem !important;
 }
+
 .sidebar {
   width: 220px;
-  /* margin-left: 10px; */
 }
+
 .midlebar {
+  position: sticky;
   width: 550px !important;
   margin-right: 20px;
 }
+
 .rightbar {
   width: 300px;
-  /* margin-right: 20px; */
 }
 </style>
