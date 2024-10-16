@@ -146,7 +146,7 @@
       <div v-for="post in importData" :key="post.id" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="post.avatar" class="pro-img" />
+            <img :src="`/img/${post.avatar}`" class="pro-img" />
           </div>
           <br />
           <div class="align">
@@ -158,7 +158,7 @@
           </div>
         </div>
         <div class="height-img">
-          <img class="pro-height-img" :src="post.img" alt="bg-img" />
+          <img class="pro-height-img" :src="`/img/${post.img}`" alt="bg-img" />
         </div>
         <hr />
         <div class="flex-container">
