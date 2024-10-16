@@ -1,27 +1,27 @@
 [
   {
-    "avata": "/img/post-img.JPG",
+    "avatar": "/img/IMG_20221031_215233.jpg",
     "name": "Md Manik Sheikh",
     "title": "Frontend Web Developer",
     "description": "I am happy to share that I've been learning my programming skills here and loving every minute of it. I'm excited to take this passion to the next level and transition from learning to work. Ready to tackle new challenges and contribute to innovative projects with my newfound skills.",
-    "img": "/img/profile-img.JPG"
+    "img": "/img/post-img.JPG"
   },
   {
-    "avata": "/img/connekt.jpg",
+    "avatar": "/img/connekt.jpg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
     "img": "/img/connekt long.jpg"
   },
   {
-    "avata": "/img/hiring-profile.jpeg",
+    "avatar": "/img/hiring-profile.jpeg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
     "img": "/img/hiring.jpeg"
   },
   {
-    "avata": "/img/studio.jpg",
+    "avatar": "/img/studio.jpg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
