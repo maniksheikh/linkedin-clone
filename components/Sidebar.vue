@@ -2,9 +2,9 @@
   <div class="container">
     <div class="side-container">
       <div class="center">
-        <img src="../img/my-img.jpg" alt="" class="main-img" />
+        <img src="../img/IMG_20221031_215233.jpg" class="main-img" />
       </div>
-      <img class="sidebar-img" src="../img/profile-img.JPG" alt="" />
+      <img class="sidebar-img" src="../img/profile-img.JPG" alt="profile-img" />
       <div class="body">
         <div class="title">Md Manik</div>
         <span class="title-body">Frontend Developer</span>

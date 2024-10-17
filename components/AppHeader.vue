@@ -71,7 +71,7 @@
             <div v-if="visible" class="dropdown-menu">
               <div class="profile-details">
                 <div class="box">
-                  <img src="../img/IMG_20221031_215233.jpg" alt="" />
+                  <img src="../img/IMG_20221031_215233.jpg" />
                   <span class="title">{{ userName }}</span>
                 </div>
               </div>
@@ -90,7 +90,7 @@
                         class="style-scope yt-icon"></path>
                     </g>
                   </svg>
-                  <h3>Settings & privacy</h3>
+                  <h4>Settings & privacy</h4>
                 </div>
                 <div class="item-box">
                   <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -106,7 +106,7 @@
                         class="style-scope yt-icon"></path>
                     </g>
                   </svg>
-                  <h3>Help & support</h3>
+                  <h4>Help & support</h4>
                 </div>
                 <div class="item-box" @click.prevent="logout">
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
@@ -164,7 +164,7 @@
                             " transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
                     </g>
                   </svg>
-                  <h3>Log Out</h3>
+                  <h4>Log Out</h4>
                 </div>
               </div>
             </div>
@@ -420,10 +420,11 @@ span {
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-left: 10px;
+  padding-left: 10px;
+  height: 40px;
 }
 
-.item-box h3 {
+.item-box h4 {
   font-size: 1rem;
   font-weight: 500;
   color: #555;
@@ -431,6 +432,8 @@ span {
 
 .item-box:hover {
   color: #555;
+  background: #ddd;
+  border-radius: 5px;
 }
 
 .item-box:hover svg path {
