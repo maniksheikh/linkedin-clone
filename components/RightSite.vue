@@ -12,9 +12,8 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="48"
-            src="https://media.licdn.com/dms/image/C510BAQFybdyJxnwFQA/company-logo_100_100/0/1552144829593?e=1685577600&amp;v=beta&amp;t=Xw07FhEQfLhl9szwaw43LyteMAWBhZcKNafQP4OQsI8"
-            loading="lazy" height="48" alt="JavaScript" id="ember145" class="js-img">
+          <img width="200" title="Js Image" src="../img/js-img.png" height="200" alt="js image" id="ember43"
+            class="ceo-img">
         </div>
         <div class="body-list">
           <span class="type">JavaScript</span> <br>
@@ -47,8 +46,8 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Md. Nasir Uddin" src="../img/nasir.jpg" height="200" alt="Md. Nasir Uddin" id="ember305"
-            class="coo-img">
+          <img width="200" title="Md. Nasir Uddin" src="../img/nasir.jpg" height="200" alt="Md. Nasir Uddin"
+            id="ember305" class="coo-img">
         </div>
         <div class="body-list">
           <span class="type">Md Nasir Uddin</span> <br>
@@ -71,7 +70,6 @@
       </div>
     </div>
     <!-- Right Bottom  -->
-
     <div class="right-bottom">
       <div class="bottom-body">
         <img class="add" src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png"
@@ -172,11 +170,11 @@ div {
 .btn-follow:hover {
   background: rgb(236, 229, 229);
   font-weight: bold;
-  /* color: white; */
 }
 
 .follow-match {
-  margin-top: 10px;
+  margin-top: 20px;
+  align-items: center;
 }
 
 .follow {
@@ -184,7 +182,6 @@ div {
   padding-left: 4px;
   font-weight: bold;
   color: gray;
-  margin-top: 30px;
 }
 
 .js-img {

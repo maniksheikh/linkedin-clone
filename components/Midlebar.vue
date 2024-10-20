@@ -154,7 +154,7 @@
       <div v-for="post in importData" :key="post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="post.avatar" class="pro-img" />
+            <img :src="`/images/${post.avatar}`" class="pro-img" alt="Avatar" />
           </div>
           <br />
           <div class="align">
@@ -165,8 +165,7 @@
             <p>{{ post.description }}</p>
           </div>
         </div>
-        <div class="height-img">
-          <img class="pro-height-img" :src="post.img" alt="bg-img" />
+        <div class="height-img"> <img class="pro-height-img" :src="`/images/${post.img}`" alt="Post image" />
         </div>
         <hr />
         <div class="flex-container">
@@ -241,7 +240,6 @@ export default {
 
 <style>
 .middle-container {
-  position: sticky;
   background: white !important;
 }
 

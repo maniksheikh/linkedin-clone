@@ -44,15 +44,29 @@ export default {
 
 .sidebar {
   width: 220px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
 .midlebar {
-  position: sticky;
+  position: relative;
   width: 550px !important;
   margin-right: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.midlebar::-webkit-scrollbar {
+  display: none;
 }
 
 .rightbar {
   width: 300px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 </style>
