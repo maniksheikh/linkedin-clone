@@ -12,7 +12,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Js Image" src="../img/js-img.png" height="200" alt="js image" id="ember43"
+          <img width="200" title="Js Image" src="../img/js-img.png" height="200" alt="js-image" id="ember43"
             class="ceo-img">
         </div>
         <div class="body-list">
