@@ -1,37 +1,37 @@
 [
   {
-    "avatar": "/post-pro-my-img.jpg",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/profile-img.jpg?alt=media&token=c8f1ee40-4630-4887-a156-6e69b37b0240",
     "name": "Md Manik Sheikh",
     "title": "Frontend Web Developer",
     "description": "I am happy to share that I've been learning my programming skills here and loving every minute of it. I'm excited to take this passion to the next level and transition from learning to work. Ready to tackle new challenges and contribute to innovative projects with my newfound skills.",
-    "img": "/post-img.JPG"
+    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/post-img.JPG?alt=media&token=089588a6-62c0-45a6-ae74-91022c1bf2bc"
   },
   {
-    "avatar": "/connekt.jpg",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/connekt.jpg?alt=media&token=45d42dc9-ac4a-4b02-b6c7-d0365d5665d4",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "/connekt long.jpg"
+    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/connekt%20long.jpg?alt=media&token=b35fcc9e-bd46-444b-a028-55da779241e7"
   },
   {
-    "avatar": "/post-pro-my-img.jpg",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/profile-img.jpg?alt=media&token=c8f1ee40-4630-4887-a156-6e69b37b0240",
     "name": "Manik Sheikh",
     "title": "Frontend Web Developer",
     "description": "What a moment, i am Really happy in this place.",
-    "img": "/fulfil dream.jpg"
+    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/fulfil%20dream.jpg?alt=media&token=a445c7c2-9044-4c0b-a832-4d775341e8df"
   },
   {
-    "avatar": "/hiring-profile.jpeg",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/hiring-profile.jpeg?alt=media&token=c806a751-9815-4368-ae25-e4d568e92ff9",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "/hiring.jpeg"
+    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/hiring.jpeg?alt=media&token=3cd81890-9ff0-49ae-b449-b99d6fe613c2"
   },
   {
-    "avatar": "/studio.jpg",
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio.jpg?alt=media&token=ce679ff7-579d-46db-8839-25ec7b7c2d92",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "/studio long.jpg"
+    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio%20long.jpg?alt=media&token=40b60dcc-a5d3-401b-b536-50f5c807ae0c"
   }
 ]
