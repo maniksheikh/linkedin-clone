@@ -49,10 +49,19 @@
         <div class="post-section">
           <div class="img-title">M</div>
           <br>
-          <div class="align">
-            <div class="header">
-              <span class="post-header">{{ item.title }}</span> <br>
-              <span class="email">{{ item.email }}</span>
+          <div class="items-flex">
+            <div class="align">
+              <div class="header">
+                <span class="post-header">{{ item.title }}</span> <br>
+                <span class="email">{{ item.email }}</span>
+              </div>
+            </div>
+            <div class="delete-icon">
+              <button @click="deleteItem(index)" class="delete-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 6h18v2H3zm2 3h14v14H5zm5 2h2v10h-2zm4 0h2v10h-2z"></path>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -150,7 +159,7 @@
       </div>
     </div>
     <!-- third time  -->
-    <div class="post">
+    <div class="post-container">
       <div v-for="post in importData" :key="post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
@@ -162,7 +171,7 @@
               <span class="post-header">{{ post.name }}</span> <br />
               <span class="id">{{ post.title }}</span>
             </div>
-            <p>{{ post.description }}</p>
+            <span class="post-dec">{{ post.description }}</span>
           </div>
         </div>
         <div class="height-img"> <img class="pro-height-img" :src="post.img" />
@@ -210,7 +219,15 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import postData from '~/store/post-data.json'
+
+const userData = ref([
+]);
+
+const deleteItem = (index) => {
+  userData.value.splice(index, 1);
+};
 
 export default {
   data() {
@@ -267,11 +284,20 @@ export default {
   font-weight: bold;
   border-radius: 5rem;
   margin-bottom: 10px;
+  outline: none;
 }
 
 .section input:hover {
   cursor: pointer;
   background: #EBEBEB;
+}
+
+.section input:focus::placeholder {
+  color: rgb(160, 147, 147);
+}
+
+.section input:hover::placeholder {
+  color: transparent;
 }
 
 .midle-img {
@@ -289,14 +315,15 @@ export default {
 
 .middle-section {
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-radius: 7px;
+  align-items: center;
+  padding: 7px 2px 4px 7px;
+  margin: 0px 7px 5px;
 }
 
 .middle-section:hover {
   cursor: pointer;
-  background: #EBEBEB;
+  border-radius: 6px;
+  background: #dfd9d9;
 }
 
 .middle-photo {
@@ -322,15 +349,20 @@ export default {
   font-weight: bold;
 }
 
-/* Post Middle  */
 .post {
   margin-top: 10px;
   border-radius: 10px;
-  border: 1px rgb(211, 209, 209) solid;
+}
+
+.post-container {
+  margin-top: 10px;
 }
 
 .post-body {
+  margin-top: 10px;
   padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px rgb(211, 209, 209) solid;
 }
 
 .img-title {
@@ -350,6 +382,22 @@ export default {
   display: flex;
 }
 
+.items-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  right: 10px;
+}
+
+
 .post-react {
   display: flex;
   justify-content: space-between;
@@ -364,8 +412,8 @@ export default {
 
 .align .header {
   cursor: pointer;
-  padding: 6px 0 0 10px;
-  line-height: 1.2;
+  padding: 10px 0 0 15px;
+  line-height: 1.5;
 }
 
 .post-header {
@@ -416,7 +464,12 @@ export default {
   line-height: 1.5;
 }
 
-/* third title  */
+.post-dec {
+  margin-top: 10px;
+  font-size: 17px;
+  font-weight: 500;
+}
+
 .pro-img {
   cursor: pointer;
   text-align: center;
@@ -432,6 +485,8 @@ export default {
   width: 100%;
   height: 600px;
   object-fit: cover;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
 .last-image {
