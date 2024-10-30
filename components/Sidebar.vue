@@ -20,13 +20,13 @@
         </div>
 
         <div class="profile-view">
-          <p>Who`s viewed your profile</p>
+          <span class="second">Who`s viewed your profile</span>
           <span class="views">4</span>
         </div>
       </div>
       <hr />
       <div class="premium">
-        <p>Access exclusive tools & insights</p>
+        <span class="second">Access exclusive tools & insights</span>
         <div class="flex">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" class="mercado-match"
             width="24" height="24" focusable="false">
@@ -61,9 +61,7 @@
         <span class="bottom-list">Followed Hashtags</span>
       </div>
       <hr />
-      <div class="finished">
-        <h3>Discover more</h3>
-      </div>
+      <span class="bottom-h">Discover more</span>
     </div>
 
   </div>
@@ -131,7 +129,7 @@ export default {};
 }
 
 .body {
-  margin-top: 3rem;
+  margin-top: 1rem;
   line-height: 1;
   text-align: center;
   justify-content: center;
@@ -157,20 +155,17 @@ h3 {
   font-size: 1.2rem;
 }
 
-.connection {
-  padding: 0 10px;
-}
-
-.connection:hover {
-  background-color: rgb(221, 218, 218);
-  height: 100%;
-}
-
 .connection-body {
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: space-between;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.connection-body:hover {
+  background-color: rgb(221, 218, 218);
 }
 
 .view {
@@ -179,12 +174,21 @@ h3 {
 
 .first {
   color: rgb(80, 78, 78);
+  font-size: 0.9rem;
+}
+
+.second {
+  color: rgb(80, 78, 78);
+  padding: 5px;
+  font-size: 0.9rem;
 }
 
 .first-bold {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgb(58, 56, 56);
   font-weight: bold;
+  margin-bottom: 5px;
+  padding: 5px;
 }
 
 p {
@@ -215,6 +219,8 @@ p {
 
 .flex {
   display: flex;
+  margin-top: 10px;
+  padding: 0px 7px;
 }
 
 .premiun-middle {
@@ -222,14 +228,14 @@ p {
   color: black;
   font-weight: bold;
   text-decoration: underline;
-  padding-left: 5px;
+  padding-left: 10px;
 }
 
 .items {
   display: flex;
   text-align: center;
   align-items: center;
-  padding-left: 14px;
+  padding: 5px 10px;
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -242,7 +248,8 @@ p {
 .last {
   font-size: 0.8rem;
   color: black;
-  padding-left: 5px;
+  margin-left: 10px;
+  padding: 5px 7px;
 }
 
 .bottom {
@@ -265,6 +272,7 @@ p {
   padding: 1rem 5px;
   font-size: 13px;
   color: blue;
+  cursor: pointer;
 }
 
 .bottom-list:hover {
@@ -286,14 +294,19 @@ p {
   height: 100%;
 }
 
-h3 {
-  text-align: center;
+.bottom-h {
+  display: flex;
   justify-content: center;
+  align-items: center;
   color: rgb(134, 128, 128);
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 8px;
 }
 
-h3:hover {
+.bottom-h:hover {
   background-color: rgb(221, 218, 218);
-  height: 100%;
+  border-radius: 5px;
 }
 </style>

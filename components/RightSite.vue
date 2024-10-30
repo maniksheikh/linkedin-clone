@@ -34,7 +34,8 @@
         </div>
         <div class="body-list">
           <span class="type">Nasim Uddin</span> <br>
-          <span class="para">CEO @ MulloKoto & CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
+          <span class="para">CEO @ SketchToImage, Vocalo.ai & CONNEKT STUDIO Raising Pre-Seed Founder Institute
+            2022</span> <br>
           <butto class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
