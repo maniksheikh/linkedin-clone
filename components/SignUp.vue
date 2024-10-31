@@ -160,11 +160,11 @@ export default {
 
 .signup .content h1 {
     text-align: center;
-    font-family: SFProDisplay-Bold, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .signup .content span {
-    font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     color: #606770;
     font-weight: 400;
     font-size: 14px;
@@ -182,7 +182,7 @@ export default {
     border: none;
     outline: none;
     border: 1px solid #ccc;
-    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     box-sizing: border-box;
     border-radius: 5px;
     background: #f5f6f7;
@@ -192,7 +192,7 @@ export default {
 .signup .signup-group .flex {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .signup .signup-group .birth .flex {
@@ -243,7 +243,7 @@ export default {
     color: #606770;
     font-weight: 400;
     text-decoration: none;
-    font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .signup .signup-group .gender .flex-items {

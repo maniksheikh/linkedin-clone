@@ -199,15 +199,18 @@
       </div>
     </div>
     <hr />
+    <mobile-nav v-show="isShowMobileNav"></mobile-nav>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
       visible: false,
+      isShowMobileNav: false
     };
   },
   computed: {
