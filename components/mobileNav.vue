@@ -38,7 +38,7 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style>
 .menu-container {
     padding-bottom: 1.25rem;
     display: none;

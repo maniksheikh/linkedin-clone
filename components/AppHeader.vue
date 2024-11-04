@@ -205,12 +205,15 @@
 
 <script>
 import { mapState } from 'vuex';
+import MobileNav from '~/components/mobileNav.vue'
+
 
 export default {
   data() {
     return {
       visible: false,
-      isShowMobileNav: false
+      isShowMobileNav: false,
+      MobileNav
     };
   },
   computed: {
