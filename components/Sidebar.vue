@@ -5,7 +5,7 @@
         <img src="../img/IMG_20221031_215233.jpg" class="main-img" />
       </div>
       <img class="sidebar-img" src="../img/profile-img.JPG" alt="profile-img" />
-      <div class="body">
+      <div class="sidebar-body">
         <div class="title">Md Manik</div>
         <span class="title-body">Frontend Developer</span>
       </div>
@@ -128,7 +128,7 @@ export default {};
   left: 4.8rem;
 }
 
-.body {
+.sidebar-body {
   margin-top: 1rem;
   line-height: 1;
   text-align: center;

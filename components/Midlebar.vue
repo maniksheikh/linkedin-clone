@@ -188,7 +188,6 @@ export default {
 }
 </script>
 
-
 <style>
 .middle-container {
   background: white !important;
@@ -331,7 +330,6 @@ export default {
   right: 10px;
 }
 
-
 .post-react {
   display: flex;
   justify-content: space-between;
@@ -434,5 +432,68 @@ export default {
 .last-height-image {
   height: 600px;
   width: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .section input {
+    width: 100%;
+    margin: 0;
+  }
+
+  .middle-body,
+  .items-flex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .post-container,
+  .post-body,
+  .post-react {
+    padding: 5px;
+  }
+
+  .pro-height-img {
+    height: 400px;
+  }
+
+  .post-dec {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .pro-img,
+  .midle-img,
+  .img-title,
+  .last-image {
+    height: 40px;
+    width: 40px;
+  }
+
+  .post-dec {
+    font-size: 15px;
+  }
+
+  .post-header,
+  .email {
+    font-size: 0.8rem;
+  }
+
+  .section input {
+    font-size: 0.9rem;
+  }
+
+  .middle-body,
+  .items-flex,
+  .middle-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

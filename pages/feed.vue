@@ -49,6 +49,14 @@ export default {
   height: 100vh;
 }
 
+@media screen and (max-width: 650px) {
+  .sidebar {
+    display: none;
+    height: 100%;
+  }
+}
+
+
 .midlebar {
   position: relative;
   width: 550px !important;
@@ -57,6 +65,12 @@ export default {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+@media screen and (max-width: 650px) {
+  .midlebar {
+    height: 100%;
+  }
 }
 
 .midlebar::-webkit-scrollbar {
@@ -68,5 +82,12 @@ export default {
   position: sticky;
   top: 0;
   height: 100vh;
+}
+
+@media screen and (max-width: 650px) {
+  .rightbar {
+    display: none;
+    height: 100%;
+  }
 }
 </style>

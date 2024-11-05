@@ -275,6 +275,7 @@ a {
 
 .container {
   margin: auto;
+  width: 90%;
 }
 
 .main-container {
@@ -284,7 +285,7 @@ a {
   margin-bottom: -10px;
   width: 100%;
   font-weight: bold;
-  background: #FFFFFF !important;
+  background: #ffffff !important;
 }
 
 .content {
@@ -296,8 +297,8 @@ a {
   cursor: pointer;
   margin-top: 5px;
   color: rgb(49, 123, 184);
+  display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .search-bar {
@@ -311,13 +312,20 @@ a {
   border-radius: 10px;
   height: 41px;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .search-bar .input {
   outline: none;
   border: none;
   background: none;
+  width: 100%;
 }
+
+
 
 .input {
   padding-left: 2rem;
@@ -332,8 +340,12 @@ a {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  border-right: 1px gray solid;
+  border-right: 1px solid gray;
   margin-left: 10rem;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .navber-contents {
@@ -409,7 +421,6 @@ span {
   margin-right: 10px;
 }
 
-
 .title {
   font-size: 1rem;
   font-weight: bold;
@@ -456,8 +467,22 @@ span {
     width: 100%;
     left: 0;
   }
-}
 
+  .search-bar {
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  .input {
+    padding-left: 1rem;
+  }
+
+  .content,
+  .container {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
 
 .profile-icon {
   display: flex !important;
@@ -470,15 +495,14 @@ span {
   border-radius: 50%;
 }
 
-#ember17 {
-  border-radius: 50%;
-}
-
 .outside {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
 
+  @media screen and (max-width: 650px) {
+    display: none;
+  }
 }
 
 .outside-content {
@@ -489,7 +513,6 @@ span {
 .work {
   display: flex;
   align-items: center;
-
 }
 
 p {
