@@ -1,17 +1,19 @@
-
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAAl7ft-zHO0y0v7bvkKovnWTgKN0unxKY",
-  authDomain: "linkedin-firebase-c6c4b.firebaseapp.com",
-  projectId: "linkedin-firebase-c6c4b",
-  storageBucket: "linkedin-firebase-c6c4b.appspot.com",
-  messagingSenderId: "1037030709594",
-  appId: "1:1037030709594:web:fa6cc8126060800923fb63",
-  measurementId: "G-R2HDG81HBT"
+  apiKey: "AIzaSyAhhj-4A6Q30FVtRCv21tepW__JiA_QrSo",
+  authDomain: "linkedin-clone-dd96f.firebaseapp.com",
+  projectId: "linkedin-clone-dd96f",
+  storageBucket: "linkedin-clone-dd96f.appspot.com",
+  messagingSenderId: "940787575292",
+  appId: "1:940787575292:web:9b94371aab0e5663f02a79",
+  measurementId: "G-DSRSCCY4P6",
 };
 
-// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-  firebase.initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+export { auth, provider, signInWithPopup };

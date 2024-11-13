@@ -13,6 +13,8 @@
             <button type="submit">Agree & Join</button>
           </div>
         </form>
+        <button @click="signInWithGoogle">Sign in with Google</button>
+        <button v-if="user" @click="signOut">Sign Out</button>
         <label>
           <input v-model="rememberMe" type="checkbox" name="remember"> Remember me
         </label>
@@ -26,7 +28,11 @@
     </div>
   </div>
 </template>
+
 <script>
+
+import { auth, GoogleAuthProvider, signInWithPopup } from '@/firebase';
+
 import Signin from '../components/Signin.vue';
 import SignUp from '../components/SignUp.vue';
 
@@ -45,7 +51,7 @@ export default {
         password: '',
       },
       rememberMe: false,
-    }
+    };
   },
   methods: {
     showModal() {
@@ -80,17 +86,34 @@ export default {
         this.clearForm();
       }
     },
+    async signInWithGoogle() {
+      const provider = new GoogleAuthProvider();
+      this.error = '';
 
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const userData = result.user;
+
+        await this.$store.dispatch('loginWithGoogle', userData);
+
+        alert('You are successfully logged in with Google! Redirecting...');
+        await this.$router.push('/feed');
+        this.clearForm();
+      } catch (error) {
+        console.error('Google Sign-In failed:', error);
+        this.error = 'Google Sign-In failed. Please try again.';
+      }
+    },
     clearForm() {
       this.user.email = '';
       this.user.password = '';
       this.rememberMe = false;
     },
   },
-}
-
-
+};
 </script>
+
+
 
 <style scoped>
 #login-form {
