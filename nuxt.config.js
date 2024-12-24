@@ -1,4 +1,5 @@
 export default {
+  ssr: false,
   nitro: {
     output: {
       publicDir: ".output/public",
