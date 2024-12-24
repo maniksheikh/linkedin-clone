@@ -5,6 +5,7 @@ export default {
       publicDir: ".output/public",
     },
   },
+  target: "static",
   head: {
     title: "linkedIn",
     htmlAttrs: {
