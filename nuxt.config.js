@@ -1,4 +1,9 @@
 export default {
+  nitro: {
+    output: {
+      publicDir: ".output/public",
+    },
+  },
   head: {
     title: "linkedIn",
     htmlAttrs: {
