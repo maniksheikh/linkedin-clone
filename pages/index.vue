@@ -14,7 +14,6 @@
           </div>
         </form>
         <button @click="signInWithGoogle">Sign in with Google</button>
-        <button v-if="user" @click="signOut">Sign Out</button>
         <label>
           <input v-model="rememberMe" type="checkbox" name="remember"> Remember me
         </label>
