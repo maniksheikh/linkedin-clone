@@ -162,7 +162,6 @@
 <script>
 import postData from '~/store/post-data.json'
 
-
 export default {
   data() {
     return {

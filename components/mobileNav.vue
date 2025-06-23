@@ -17,7 +17,6 @@
                 <nuxt-link to="#">Blog</nuxt-link>
             </li>
         </ul>
-
         <button class="try-free-button">
             <nuxt-link to="/" aria-label="Try For Free" title="Try For Free" class="button-link">
                 <span>Try For Free</span>

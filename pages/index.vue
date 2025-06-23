@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
 import { auth, GoogleAuthProvider, signInWithPopup } from '@/firebase';
 
 import Signin from '../components/Signin.vue';
@@ -111,8 +110,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style scoped>
 #login-form {

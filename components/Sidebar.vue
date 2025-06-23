@@ -63,13 +63,8 @@
       <hr />
       <span class="bottom-h">Discover more</span>
     </div>
-
   </div>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style>
 .container {

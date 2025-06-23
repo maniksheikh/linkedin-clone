@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style scoped>
+
 div {
     border-radius: 10px;
 }
