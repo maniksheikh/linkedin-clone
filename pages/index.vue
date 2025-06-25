@@ -111,19 +111,56 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+// Variables
+$primary-color: #0a66c2;
+$primary-dark: #084d7a;
+$white: #ffffff;
+$text-primary: #333333;
+$text-secondary: #666666;
+$text-muted: #9ca3af;
+$border-color: #e1e5e9;
+$border-light: #d1d5db;
+$error-color: #d32f2f;
+$error-bg: #fef2f2;
+$error-border: #fecaca;
+$success-bg: #f8f9fa;
+
+$border-radius: 8px;
+$border-radius-lg: 12px;
+$transition: 0.2s ease;
+$box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+
+// Mixins
+@mixin button-hover-effect {
+  transform: translateY(-1px);
+}
+
+@mixin focus-style {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+@mixin input-focus {
+  border-color: $primary-color;
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+
+// Global styles
 * {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: $font-family;
 }
 
 #login-form {
-  border-radius: 12px;
+  border-radius: $border-radius-lg;
   width: 100%;
   max-width: 400px;
   margin: 7rem auto;
-  background: #ffffff;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e1e5e9;
+  background: $white;
+  box-shadow: $box-shadow;
+  border: 1px solid $border-color;
 }
 
 .login-container {
@@ -135,7 +172,7 @@ h2 {
   font-weight: 600;
   font-size: 2rem;
   margin: 0 0 1.5rem 0;
-  color: #0a66c2;
+  color: $primary-color;
   letter-spacing: -0.5px;
   line-height: 1.2;
 }
@@ -148,11 +185,11 @@ h2 {
 }
 
 .error {
-  color: #d32f2f;
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
+  color: $error-color;
+  background-color: $error-bg;
+  border: 1px solid $error-border;
   padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  border-radius: $border-radius;
   margin-bottom: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -164,30 +201,27 @@ input[type=password] {
   padding: 0.75rem 1rem;
   margin: 0.375rem 0;
   font-size: 1rem;
-  border: 2px solid #e1e5e9;
+  border: 2px solid $border-color;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: $border-radius;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  background-color: #ffffff;
-  color: #333333;
+  transition: border-color $transition, box-shadow $transition;
+  background-color: $white;
+  color: $text-primary;
   font-weight: 400;
-}
 
-input[type=email]:focus,
-input[type=password]:focus {
-  border-color: #0a66c2;
-  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
-}
+  &:focus {
+    @include input-focus;
+  }
 
-input[type=email]::placeholder,
-input[type=password]::placeholder {
-  color: #666666;
-  font-weight: 400;
+  &::placeholder {
+    color: $text-secondary;
+    font-weight: 400;
+  }
 }
 
 button {
-  background-color: #0a66c2;
+  background-color: $primary-color;
   color: white;
   padding: 0.75rem 1.5rem;
   margin: 0.75rem 0 0.5rem 0;
@@ -196,50 +230,65 @@ button {
   width: 100%;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 8px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  border-radius: $border-radius;
+  transition: background-color $transition, transform 0.1s ease;
   font-family: inherit;
   margin-bottom: 1rem;
-}
 
-button:hover {
-  background-color: #084d7a;
-  transform: translateY(-1px);
-}
+  &:hover {
+    background-color: $primary-dark;
+    @include button-hover-effect;
+  }
 
-button:active {
-  transform: translateY(0);
-}
+  &:active {
+    transform: translateY(0);
+  }
 
-/* Google Sign-in button */
-button + button {
-  background-color: #ffffff;
-  color: #333333;
-  border: 2px solid #e1e5e9;
-  margin: 0.375rem 0 0.75rem 0;
-  font-weight: 500;
-}
+  &:focus {
+    @include focus-style;
+  }
 
-button + button:hover {
-  background-color: #f8f9fa;
-  border-color: #d1d5db;
-  transform: translateY(-1px);
+  &:disabled {
+    background-color: $border-color;
+    color: $text-muted;
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover {
+      background-color: $border-color;
+      transform: none;
+    }
+  }
+
+  // Google Sign-in button
+  + button {
+    background-color: $white;
+    color: $text-primary;
+    border: 2px solid $border-color;
+    margin: 0.375rem 0 0.75rem 0;
+    font-weight: 500;
+
+    &:hover {
+      background-color: $success-bg;
+      border-color: $border-light;
+      @include button-hover-effect;
+    }
+  }
 }
 
 .container {
-  background: #ffffff;
-  border-radius: 12px;
+  background: $white;
+  border-radius: $border-radius-lg;
   padding: 0;
   margin: 0;
   box-shadow: none;
 }
 
-/* Remember me checkbox */
 label {
   display: flex;
   align-items: center;
   font-size: 0.875rem;
-  color: #666666;
+  color: $text-secondary;
   font-weight: 400;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -249,7 +298,7 @@ input[type="checkbox"] {
   width: auto;
   margin: 0 0.5rem 0 0;
   padding: 0;
-  accent-color: #0a66c2;
+  accent-color: $primary-color;
 }
 
 footer {
@@ -258,33 +307,37 @@ footer {
   justify-content: center;
   padding: 1rem 0 0 0;
   margin: 0;
-  border-top: 1px solid #e1e5e9;
-}
+  border-top: 1px solid $border-color;
 
-footer p {
-  font-size: 0.875rem;
-  color: #666666;
-  font-weight: 400;
-  margin: 0;
-  text-decoration: none;
+  p {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    font-weight: 400;
+    margin: 0;
+    text-decoration: none;
+  }
 }
 
 .create-content {
   cursor: pointer;
-  color: #0a66c2;
+  color: $primary-color;
   font-size: 0.875rem;
   font-weight: 600;
   margin-left: 0.5rem;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color $transition;
+
+  &:hover {
+    color: $primary-dark;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    @include focus-style;
+  }
 }
 
-.create-content:hover {
-  color: #084d7a;
-  text-decoration: underline;
-}
-
-/* Responsive Design */
+// Responsive Design
 @media screen and (max-width: 480px) {
   #login-form {
     margin: 1rem;
@@ -322,32 +375,12 @@ footer p {
   }
 }
 
-/* Loading and disabled states */
-button:disabled {
-  background-color: #e1e5e9;
-  color: #9ca3af;
-  cursor: not-allowed;
-  transform: none;
-}
-
-button:disabled:hover {
-  background-color: #e1e5e9;
-  transform: none;
-}
-
-/* Accessibility improvements */
+// Accessibility improvements
 @media (prefers-reduced-motion: reduce) {
   button,
   input,
   .create-content {
     transition: none;
   }
-}
-
-/* Focus styles for better accessibility */
-button:focus,
-.create-content:focus {
-  outline: 2px solid #0a66c2;
-  outline-offset: 2px;
 }
 </style>
