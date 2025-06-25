@@ -93,6 +93,10 @@
 </template>
 
 <style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 div {
   padding: 0;
   margin: 0;

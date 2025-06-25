@@ -72,6 +72,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 
 div {
     border-radius: 10px;

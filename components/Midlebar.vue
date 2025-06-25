@@ -188,6 +188,10 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 .middle-container {
   background: white !important;
 }

@@ -134,6 +134,11 @@ export default {
 </script>
 
 <style>
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 .signup {
     position: absolute;
     top: 50%;

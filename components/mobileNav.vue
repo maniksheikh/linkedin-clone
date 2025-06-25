@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 .menu-container {
     padding-bottom: 1.25rem;
     display: none;

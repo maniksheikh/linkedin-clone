@@ -29,6 +29,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
 .container {
   width: 1200px !important;
   margin: auto;
