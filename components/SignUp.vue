@@ -38,7 +38,7 @@
                     </div>
                     <div class="gender">
                         <a href="#">Gender
-                            <img class="question-png" src="/assets/image/icons-question-mark-img.pngg" alt="" /></a>
+                            <img class="question-png" src="/assets/image/icons-question-mark-img.png" alt="" /></a>
                         <div class="flex-items">
                             <div class="form-control">
                                 <label for="html">Female</label><br />
@@ -65,8 +65,9 @@
                     </div>
                 </form>
             </div>
-            <img id="u_2_9_Am" class="delete-img" src="https://static.xx.fbcdn.net/rsrc.php/v3/yO/r/zgulV2zGm8t.png"
-                alt="" width="24" height="24" @click="hideOrderForm" />
+            <svg class="delete-img" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="hideOrderForm">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#606770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
     </div>
 </template>
@@ -158,9 +159,12 @@ export default {
     cursor: pointer;
 }
 
+.signup .delete-img:hover path {
+    stroke: #42506B;
+}
+
 .signup .content {
     padding: 1rem;
-    border: 1px solid rgba(99, 96, 96, 0.3);
 }
 
 .signup .content h1 {
