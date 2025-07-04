@@ -1,5 +1,6 @@
 <template>
-  <div id="login-form">
+  <div class="login-page">
+    <div id="login-form">
     <div class="login-container">
       <h2>Linked<span><img class="linkedin-img" src="../img/linkedin.png" alt="LinkedIn Logo"></span></h2>
       <div class="container">
@@ -13,7 +14,15 @@
             <button type="submit">Agree & Join</button>
           </div>
         </form>
-        <button @click="signInWithGoogle">Sign in with Google</button>
+        <button @click="signInWithGoogle" class="google-signin-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" class="google-icon">
+            <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+            <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-7.18-2.53H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+            <path fill="#EA4335" d="M4.5 10.49a4.8 4.8 0 0 1 0-3.09V5.33H1.83a8 8 0 0 0 0 7.16z"/>
+            <path fill="#FBBC04" d="M8.98 4.72c1.16 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.33L4.5 7.4c.68-2.07 2.49-2.68 4.48-2.68z"/>
+          </svg>
+          Sign in with Google
+        </button>
         <label>
           <input v-model="rememberMe" type="checkbox" name="remember"> Remember me
         </label>
@@ -25,6 +34,7 @@
       <Signin v-if="show" @toggle-order-form="showModal"></Signin>
       <SignUp v-if="visible" @toggle-order-form="showSignup"></SignUp>
     </div>
+  </div>
   </div>
 </template>
 
@@ -148,23 +158,53 @@ $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
 }
 
-// Global styles
 * {
   font-family: $font-family;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
 }
 
 #login-form {
   border-radius: $border-radius-lg;
   width: 100%;
   max-width: 400px;
-  margin: 7rem auto;
+  margin: 2rem auto;
   background: $white;
-  box-shadow: $box-shadow;
-  border: 1px solid $border-color;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: $border-radius-lg;
+    pointer-events: none;
+  }
 }
 
 .login-container {
   padding: 1.5rem 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 h2 {
@@ -185,14 +225,19 @@ h2 {
 }
 
 .error {
-  color: $error-color;
-  background-color: $error-bg;
-  border: 1px solid $error-border;
-  padding: 0.5rem 0.75rem;
+  color: #ff0000 !important;
+  background-color: #fff5f5;
+  border: 2px solid #ff0000;
+  padding: 1rem;
   border-radius: $border-radius;
-  margin-bottom: 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+  margin-bottom: 1rem;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+  display: block !important;
+  visibility: visible !important;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
 }
 
 input[type=email],
@@ -261,17 +306,33 @@ button {
   }
 
   // Google Sign-in button
-  + button {
+  &.google-signin-btn {
     background-color: $white;
-    color: $text-primary;
-    border: 2px solid $border-color;
+    color: #3c4043;
+    border: 2px solid #dadce0;
     margin: 0.375rem 0 0.75rem 0;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all $transition;
 
     &:hover {
-      background-color: $success-bg;
-      border-color: $border-light;
+      background-color: #f8f9fa;
+      border-color: #dadce0;
+      box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3);
       @include button-hover-effect;
+    }
+
+    &:focus {
+      background-color: #f8f9fa;
+      border-color: #4285f4;
+      box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3);
+    }
+
+    .google-icon {
+      flex-shrink: 0;
     }
   }
 }
@@ -339,6 +400,10 @@ footer {
 
 // Responsive Design
 @media screen and (max-width: 480px) {
+  body {
+    padding: 1rem 0;
+  }
+  
   #login-form {
     margin: 1rem;
     width: calc(100% - 2rem);
