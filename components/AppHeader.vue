@@ -315,6 +315,10 @@ a {
   background: $background-white;
   box-shadow: $shadow-light;
   border-bottom: 1px solid $border-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .navbar-content {
@@ -322,7 +326,7 @@ a {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1128px;
+  max-width: 1200px;
 }
 
 .content {

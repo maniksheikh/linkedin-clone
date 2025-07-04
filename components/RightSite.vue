@@ -108,6 +108,7 @@ div {
   background: white !important;
   border: 1px rgb(211, 209, 209) solid;
   border-radius: 10px;
+  margin-top: 5.5rem;
 }
 
 .right {

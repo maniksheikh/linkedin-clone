@@ -36,7 +36,6 @@ export default {
 .container {
   width: 1200px !important;
   margin: auto;
-  margin-top: 1rem;
 }
 
 .grid {
@@ -46,9 +45,10 @@ export default {
 }
 
 .sidebar {
-  width: 220px;
+  width: 230px;
   position: sticky;
-  top: 0;
+  top:0;
+  left: 0;
   height: 100vh;
 }
 
@@ -62,9 +62,10 @@ export default {
 
 .midlebar {
   position: relative;
-  width: 550px !important;
-  margin-right: 20px;
+  width: 560px !important;
   height: 100vh;
+  top: 5.5rem;
+  margin: auto;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -83,7 +84,7 @@ export default {
 .rightbar {
   width: 300px;
   position: sticky;
-  top: 0;
+  top:0;
   height: 100vh;
 }
 
