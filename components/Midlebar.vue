@@ -59,7 +59,6 @@
           </div>
         </div>
         <span class="post-item">{{ item.post }}</span>
-        <hr>
         <div class="flex-container">
           <div class="post-react">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
@@ -117,7 +116,6 @@
         <div class="height-img">
           <img class="pro-height-img" :src="post.img" />
         </div>
-        <hr />
         <div class="flex-container">
           <div class="post-react">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
@@ -352,12 +350,6 @@ $color-red: #cc1016;
   border-radius: 8px;
   border: 1px solid $color-gray-300;
   background: white;
-  transition: all 0.2s ease;
-
-  &:hover {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    border-color: $color-gray-500;
-  }
 }
 
 .img-title {
