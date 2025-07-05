@@ -187,9 +187,32 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+// Typography Variables
+$font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Color Variables
+$color-primary: #0a66c2;
+$color-gray-100: #f3f2ef;
+$color-gray-300: #ddd;
+$color-gray-500: #666;
+$color-gray-700: #333;
+$color-gray-900: #000;
+$color-green: #057642;
+$color-orange: #e7a33e;
+$color-red: #cc1016;
+
 * {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: $font-family-primary;
 }
 
 .middle-container {
@@ -197,125 +220,171 @@ export default {
 }
 
 .middle {
-  border: 1px rgb(211, 209, 209) solid;
-  border-radius: 5px;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  background: white;
 }
 
 .section {
   display: flex;
   align-items: center;
-  padding: 15px 10px;
-}
+  padding: 16px 12px;
 
-.section input {
-  text-align: center;
-  width: 80%;
-  box-sizing: border-box;
-  font-size: 1rem;
-  padding: 15px 10px;
-  text-decoration: none;
-  margin-left: 1rem !important;
-  border: 1px rgb(128, 125, 125) solid !important;
-  color: black !important;
-  font-weight: bold;
-  border-radius: 5rem;
-  margin-bottom: 10px;
-  outline: none;
-}
+  input {
+    flex: 1;
+    margin-left: 12px;
+    padding: 12px 16px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    border: 1px solid $color-gray-300;
+    border-radius: 35px;
+    outline: none;
+    background: white;
+    transition: all 0.2s ease;
 
-.section input:hover {
-  cursor: pointer;
-  background: #EBEBEB;
-}
+    &::placeholder {
+      color: $color-gray-500;
+      font-weight: $font-weight-normal;
+    }
 
-.section input:focus::placeholder {
-  color: rgb(160, 147, 147);
-}
+    &:hover {
+      cursor: pointer;
+      background: $color-gray-100;
+      border-color: $color-gray-500;
+      color: $color-gray-900;
 
-.section input:hover::placeholder {
-  color: transparent;
+      &::placeholder {
+        color: $color-gray-700;
+      }
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
+
+      &::placeholder {
+        color: $color-gray-500;
+      }
+    }
+  }
 }
 
 .midle-img {
   cursor: pointer;
-  height: 50px;
-  width: 50px;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .middle-body {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  padding: 0 8px 8px;
 }
 
 .middle-section {
   display: flex;
   align-items: center;
-  padding: 7px 2px 4px 7px;
-  margin: 0px 7px 5px;
-}
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 
-.middle-section:hover {
-  cursor: pointer;
-  border-radius: 6px;
-  background: #dfd9d9;
+  &:hover {
+    cursor: pointer;
+    background: $color-gray-100;
+    
+    .span {
+      color: $color-gray-900;
+    }
+    
+    svg {
+      opacity: 0.8;
+    }
+  }
+
+  .span {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    margin-left: 8px;
+    transition: color 0.2s ease;
+  }
 }
 
 .middle-photo {
-  color: rgb(52, 160, 211);
+  color: $color-primary;
 }
 
 .middle-video {
-  color: green;
+  color: $color-green;
 }
 
 .middle-event {
-  color: coral;
+  color: $color-orange;
 }
 
 .middle-write {
-  color: chocolate;
-}
-
-.span {
-  text-decoration: none !important;
-  padding: 3px 15px;
-  color: gray;
-  font-weight: bold;
+  color: $color-red;
 }
 
 .post {
-  margin-top: 10px;
-  border-radius: 10px;
+  margin-top: 12px;
+  border-radius: 8px;
 }
 
 .post-container {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .post-body {
-  margin-top: 10px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px rgb(211, 209, 209) solid;
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid $color-gray-300;
+  background: white;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border-color: $color-gray-500;
+  }
 }
 
 .img-title {
   cursor: pointer;
-  padding-top: 15px;
-  text-align: center;
-  margin-top: 5px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  height: 50px;
-  width: 50px;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
-  background: coral;
-  font-weight: bold;
+  background: $color-orange;
+  color: white;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background: darken($color-orange, 10%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .post-section {
   display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
 }
 
 .items-flex {
@@ -333,144 +402,206 @@ export default {
   right: 10px;
 }
 
-.post-react {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-radius: 7px;
-}
+.align {
+  flex: 1;
+  margin-left: 12px;
 
-.post-react:hover {
-  cursor: pointer;
-  background: rgb(211, 205, 205);
-}
+  .header {
+    cursor: pointer;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
 
-.align .header {
-  cursor: pointer;
-  padding: 10px 0 0 15px;
-  line-height: 1.5;
+    &:hover {
+      .post-header {
+        color: $color-primary;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .post-header {
-  font-size: .9rem;
-  font-weight: bold;
-  color: black;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-gray-900;
+  line-height: 1.3;
+  transition: all 0.2s ease;
 }
 
 .email {
-  font-size: 12px;
-  color: gray;
-  font-weight: bold;
+  font-size: $font-size-xs;
+  color: $color-gray-500;
+  font-weight: $font-weight-normal;
+  line-height: 1.3;
+}
+
+.id {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-gray-700;
+  line-height: 1.3;
 }
 
 .post-item {
-  margin-left: 3.5rem;
-  font-weight: bold;
-  color: black;
+  display: block;
+  margin-left: 60px;
+  margin-bottom: 16px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $color-gray-900;
+  line-height: 1.5;
+}
+
+.post-dec {
+  display: block;
+  margin-top: 8px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $color-gray-900;
+  line-height: 1.5;
 }
 
 .flex-container {
   display: flex;
-  font-weight: bold;
   justify-content: space-between;
-  color: rgb(90, 88, 88);
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid $color-gray-300;
 }
 
 .post-react {
   display: flex;
   align-items: center;
-  padding: 7px 2px 4px 7px;
-}
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 
-.post-react:hover {
-  cursor: pointer;
-  border-radius: 6px;
-  background: #dfd9d9;
+  &:hover {
+    cursor: pointer;
+    background: $color-gray-100;
+    
+    .span {
+      color: $color-gray-900;
+      font-weight: $font-weight-semibold;
+    }
+    
+    svg {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  .span {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-gray-700;
+    margin-left: 8px;
+    transition: all 0.2s ease;
+  }
 }
 
 .wish-match {
-  padding: 0 6px;
-}
+  color: $color-gray-500;
+  transition: all 0.2s ease;
 
-.id {
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: black;
-  line-height: 1.5;
-}
-
-.post-dec {
-  margin-top: 10px;
-  font-size: 17px;
-  font-weight: 500;
+  .post-react:hover & {
+    color: $color-gray-900;
+  }
 }
 
 .pro-img {
   cursor: pointer;
-  text-align: center;
-  justify-content: center;
-  height: 50px;
-  width: 50px;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
-  background: coral;
-  font-weight: bold;
+  object-fit: cover;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.pro-img-title {
+  flex-shrink: 0;
 }
 
 .pro-height-img {
   width: 100%;
-  height: 600px;
+  height: 400px;
   object-fit: cover;
-  border-radius: 5px;
-  margin-top: 10px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.height-img {
+  margin: 12px 0;
 }
 
 .last-image {
   cursor: pointer;
-  height: 50px;
-  width: 70px;
-  font-weight: bold;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .last-height-image {
-  height: 600px;
+  height: 400px;
   width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-/* Responsive Styles */
+// Responsive Styles
 @media (max-width: 768px) {
   .section {
     flex-direction: column;
+    padding: 12px;
+
+    input {
+      width: 100%;
+      margin: 8px 0 0 0;
+    }
   }
 
-  .section input {
-    width: 100%;
+  .middle-body {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .middle-section {
+    justify-content: flex-start;
     margin: 0;
   }
 
-  .middle-body,
   .items-flex {
     flex-direction: column;
     align-items: flex-start;
   }
 
   .post-container,
-  .post-body,
+  .post-body {
+    padding: 12px;
+  }
+
   .post-react {
-    padding: 5px;
+    padding: 6px 8px;
   }
 
   .pro-height-img {
-    height: 400px;
+    height: 300px;
   }
 
   .post-dec {
-    font-size: 16px;
+    font-size: $font-size-sm;
   }
 }
 
 @media (max-width: 480px) {
-
   .pro-img,
   .midle-img,
   .img-title,
@@ -479,24 +610,43 @@ export default {
     width: 40px;
   }
 
-  .post-dec {
-    font-size: 15px;
+  .img-title {
+    font-size: $font-size-base;
   }
 
-  .post-header,
+  .post-dec {
+    font-size: $font-size-sm;
+  }
+
+  .post-header {
+    font-size: $font-size-sm;
+  }
+
   .email {
-    font-size: 0.8rem;
+    font-size: $font-size-xs;
   }
 
   .section input {
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
   }
 
-  .middle-body,
-  .items-flex,
-  .middle-section {
+  .middle-body {
     flex-direction: column;
-    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .middle-section {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 8px;
+  }
+
+  .post-item {
+    margin-left: 52px;
+  }
+
+  .pro-height-img {
+    height: 250px;
   }
 }
 </style>
