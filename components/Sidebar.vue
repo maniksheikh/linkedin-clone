@@ -13,7 +13,7 @@
           <p class="role">Jr. Frontend Engineer | Javascript, Tailwindcss, Vuejs, Nuxt3</p>
           <p class="location">Bogra District, Rajshahi</p>
           <div class="company">
-            <img src="connekt-logo.png" alt="Connekt Studio Logo" />
+            <img src="/connekt-logo.png" alt="Connekt Studio Logo" />
             <span>CONNEKT STUDIO</span>
           </div>
         </div>
@@ -27,7 +27,6 @@
           </div>
           <span class="first-bold">Grow your Network</span>
         </div>
-
         <div class="profile-view">
           <span class="second">Who`s viewed your profile</span>
           <span class="views">4</span>
