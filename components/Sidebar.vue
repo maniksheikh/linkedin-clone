@@ -1,13 +1,22 @@
 <template>
   <div class="container">
     <div class="side-container">
-      <div class="center">
-        <img src="../img/IMG_20221031_215233.jpg" class="main-img" />
-      </div>
-      <img class="sidebar-img" src="../img/profile-img.JPG" alt="profile-img" />
-      <div class="sidebar-body">
-        <div class="title">Md Manik</div>
-        <span class="title-body">Frontend Developer</span>
+      <div class="profile-card">
+        <div class="banner">
+          <img src="/Manik-background.jpg" alt="banner" />
+        </div>
+        <div class="avatar">
+          <img src="/Manik.jpg" alt="profile" />
+        </div>
+        <div class="info">
+          <h2>Muhammad Manik Sheikh</h2>
+          <p class="role">Jr. Frontend Engineer | Javascript, Tailwindcss, Vuejs, Nuxt3</p>
+          <p class="location">Bogra District, Rajshahi</p>
+          <div class="company">
+            <img src="connekt-logo.png" alt="Connekt Studio Logo" />
+            <span>CONNEKT STUDIO</span>
+          </div>
+        </div>
       </div>
       <hr />
       <div class="container-body">
@@ -66,244 +75,318 @@
   </div>
 </template>
 
-<style>
-* {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+<style lang="scss">
+// SCSS Variables
+$primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+$hover-bg: rgb(221, 218, 218);
+$text-gray: rgb(80, 78, 78);
+$text-dark-gray: rgb(58, 56, 56);
+$border-color: rgb(211, 209, 209);
+$background-light: hsl(0, 16%, 96%);
+$blue-color: blue;
+$border-radius: 5px;
+$sidebar-width: 24%;
+$white: white;
+$black: black;
+
+// Mixins
+@mixin hover-effect {
+  &:hover {
+    background-color: $hover-bg;
+  }
 }
 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Global styles
+* {
+  font-family: $primary-font;
+}
+
+// Main container
 .container {
   width: 100%;
   box-sizing: border-box;
+
+  // Side container
+  .side-container {
+    cursor: pointer;
+    width: $sidebar-width;
+    height: 100%;
+    background: $white !important;
+    border-radius: $border-radius;
+    margin-top: 5.5rem;
+    position: relative;
+    align-items: center;
+    border: 1px $border-color solid;
+    background: $background-light;
+
+    .sidebar-img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .profile-card {
+    width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    position: relative;
+    text-align: center;
+
+    .banner {
+      width: 100%;
+      height: 100px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .avatar {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      overflow: hidden;
+      background: #fff;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .info {
+      margin-top: 50px;
+      padding: 0 15px 20px;
+
+      h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .role {
+        font-size: 13px;
+        color: #333;
+        margin-bottom: 4px;
+      }
+
+      .location {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 10px;
+      }
+
+      .company {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+
+        span {
+          font-size: 12px;
+          font-weight: 600;
+          color: #000;
+        }
+      }
+    }
+  }
+
+
+  // Connection section
+  .connection {
+    .connection-body {
+      @include flex-between;
+      text-align: center;
+      padding: 5px;
+      margin-bottom: 5px;
+      @include hover-effect;
+    }
+
+    .view {
+      color: $blue-color;
+    }
+
+    .first-bold {
+      font-size: 0.9rem;
+      color: $text-dark-gray;
+      font-weight: bold;
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+  }
+
+  // Profile view section
+  .profile-view {
+    @include flex-between;
+    text-align: center;
+    padding-right: 12px;
+
+    &:hover {
+      background-color: $hover-bg;
+      height: 100%;
+    }
+
+    .views {
+      color: $blue-color;
+    }
+  }
+
+  // Premium section
+  .premium {
+    @include hover-effect;
+
+    &:hover {
+      height: 100%;
+    }
+
+    .flex {
+      display: flex;
+      margin-top: 10px;
+      padding: 0px 7px;
+    }
+
+    .premiun-middle {
+      font-size: 0.9rem;
+      color: $black;
+      font-weight: bold;
+      text-decoration: underline;
+      padding-left: 10px;
+    }
+  }
+
+  // Items section
+  .items {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $hover-bg;
+      height: 100%;
+    }
+
+    .last {
+      font-size: 0.8rem;
+      color: $black;
+      margin-left: 10px;
+      padding: 5px 7px;
+    }
+  }
+
+  // Bottom section
+  .bottom {
+    width: $sidebar-width;
+    height: 100%;
+    background: $white !important;
+    border: 1px $border-color solid;
+    border-radius: $border-radius;
+    padding-top: 5px;
+    line-height: 1;
+
+    .bottom-body {
+      padding-left: 10px;
+      color: $blue-color;
+    }
+
+    .bottom-list {
+      padding: 1rem 5px;
+      font-size: 13px;
+      color: $blue-color;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .events {
+      @include flex-between;
+      padding-right: 10px;
+      font-weight: bold;
+
+      .plus {
+        &:hover {
+          cursor: pointer;
+          border-radius: 100%;
+          background-color: $hover-bg;
+          height: 100%;
+        }
+      }
+    }
+
+    .bottom-h {
+      @include flex-center;
+      color: rgb(134, 128, 128);
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-bottom: 8px;
+
+      &:hover {
+        background-color: $hover-bg;
+        border-radius: $border-radius;
+      }
+    }
+  }
 }
 
-.side-container {
-  cursor: pointer;
-  width: 24%;
-  height: 100%;
-  background: white !important;
-  border-radius: 5px;
-  margin-top:5.5rem;
-}
-
-.sidebar-img {
-  width: 100%;
-  height: 100%;
-}
-
-.main-img {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-}
-
-.center {
-  align-items: center;
-  justify-content: center;
-}
-
-.side-container {
-  position: relative;
-  align-items: center;
-  border-radius: 5px;
-  border: 1px rgb(211, 209, 209) solid;
-  background: hsl(0, 16%, 96%);
-}
-
-.sidebar-container .sidebar-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: none;
-  outline: none;
-}
-
-.center .main-img {
-  position: absolute;
-  padding: 0 5px;
-  top: 1.9rem;
-  left: 4.8rem;
-}
-
-.sidebar-body {
-  margin-top: 1rem;
-  line-height: 1;
-  text-align: center;
-  justify-content: center;
-}
-
-.title {
-  cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.title:hover {
-  text-decoration: underline;
-}
-
-.title-body {
-  font-size: 13px;
-  color: rgb(99, 98, 98);
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.connection-body {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  margin-bottom: 5px;
-}
-
-.connection-body:hover {
-  background-color: rgb(221, 218, 218);
-}
-
-.view {
-  color: blue;
-}
-
+// Text styles
 .first {
-  color: rgb(80, 78, 78);
+  color: $text-gray;
   font-size: 0.9rem;
 }
 
 .second {
-  color: rgb(80, 78, 78);
+  color: $text-gray;
   padding: 5px;
   font-size: 0.9rem;
 }
 
-.first-bold {
-  font-size: 0.9rem;
-  color: rgb(58, 56, 56);
-  font-weight: bold;
-  margin-bottom: 5px;
-  padding: 5px;
+// Headings
+h3 {
+  font-size: 1.2rem;
 }
 
 p {
   font-weight: bold;
-}
-
-.profile-view {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: 12px;
-}
-
-.profile-view:hover {
-  background-color: rgb(221, 218, 218);
-  height: 100%;
-}
-
-.views {
-  color: blue;
-}
-
-.premium:hover {
-  background-color: rgb(221, 218, 218);
-  height: 100%;
-}
-
-.flex {
-  display: flex;
-  margin-top: 10px;
-  padding: 0px 7px;
-}
-
-.premiun-middle {
-  font-size: 0.9rem;
-  color: black;
-  font-weight: bold;
-  text-decoration: underline;
-  padding-left: 10px;
-}
-
-.items {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.items:hover {
-  background-color: rgb(221, 218, 218);
-  height: 100%;
-}
-
-.last {
-  font-size: 0.8rem;
-  color: black;
-  margin-left: 10px;
-  padding: 5px 7px;
-}
-
-.bottom {
-  width: 24%;
-  height: 100%;
-  background: white !important;
-  border: 1px rgb(211, 209, 209) solid;
-  border-radius: 5px;
-  padding-top: 5px;
-  line-height: 1;
-}
-
-.bottom-body {
-  padding-left: 10px;
-  color: blue;
-}
-
-.bottom-list {
-  padding: 1rem 5px;
-  font-size: 13px;
-  color: blue;
-  cursor: pointer;
-}
-
-.bottom-list:hover {
-  text-decoration: underline;
-}
-
-.events {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 10px;
-  font-weight: bold;
-}
-
-.plus:hover {
-  cursor: pointer;
-  border-radius: 100%;
-  background-color: rgb(221, 218, 218);
-  height: 100%;
-}
-
-.bottom-h {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(134, 128, 128);
-  font-size: 1.2rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-bottom: 8px;
-}
-
-.bottom-h:hover {
-  background-color: rgb(221, 218, 218);
-  border-radius: 5px;
 }
 </style>
