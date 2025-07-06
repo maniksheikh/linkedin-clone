@@ -18,13 +18,13 @@
         <div class="body-list">
           <span class="type">JavaScript</span> <br>
           <span class="para">Company. E-Larnign</span> <br>
-          <butto class="btn-follow">
+          <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
               <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
             </svg>
             <span class="follow">Follow</span>
-          </butto>
+          </button>
         </div>
       </div>
       <div class="right-section">
@@ -36,13 +36,13 @@
           <span class="type">Nasim Uddin</span> <br>
           <span class="para">CEO @ SketchToImage, Vocalo.ai & CONNEKT STUDIO Raising Pre-Seed Founder Institute
             2022</span> <br>
-          <butto class="btn-follow">
+          <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
               <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
             </svg>
             <span class="follow">Follow</span>
-          </butto>
+          </button>
         </div>
       </div>
       <div class="right-section">
@@ -53,13 +53,13 @@
         <div class="body-list">
           <span class="type">Md Nasir Uddin</span> <br>
           <span class="para">COO Founder @ CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
-          <butto class="btn-follow">
+          <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
               <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
             </svg>
             <span class="follow">Follow</span>
-          </butto>
+          </button>
         </div>
       </div>
       <div class="bottom-view">
@@ -92,9 +92,21 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+// Variables
+$primary-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+$primary-color: #0a66c2;
+$text-dark: #1d1d1d;
+$text-medium: #666666;
+$text-light: #999999;
+$border-color: #e0e0e0;
+$bg-white: #ffffff;
+$bg-hover: #f3f2ef;
+$border-radius: 8px;
+
+// Reset and base styles
 * {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: $primary-font;
 }
 
 div {
@@ -103,161 +115,203 @@ div {
   box-sizing: border-box;
 }
 
+// Right container
 .right-container {
-  font-family: Arial, Helvetica, sans-serif;
-  background: white !important;
-  border: 1px rgb(211, 209, 209) solid;
-  border-radius: 10px;
+  background: $bg-white;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
   margin-top: 5.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
+// Header section
 .right {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 16px 20px;
+  border-bottom: 1px solid $border-color;
+  
+  .right-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0;
+  }
+  
+  .right-match {
+    cursor: pointer;
+    color: $text-medium;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: $primary-color;
+    }
+  }
 }
 
-.right-title {
-  padding: 5px 7px;
-  font-size: 1.2rem;
-  color: black;
-  font-weight: bold;
-}
-
-.right-match {
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 10px;
-  color: gray;
-}
-
+// Section content
 .right-section {
-  cursor: pointer;
   display: flex;
-  padding: 10px 10px;
-}
-
-.body-img {
-  border-radius: 50%;
-
-}
-
-.body-list {
-  box-sizing: border-box;
-  padding: 0 0 7px 15px;
-  line-height: 1;
-}
-
-.type {
-  font-size: 0.9rem;
-  color: black;
-  font-weight: bold;
-}
-
-.para {
-  font-size: 0.9rem;
-  font-weight: bold;
-  line-height: normal;
-}
-
-.btn-follow {
-  padding: 8px 15px;
-  margin-bottom: 10px;
-  align-items: center;
-  align-items: center;
-  border: 1px gray solid;
-  border-radius: 5rem;
-
-}
-
-.btn-follow:hover {
-  background: rgb(236, 229, 229);
-  font-weight: bold;
-}
-
-.follow-match {
-  margin-top: 20px;
-  align-items: center;
-}
-
-.follow {
-  font-size: 1rem;
-  padding-left: 4px;
-  font-weight: bold;
-  color: gray;
-}
-
-.js-img {
-  border-radius: 50%;
-  margin-top: 10px;
-}
-
-.ceo-img {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  margin-top: 1.5rem;
-}
-
-.coo-img {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  margin-top: 1.5rem;
-}
-
-.bottom-view {
-  align-items: center;
-  padding: 10px 17px;
-}
-
-.viw-bottom {
-  font-size: 15px;
-  font-weight: bold;
-  color: rgb(99, 97, 97);
-}
-
-.viw-bottom:hover {
-  background: gray;
-  color: white;
-}
-
-.icon-match {
-  padding-top: 3px !important;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-/* Right Bottom  */
-.right-bottom {
-  border: 1px rgb(211, 209, 209) solid;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-
-.add {
+  align-items: flex-start;
+  padding: 16px 20px;
   cursor: pointer;
-  width: 100%;
-  height: 100%;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: $bg-hover;
+  }
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid $border-color;
+  }
 }
 
-.footer {
-  padding: 10px 0;
-  text-align: center;
+// Profile images
+.ceo-img,
+.coo-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+// Content list
+.body-list {
+  padding-left: 20px;
+  flex: 1;
+  
+  .type {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-dark;
+    display: block;
+  }
+  
+  .para {
+    font-size: 16px;
+    font-weight:500;
+    color: $text-medium;
+    line-height: 1.5;
+    display: block;
+  }
+}
+
+// Follow button
+.btn-follow {
+  display: inline-flex;
   align-items: center;
+  padding: 6px 16px;
+  border: 1px solid $border-color;
+  border-radius: 24px;
+  background: $bg-white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: $bg-hover;
+    border-color: $text-medium;
+  }
+  
+  .follow-match {
+    margin-right: 6px;
+    color: $text-medium;
+  }
+  
+  .follow {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-medium;
+  }
 }
 
-.linkedIn-match {
-  color: rgb(24, 94, 199);
-  font-weight: bold;
+// Bottom view section
+.bottom-view {
+  padding: 16px 20px;
+  border-top: 1px solid $border-color;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: $bg-hover;
+    
+    .viw-bottom {
+      color: $primary-color;
+    }
+  }
+  
+  .viw-bottom {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-medium;
+    margin-right: 8px;
+  }
+  
+  .icon-match {
+    color: $text-medium;
+    vertical-align: middle;
+  }
 }
 
-.footer-body {
-  font-size: 12px;
-  font-weight: bold;
-  color: black;
+// Right bottom section
+.right-bottom {
+  border: 1px solid $border-color;
+  margin-top: 16px;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  
+  .add {
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .footer {
+    padding: 12px 16px;
+    text-align: center;
+    background: $bg-white;
+    
+    .footer-body {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: $text-medium;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .linkedIn-match {
+        color: $primary-color;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .right-container {
+    margin-top: 2rem;
+  }
+  
+  .right-section {
+    padding: 12px 16px;
+  }
+  
+  .right .right-title {
+    font-size: 0.875rem;
+  }
+  
+  .body-list {
+    .type {
+      font-size: 0.8125rem;
+    }
+    
+    .para {
+      font-size: 0.6875rem;
+    }
+  }
 }
 </style>
