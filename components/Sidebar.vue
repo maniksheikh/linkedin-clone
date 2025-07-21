@@ -75,7 +75,7 @@
 </template>
 
 <style lang="scss">
-// SCSS Variables
+
 $primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 $hover-bg: rgb(221, 218, 218);
 $text-gray: rgb(80, 78, 78);
@@ -88,7 +88,6 @@ $sidebar-width: 24%;
 $white: white;
 $black: black;
 
-// Mixins
 @mixin hover-effect {
   &:hover {
     background-color: $hover-bg;
@@ -105,11 +104,6 @@ $black: black;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-// Global styles
-* {
-  font-family: $primary-font;
 }
 
 // Main container
@@ -225,7 +219,6 @@ $black: black;
       }
     }
   }
-
 
   // Connection section
   .connection {
@@ -368,7 +361,6 @@ $black: black;
   }
 }
 
-// Text styles
 .first {
   color: $text-gray;
   font-size: 0.9rem;
@@ -380,7 +372,6 @@ $black: black;
   font-size: 0.9rem;
 }
 
-// Headings
 h3 {
   font-size: 1.2rem;
 }

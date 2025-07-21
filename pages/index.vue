@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// Variables
+
 $primary-color: #0a66c2;
 $primary-dark: #084d7a;
 $white: #ffffff;
@@ -143,7 +143,6 @@ $box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 
 $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 
-// Mixins
 @mixin button-hover-effect {
   transform: translateY(-1px);
 }
@@ -305,7 +304,6 @@ button {
     }
   }
 
-  // Google Sign-in button
   &.google-signin-btn {
     background-color: $white;
     color: #3c4043;
@@ -398,7 +396,6 @@ footer {
   }
 }
 
-// Responsive Design
 @media screen and (max-width: 480px) {
   body {
     padding: 1rem 0;
@@ -440,7 +437,6 @@ footer {
   }
 }
 
-// Accessibility improvements
 @media (prefers-reduced-motion: reduce) {
   button,
   input,
