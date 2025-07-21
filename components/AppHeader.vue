@@ -68,11 +68,11 @@
           </div>
           <li v-if="!isUserAuth" class="item">
             <button class="btn dropdown" @click.stop="toggle">
-              <img src="../img/IMG_20221031_215233.jpg" alt="" class="profile" />
+              <img src="/Manik.jpg" alt="" class="profile" />
               <div v-if="visible" class="dropdown-menu">
                 <div class="profile-details">
                   <div class="box">
-                    <img src="../img/IMG_20221031_215233.jpg" />
+                    <img src="/Manik.jpg" alt="profile"/>
                     <span class="title">{{ userName }}</span>
                   </div>
                 </div>
@@ -259,7 +259,7 @@ export default {
 </script>
 
 <style lang="scss">
-// SCSS Variables
+
 $primary-blue: #0a66c2;
 $secondary-blue: #317bb8;
 $text-primary: #000000e6;
@@ -426,7 +426,6 @@ a {
     svg {
       color: $primary-blue;
     }
-
     span {
       color: $primary-blue;
     }

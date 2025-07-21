@@ -186,7 +186,7 @@ export default {
 </script>
 
 <style lang="scss">
-// Typography Variables
+
 $font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
@@ -198,7 +198,6 @@ $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-// Color Variables
 $color-primary: #0a66c2;
 $color-gray-100: #f3f2ef;
 $color-gray-300: #ddd;

@@ -1,0 +1,16 @@
+{
+  "typescript.validate.enable": false,
+  "typescript.suggestionActions.enabled": false,
+  "vetur.validation.template": false,
+  "vetur.validation.style": false,
+  "vetur.validation.script": false,
+  "vetur.useWorkspaceDependencies": true,
+  "vetur.experimental.templateInterpolationService": false,
+  "javascript.validate.enable": true,
+  "emmet.includeLanguages": {
+    "vue": "html"
+  },
+  "files.associations": {
+    "*.vue": "vue"
+  }
+} 

@@ -93,7 +93,7 @@
 </template>
 
 <style lang="scss">
-// Variables
+
 $primary-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 $primary-color: #0a66c2;
 $text-dark: #1d1d1d;
@@ -104,7 +104,6 @@ $bg-white: #ffffff;
 $bg-hover: #f3f2ef;
 $border-radius: 8px;
 
-// Reset and base styles
 * {
   font-family: $primary-font;
 }

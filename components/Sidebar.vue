@@ -3,7 +3,7 @@
     <div class="side-container">
       <div class="profile-card">
         <div class="banner">
-          <img src="/Manik-background.jpg" alt="banner" />
+          <img src="/Manik-background.jpg" alt="banner">
         </div>
         <div class="avatar">
           <img src="/Manik.jpg" alt="profile" />
@@ -13,7 +13,7 @@
           <p class="role">Jr. Frontend Engineer | Javascript, Tailwindcss, Vuejs, Nuxt3</p>
           <p class="location">Bogra District, Rajshahi</p>
           <div class="company">
-            <img src="/connekt-logo.png" alt="Connekt Studio Logo" />
+            <img src="/connekt.jpg" alt="Connekt Studio Logo" />
             <span>CONNEKT STUDIO</span>
           </div>
         </div>
