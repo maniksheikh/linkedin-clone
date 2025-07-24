@@ -3,17 +3,17 @@
     <div class="side-container">
       <div class="profile-card">
         <div class="banner">
-          <img src="" alt="banner">
+          <img src="/assets/img/banner-img.jpg" alt="banner">
         </div>
         <div class="avatar">
-          <img src="/Manik.jpg" alt="profile" />
+          <img src="/assets/img/profile-img.jpg" alt="profile" />
         </div>
         <div class="info">
           <h2>Muhammad Manik Sheikh</h2>
           <p class="role">Jr. Frontend Engineer | Javascript, Tailwindcss, Vuejs, Nuxt3</p>
           <p class="location">Bogra District, Rajshahi</p>
           <div class="company">
-            <img src="/connekt.jpg" alt="Connekt Studio Logo" />
+            <img src="/assets/img/studio.jpg" alt="Connekt Studio Logo" />
             <span>CONNEKT STUDIO</span>
           </div>
         </div>

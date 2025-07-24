@@ -2,7 +2,7 @@
   <div class="login-page">
     <div id="login-form">
     <div class="login-container">
-      <h2>Linked<span><img class="linkedin-img" src="../img/linkedin.png" alt="LinkedIn Logo"></span></h2>
+      <h2>Linked<span><img class="linkedin-img" src="/assets/img/linkedin.png" alt="LinkedIn Logo"></span></h2>
       <div class="container">
         <div v-if="error" class="error">
           {{ error }}

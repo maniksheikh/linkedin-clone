@@ -12,7 +12,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Js Image" src="../img/js-img.png" height="200" alt="js-image" id="ember43"
+          <img width="200" title="Js Image" src="/assets/img/js-img.png" height="200" alt="js-image" id="ember43"
             class="ceo-img">
         </div>
         <div class="body-list">
@@ -29,7 +29,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Nasim Uddin" src="../img/nasim.jpg" height="200" alt="Nasim Uddin" id="ember43"
+          <img width="200" title="Nasim Uddin" src="/assets/img/nasim.jpg" height="200" alt="Nasim Uddin" id="ember43"
             class="ceo-img">
         </div>
         <div class="body-list">
@@ -47,7 +47,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Md. Nasir Uddin" src="../img/nasir.jpg" height="200" alt="Md. Nasir Uddin"
+          <img width="200" title="Md. Nasir Uddin" src="/assets/img/nasir.jpg" height="200" alt="Md. Nasir Uddin"
             id="ember305" class="coo-img">
         </div>
         <div class="body-list">

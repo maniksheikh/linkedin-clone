@@ -3,7 +3,7 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img src="../img/post-img.JPG" alt="Visit profile for Md Manik" id="ember480" class="midle-img" />
+          <img src="/assets/img/post-img.JPG" alt="Visit profile for Md Manik" id="ember480" class="midle-img" />
           <input @change="addItems" v-model="text" type="text"
             placeholder="Have a topic that excites you? Post about it" />
         </div>

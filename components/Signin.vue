@@ -9,7 +9,7 @@
                     <div class="header">
                         Log in to LinkedIn
                     </div>
-                    <img src="../img/icons-question-mark-img.png" alt="" class="cross-icon" @click="hideorderform" />
+                    <img src="/assets/img/icons-question-mark-img.png" alt="" class="cross-icon" @click="hideorderform" />
                     <div class="signin-wrap">
                         <form @submit.prevent="loginUser">
                             <input v-model="user.email" type="email" placeholder="Email address or phone number"
