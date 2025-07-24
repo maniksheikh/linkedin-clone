@@ -3,7 +3,7 @@
     <div class="side-container">
       <div class="profile-card">
         <div class="banner">
-          <img src="/Manik-background.jpg" alt="banner">
+          <img src="" alt="banner">
         </div>
         <div class="avatar">
           <img src="/Manik.jpg" alt="profile" />
