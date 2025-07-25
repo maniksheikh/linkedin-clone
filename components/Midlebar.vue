@@ -3,7 +3,7 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img src="/assets/img/post-img.JPG" alt="Visit profile for Md Manik" id="ember480" class="midle-img" />
+          <img src="/img/profile-img.jpg" alt="Visit profile for Md Manik" id="ember480" class="midle-img" @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text"
             placeholder="Have a topic that excites you? Post about it" />
         </div>
@@ -102,7 +102,7 @@
       <div v-for="post in importData" :key="post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="post.avatar" class="pro-img" />
+            <img :src="post.avatar" class="pro-img" @error="handleImageError" />
           </div>
           <br />
           <div class="align">
@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="height-img">
-          <img class="pro-height-img" :src="post.img" />
+          <img class="pro-height-img" :src="post.img" @error="handleImageError" />
         </div>
         <div class="flex-container">
           <div class="post-react">
@@ -180,6 +180,9 @@ export default {
     addItems() {
       this.userData.push({ post: this.text, email: this.email });
       this.text = ''
+    },
+    handleImageError(event) {
+      event.target.src = '/img/default-avatar.svg'; // Fallback image
     }
   }
 }
@@ -367,7 +370,6 @@ $color-red: #cc1016;
 
   &:hover {
     transform: scale(1.05);
-    background: darken($color-orange, 10%);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 }

@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "cross-env NODE_OPTIONS=--openssl-legacy-provider nuxt generate"
   },
   "dependencies": {
     "20": "^3.1.9",
+    "@nuxtjs/axios": "^5.13.6",
     "@tailwindcss/vite": "^4.1.10",
     "core-js": "^3.19.3",
     "firebase": "^11.0.1",
@@ -23,10 +24,13 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^7.0.0-beta.0",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
+    "file-loader": "^6.2.0",
     "postcss": "^8.5.6",
     "sass": "^1.80.6",
     "sass-loader": "10.1.1",
-    "tailwindcss": "^4.1.10"
+    "tailwindcss": "^4.1.10",
+    "url-loader": "^4.1.1"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

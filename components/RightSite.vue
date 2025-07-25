@@ -12,7 +12,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Js Image" src="/assets/img/js-img.png" height="200" alt="js-image" id="ember43"
+          <img width="200" title="Js Image" src="/img/js-img.png" height="200" alt="js-image" id="ember43"
             class="ceo-img">
         </div>
         <div class="body-list">
@@ -29,7 +29,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Nasim Uddin" src="/assets/img/nasim.jpg" height="200" alt="Nasim Uddin" id="ember43"
+          <img width="200" title="Nasim Uddin" src="/img/nasim.jpg" height="200" alt="Nasim Uddin" id="ember43"
             class="ceo-img">
         </div>
         <div class="body-list">
@@ -47,7 +47,7 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Md. Nasir Uddin" src="/assets/img/nasir.jpg" height="200" alt="Md. Nasir Uddin"
+          <img width="200" title="Md. Nasir Uddin" src="/img/nasir.jpg" height="200" alt="Md. Nasir Uddin"
             id="ember305" class="coo-img">
         </div>
         <div class="body-list">
@@ -152,14 +152,8 @@ div {
 // Section content
 .right-section {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 16px 20px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  
-  &:hover {
-    background-color: $bg-hover;
-  }
   
   &:not(:last-child) {
     border-bottom: 1px solid $border-color;
@@ -173,6 +167,15 @@ div {
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+// Right body container
+.right-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
@@ -229,16 +232,6 @@ div {
 .bottom-view {
   padding: 16px 20px;
   border-top: 1px solid $border-color;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  
-  &:hover {
-    background-color: $bg-hover;
-    
-    .viw-bottom {
-      color: $primary-color;
-    }
-  }
   
   .viw-bottom {
     font-size: 0.875rem;

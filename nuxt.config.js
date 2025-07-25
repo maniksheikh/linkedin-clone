@@ -1,10 +1,5 @@
 export default {
   ssr: false,
-  nitro: {
-    output: {
-      publicDir: ".output/public",
-    },
-  },
   target: "static",
   head: {
     title: "linkedIn",
@@ -26,6 +21,10 @@ export default {
 
   buildModules: [],
 
-  modules: [],
-  build: {},
+  modules: ['@nuxtjs/axios'],
+
+  // Public runtime config for static assets
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000'
+  }
 };

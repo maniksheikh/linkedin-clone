@@ -68,7 +68,7 @@
           </div>
           <li v-if="!isUserAuth" class="item">
             <button class="btn dropdown" @click.stop="toggle">
-              <img src="/Manik.jpg" alt="" class="profile" />
+              <img src="/img/profile-img.jpg" alt="" class="profile" />
               <div v-if="visible" class="dropdown-menu">
                 <div class="profile-details">
                   <div class="box">
