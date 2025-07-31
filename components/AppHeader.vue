@@ -198,6 +198,12 @@
             Try Premium for <br /> Free
           </p>
         </div>
+        <!-- Mobile Menu Button -->
+        <div class="mobile-menu-btn" @click="toggleMobileNav">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </div>
       </div>
     </div>
     <mobile-nav v-show="isShowMobileNav"></mobile-nav>
@@ -240,6 +246,9 @@ export default {
     },
     toggle() {
       this.visible = !this.visible;
+    },
+    toggleMobileNav() {
+      this.isShowMobileNav = !this.isShowMobileNav;
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector('.dropdown-menu');
@@ -327,6 +336,7 @@ a {
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
+  padding: 0 $spacing-md;
 }
 
 .content {
@@ -648,9 +658,34 @@ a {
     display: none;
   }
 
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: $spacing-sm;
+    border-radius: $spacing-xs;
+    transition: $transition;
+    color: $text-secondary;
+
+    &:hover {
+      color: $primary-blue;
+      background: $hover-color;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
   .main-container {
     justify-content: space-between;
-    padding: $spacing-md 0;
+    padding: $spacing-md;
+  }
+
+  .navbar-content {
+    padding: 0;
   }
 
   .content {
@@ -667,6 +702,10 @@ a {
 @media screen and (max-width: 480px) {
   .main-container {
     padding: $spacing-sm;
+  }
+
+  .navbar-content {
+    padding: 0;
   }
 
   .profile {

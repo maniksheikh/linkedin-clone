@@ -44,10 +44,23 @@ export default {
 
 .menu-container {
     padding-bottom: 1.25rem;
-    display: none;
+    display: block;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 0;
+    overflow: hidden;
+    z-index: 999;
 
     @media (min-width: 640px) {
-        display: block;
+        display: none;
     }
 }
 
@@ -58,27 +71,53 @@ export default {
     padding: 0.75rem;
     text-align: center;
     font-weight: 600;
+    width: 100%;
+    margin: 0;
+    list-style: none;
+    background: white;
 }
 
 .menu-item {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 1rem;
     font-weight: 600;
     transition: background-color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
 }
 
 .menu-item:hover {
+    background-color: #f8f9fa;
     border-radius: 0.375rem;
+}
+
+.menu-item a {
+    color: #535251;
+    text-decoration: none;
+    display: block;
+    width: 100%;
 }
 
 .try-free-button {
     display: flex;
     justify-content: center;
-    margin: auto;
+    margin: 1rem auto;
     background-color: #ff4f00;
     color: white;
     font-size: 14px;
     border-radius: 9999px;
     padding: 0.625rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    max-width: 200px;
+    width: 100%;
+}
+
+.try-free-button:hover {
+    background-color: #e64500;
 }
 
 .button-link {
@@ -86,6 +125,8 @@ export default {
     align-items: center;
     color: inherit;
     text-decoration: none;
+    width: 100%;
+    justify-content: center;
 }
 
 .icon {
