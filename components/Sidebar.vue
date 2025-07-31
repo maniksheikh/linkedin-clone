@@ -18,7 +18,6 @@
           </div>
         </div>
       </div>
-      <hr />
       <div class="container-body">
         <div class="connection">
           <div class="connection-body">
@@ -146,9 +145,8 @@ $black: black;
   }
 
   .profile-card {
-    width: 280px;
+    width: 100%;
     background: #fff;
-    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     font-family: 'Segoe UI', sans-serif;
