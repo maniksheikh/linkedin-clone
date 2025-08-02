@@ -28,10 +28,10 @@
     "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/connekt%20long.jpg?alt=media&token=6dbb993f-1e79-4f2f-9af7-122ca3c7c4ea"
   },
   {
-    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio.jpg?alt=media&token=ce679ff7-579d-46db-8839-25ec7b7c2d92",
+    "avatar": "/img/hiring-profile.jpeg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio%20long.jpg?alt=media&token=40b60dcc-a5d3-401b-b536-50f5c807ae0c"
+    "img": "/img/hairing.jpeg"
   }
 ]
