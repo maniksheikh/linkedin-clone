@@ -56,6 +56,11 @@
                 <span class="email">{{ item.email }}</span>
               </div>
             </div>
+            <button class="delete-icon" @click="deletePost(item.id)" title="Delete post">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              </svg>
+            </button>
           </div>
         </div>
         <span class="post-item">{{ item.post }}</span>
@@ -99,7 +104,7 @@
     </div>
     <!-- third time  -->
     <div class="post-container">
-      <div v-for="post in importData" :key="post" class="post-body">
+      <div v-for="post in importData" :key="post.id || post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
             <img :src="post.avatar" class="pro-img" @error="handleImageError" />
@@ -112,6 +117,11 @@
             </div>
             <span class="post-dec">{{ post.description }}</span>
           </div>
+          <button class="delete-icon" @click="deleteImportedPost(post)" title="Delete post">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
         </div>
         <div class="height-img">
           <img class="pro-height-img" :src="post.img" @error="handleImageError" />
@@ -178,8 +188,22 @@ export default {
   },
   methods: {
     addItems() {
-      this.userData.push({ post: this.text, email: this.email });
-      this.text = ''
+      if (this.text.trim()) {
+        const newPost = {
+          id: Date.now(), // Generate unique ID
+          name: 'Md Manik Sheak',
+          email: 'mdmanik081498@gmail.com',
+          post: this.text
+        };
+        this.userData.push(newPost);
+        this.text = '';
+      }
+    },
+    deletePost(postId) {
+      this.userData = this.userData.filter(post => post.id !== postId);
+    },
+    deleteImportedPost(post) {
+      this.importData = this.importData.filter(p => p !== post);
     },
     handleImageError(event) {
       event.target.src = '/img/default-avatar.svg'; // Fallback image
@@ -352,6 +376,7 @@ $color-red: #cc1016;
   border-radius: 8px;
   border: 1px solid $color-gray-300;
   background: white;
+  position: relative;
 }
 
 .img-title {
@@ -390,9 +415,28 @@ $color-red: #cc1016;
   background: transparent;
   border: none;
   cursor: pointer;
-  position: relative;
-  top: 5px;
-  right: 10px;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: $color-red;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(204, 16, 22, 0.1);
+    color: $color-red;
+    transform: scale(1.15);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .align {
