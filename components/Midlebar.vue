@@ -3,7 +3,7 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img src="/img/profile-img.jpg" alt="Visit profile for Md Manik" id="ember480" class="midle-img" @error="handleImageError" />
+          <img :src="currentUser?.photoURL || '/img/default-avatar.svg'" :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text"
             placeholder="Have a topic that excites you? Post about it" />
         </div>
@@ -38,78 +38,18 @@
               class="middle-write" width="24" height="24" focusable="false">
               <path d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z"></path>
             </svg>
-            <div class="span">Write articale</div>
+            <div class="span">Write article</div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Post Midddle site  -->
-    <div class="post" v-for="item in userData" :key="item.id">
-      <div class="post-body">
-        <div class="post-section">
-          <div class="img-title">M</div>
-          <br>
-          <div class="items-flex">
-            <div class="align">
-              <div class="header">
-                <span class="post-header">{{ item.name }}</span> <br>
-                <span class="email">{{ item.email }}</span>
-              </div>
-            </div>
-            <button class="delete-icon" @click="deletePost(item.id)" title="Delete post">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <span class="post-item">{{ item.post }}</span>
-        <div class="flex-container">
-          <div class="post-react">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="wish-match" width="24" height="24" focusable="false">
-              <path
-                d="M19.46 11l-3.91-3.91a7 7 0 01-1.69-2.74l-.49-1.47A2.76 2.76 0 0010.76 1 2.75 2.75 0 008 3.74v1.12a9.19 9.19 0 00.46 2.85L8.89 9H4.12A2.12 2.12 0 002 11.12a2.16 2.16 0 00.92 1.76A2.11 2.11 0 002 14.62a2.14 2.14 0 001.28 2 2 2 0 00-.28 1 2.12 2.12 0 002 2.12v.14A2.12 2.12 0 007.12 22h7.49a8.08 8.08 0 003.58-.84l.31-.16H21V11zM19 19h-1l-.73.37a6.14 6.14 0 01-2.69.63H7.72a1 1 0 01-1-.72l-.25-.87-.85-.41A1 1 0 015 17l.17-1-.76-.74A1 1 0 014.27 14l.66-1.09-.73-1.1a.49.49 0 01.08-.7.48.48 0 01.34-.11h7.05l-1.31-3.92A7 7 0 0110 4.86V3.75a.77.77 0 01.75-.75.75.75 0 01.71.51L12 5a9 9 0 002.13 3.5l4.5 4.5H19z">
-              </path>
-            </svg>
-            <div class="span">Like</div>
-          </div>
-          <div class="post-react">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="wish-match" width="24" height="24" focusable="false">
-              <path
-                d="M7 9h10v1H7zm0 4h7v-1H7zm16-2a6.78 6.78 0 01-2.84 5.61L12 22v-4H8A7 7 0 018 4h8a7 7 0 017 7zm-2 0a5 5 0 00-5-5H8a5 5 0 000 10h6v2.28L19 15a4.79 4.79 0 002-4z">
-              </path>
-            </svg>
-            <div class="span">Comment</div>
-          </div>
-          <div class="post-react">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="wish-match" width="24" height="24" focusable="false">
-              <path
-                d="M23 12l-4.61 7H16l4-6H8a3.92 3.92 0 00-4 3.84V17a4 4 0 00.19 1.24L5.12 21H3l-.73-2.22A6.4 6.4 0 012 16.94 6 6 0 018 11h12l-4-6h2.39z">
-              </path>
-            </svg>
-            <div class="span">Share</div>
-          </div>
-          <div class="post-react">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="wish-match" width="24" height="24" focusable="false">
-              <path d="M21 3L0 10l7.66 4.26L16 8l-6.26 8.34L14 24l7-21z"></path>
-            </svg>
-            <div class="span">Send</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- third time  -->
+    <!-- Two time  -->
     <div class="post-container">
       <div v-for="post in importData" :key="post.id || post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="post.avatar" class="pro-img" @error="handleImageError" />
+            <img :src="currentUser?.photoURL || '/img/default-avatar.svg'" :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
           </div>
-          <br />
           <div class="align">
             <div class="header">
               <span class="post-header">{{ post.name }}</span> <br />
@@ -123,7 +63,7 @@
             </svg>
           </button>
         </div>
-        <div class="height-img">
+        <div class="height-img" v-if="post.img">
           <img class="pro-height-img" :src="post.img" @error="handleImageError" />
         </div>
         <div class="flex-container">
@@ -169,44 +109,64 @@
 
 <script>
 import postData from '~/store/post-data.json'
+import { useAuth } from '~/composables/useAuth'
+import { auth } from '~/plugins/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+import { ref, onMounted } from 'vue'
 
 export default {
+  setup() {
+    const currentUser = ref(null)
+    
+    onMounted(() => {
+      onAuthStateChanged(auth, (user) => {
+        currentUser.value = user
+      })
+    })
+
+    return { currentUser }
+  },
   data() {
     return {
       importData: postData,
       text: '',
-      email: '',
-      userData: [
-        {
-          id: 1,
-          name: 'Md Manik Sheak',
-          email: 'mdmanik081498@gmail.com',
-          post: " I Am a FrontEnd Developer"
-        }
-      ]
+      email: ''
     }
   },
   methods: {
     addItems() {
       if (this.text.trim()) {
         const newPost = {
-          id: Date.now(), // Generate unique ID
-          name: 'Md Manik Sheak',
-          email: 'mdmanik081498@gmail.com',
-          post: this.text
+          id: Date.now(),
+          name: this.currentUser ? this.currentUser.displayName : 'Anonymous',
+          title: this.currentUser ? this.currentUser.email : 'anonymous@user.com',
+          description: this.text,
+          avatar: this.currentUser ? this.currentUser.photoURL : '/img/default-avatar.svg',
+          img: null
         };
-        this.userData.push(newPost);
+        this.importData.unshift(newPost);
         this.text = '';
       }
-    },
-    deletePost(postId) {
-      this.userData = this.userData.filter(post => post.id !== postId);
     },
     deleteImportedPost(post) {
       this.importData = this.importData.filter(p => p !== post);
     },
     handleImageError(event) {
-      event.target.src = '/img/default-avatar.svg'; // Fallback image
+      // First try to load from static directory if it was a remote URL
+      const currentSrc = event.target.src;
+      if (currentSrc.startsWith('http')) {
+        const fileName = currentSrc.split('/').pop().split('?')[0];
+        event.target.src = `/img/${fileName}`;
+        // Add another error handler for the local path attempt
+        event.target.onerror = () => {
+          event.target.src = '/img/default-avatar.svg';
+          event.target.onerror = null; // Prevent infinite loop
+        };
+      } else {
+        // If it was already a local path, go straight to default
+        event.target.src = '/img/default-avatar.svg';
+        event.target.onerror = null; // Prevent infinite loop
+      }
     }
   }
 }
@@ -374,9 +334,9 @@ $color-red: #cc1016;
   margin-top: 12px;
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid $color-gray-300;
   background: white;
   position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .img-title {
@@ -403,6 +363,7 @@ $color-red: #cc1016;
   display: flex;
   align-items: flex-start;
   margin-bottom: 12px;
+  position: relative;
 }
 
 .items-flex {
@@ -412,6 +373,9 @@ $color-red: #cc1016;
 }
 
 .delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -421,14 +385,10 @@ $color-red: #cc1016;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  color: $color-red;
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 10;
+  color: $color-gray-500;
 
   &:hover {
-    background: rgba(204, 16, 22, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     color: $color-red;
     transform: scale(1.15);
   }
@@ -441,21 +401,7 @@ $color-red: #cc1016;
 
 .align {
   flex: 1;
-  margin-left: 12px;
-
-  .header {
-    cursor: pointer;
-    line-height: 1.4;
-    margin-bottom: 8px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      .post-header {
-        color: $color-primary;
-        text-decoration: underline;
-      }
-    }
-  }
+  padding-right: 40px;
 }
 
 .post-header {
@@ -564,6 +510,7 @@ $color-red: #cc1016;
 
 .pro-img-title {
   flex-shrink: 0;
+  margin-right: 12px;
 }
 
 .pro-height-img {

@@ -8,6 +8,7 @@ import {
   updateProfile,
   signOut
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCLE60xdd5n3Y8Ogh6Qfj0sT1WFhyf6wFQ",
@@ -22,6 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
 export { 
   auth, 
@@ -30,5 +32,6 @@ export {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-  signOut
+  signOut,
+  db
 };

@@ -332,7 +332,7 @@ a {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1220px;
   padding: 0 $spacing-md;
 }
 
@@ -637,6 +637,10 @@ a {
 .email {
   font-size: 12px;
   color: $text-secondary;
+}
+
+.mobile-menu-btn {
+  display: none; /* Hidden by default on large screens */
 }
 
 @media screen and (max-width: 1024px) {
