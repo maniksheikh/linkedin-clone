@@ -4,28 +4,35 @@
     "name": "Md Manik Sheikh",
     "title": "Frontend Web Developer",
     "description": "I am happy to share that I've been learning my programming skills here and loving every minute of it. I'm excited to take this passion to the next level and transition from learning to work. Ready to tackle new challenges and contribute to innovative projects with my newfound skills.",
-    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/post-img.JPG?alt=media&token=d7a57951-431b-4b62-85f0-b4ecc1182e54"
+    "img": "/img/post-img.JPG"
   },
   {
-    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio.jpg?alt=media&token=4a85668e-00e6-4961-88df-ca8217af50ca",
+    "avatar": "/img/studio.jpg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/studio%20long.jpg?alt=media&token=b41678c0-e86d-43fc-9a70-0ca5a77460a0"
+    "img": "/img/studio long.jpg"
   },
   {
     "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/profile-img.jpg?alt=media&token=c8f1ee40-4630-4887-a156-6e69b37b0240",
     "name": "Manik Sheikh",
     "title": "Frontend Web Developer",
-    "description": "What a moment, i am Really happy in this place.",
-    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/fulfil%20dream.jpg?alt=media&token=5e73823f-15a0-449c-a640-898e14d025b5"
+    "description": "What a moment, i am Really happy in this place. Mindblowing experience",
+    "img": "/img/fulfil dream.jpg"
   },
   {
-    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/connekt.jpg?alt=media&token=f9caa211-6d68-4dde-998b-c23863964e21",
+    "avatar": "/img/connekt.jpg",
     "name": "CONNEKT STUDIO",
     "title": "SOFTWEAR DEVELOPMENT",
     "description": "",
-    "img": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/connekt%20long.jpg?alt=media&token=6dbb993f-1e79-4f2f-9af7-122ca3c7c4ea"
+    "img": "/img/connekt long.jpg"
+  },
+  {
+    "avatar": "https://firebasestorage.googleapis.com/v0/b/linkedin-clone-dd96f.appspot.com/o/profile-img.jpg?alt=media&token=c8f1ee40-4630-4887-a156-6e69b37b0240",
+    "name": "Manik Sheikh",
+    "title": "Frontend Web Developer",
+    "description": "Village place nature is looking good , i am very excited to this place",
+    "img": "/img/sad-news sirajgonj.jpg"
   },
   {
     "avatar": "/img/hiring-profile.jpeg",
