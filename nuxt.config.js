@@ -15,7 +15,10 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  plugins: [`~/plugins/firebase.js`],
+  plugins: [
+    '~/plugins/firebase.js',
+    { src: '~/plugins/auth.js', mode: 'client' }
+  ],
 
   components: true,
 

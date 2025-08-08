@@ -66,14 +66,17 @@
             </svg>
             <span>Notifications</span>
           </div>
-          <li v-if="!isUserAuth" class="item">
+          <li v-if="isUserAuth" class="item">
             <button class="btn dropdown" @click.stop="toggle">
-              <img src="/img/profile-img.jpg" alt="" class="profile" />
+              <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="" class="profile" />
               <div v-if="visible" class="dropdown-menu">
                 <div class="profile-details">
                   <div class="box">
-                    <img src="/Manik.jpg" alt="profile"/>
-                    <span class="title">{{ userName }}</span>
+                    <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="profile"/>
+                    <div class="user-info">
+                      <span class="title">{{ user ? user.displayName : 'Guest User' }}</span>
+                      <span class="email">{{ user ? user.email : '' }}</span>
+                    </div>
                   </div>
                 </div>
                 <div class="profile-item">
@@ -225,20 +228,14 @@ export default {
   },
   computed: {
     ...mapState(['user']),
-    userName() {
-      return this.user ? this.user.displayName : '';
-    },
-    userEmail() {
-      return this.user ? this.user.displayEmail : '';
-    },
     isUserAuth() {
-      return this.$store.getters.isUserAuth;
-    },
+      return this.$store.getters.isAuthenticated;
+    }
   },
   methods: {
     async logout() {
       try {
-        await this.$store.dispatch('loggingOut');
+        await this.$store.dispatch('logout');
         this.$router.push('/');
       } catch (error) {
         console.error(error);
@@ -256,14 +253,14 @@ export default {
       if (dropdown && !dropdown.contains(event.target) && !profileButton.contains(event.target)) {
         this.visible = false;
       }
-    },
+    }
   },
   mounted() {
     document.addEventListener('click', this.handleClickOutside);
   },
   beforeDestroy() {
     document.removeEventListener('click', this.handleClickOutside);
-  },
+  }
 };
 </script>
 
@@ -628,6 +625,18 @@ a {
     font-size: $font-size-xs;
     color: $text-muted;
   }
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.email {
+  font-size: 12px;
+  color: $text-secondary;
 }
 
 @media screen and (max-width: 1024px) {

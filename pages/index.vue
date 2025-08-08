@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { auth, GoogleAuthProvider, signInWithPopup } from '@/firebase';
+import { auth, signInWithPopup, provider } from '@/plugins/firebase';
 
 import Signin from '../components/Signin.vue';
 import SignUp from '../components/SignUp.vue';
@@ -95,7 +95,6 @@ export default {
       }
     },
     async signInWithGoogle() {
-      const provider = new GoogleAuthProvider();
       this.error = '';
 
       try {

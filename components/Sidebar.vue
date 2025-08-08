@@ -9,8 +9,8 @@
           <img src="/img/profile-img.jpg" alt="profile" @error="handleImageError" />
         </div>
         <div class="info">
-          <h2>Muhammad Manik Sheikh</h2>
-          <p class="role">Jr. Frontend Engineer | Javascript, Tailwindcss, Vuejs, Nuxt3</p>
+          <h2>{{ user ? user.displayName : 'Guest User' }}</h2>
+          <p class="role">{{ user ? user.email : 'Please sign in' }}</p>
           <p class="location">Bogra District, Rajshahi</p>
           <div class="company">
             <img src="/img/studio.jpg" alt="Connekt Studio Logo" @error="handleImageError" />
@@ -74,7 +74,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
+  computed: {
+    ...mapState(['user'])
+  },
   methods: {
     handleImageError(event) {
       event.target.src = '/img/placeholder.svg';

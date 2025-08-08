@@ -122,12 +122,11 @@ export default {
                 await this.$store.dispatch('signup', {
                     email: this.user.email,
                     password: this.user.password,
-                    userName: this.user.username,
+                    userName: this.user.username
                 })
                 this.$router.push('/feed')
             } catch (error) {
-                alert(error)
-                this.error = 'Something went wrong to create account'
+                this.error = error.message || 'Something went wrong while creating your account'
             }
         },
     },
