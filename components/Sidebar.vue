@@ -26,11 +26,11 @@
               <span class="view">39</span>
             </div>
             <span class="first-bold">Grow your Network</span>
-          </div>
           <div class="profile-view">
             <span class="second">Who's viewed your profile</span>
             <span class="views">4</span>
           </div>
+        </div>
         </div>
       </div>
       <div class="premium">
@@ -157,12 +157,11 @@ $black: black;
           cursor: pointer;
 
           &:hover {
-
             .first,
             .view,
             .first-bold {
-              text-decoration: underline;
               color: #0a66c2;
+              text-decoration: underline;
             }
           }
 
@@ -173,85 +172,177 @@ $black: black;
             .first {
               color: #0a66c2;
               font-size: 0.9rem;
+              transition: all 0.2s ease;
             }
 
             .view {
               color: #0a66c2;
               font-weight: 600;
+              transition: all 0.2s ease;
             }
           }
 
           .first-bold {
             display: block;
             font-weight: 600;
+            transition: all 0.2s ease;
           }
         }
 
         .profile-view {
           @include flex-between;
-          padding: 8px 12px;
+          padding: 5px;
           cursor: pointer;
 
           &:hover {
-
             .second,
             .views {
-              text-decoration: underline;
               color: #0a66c2;
+              text-decoration: underline;
             }
           }
 
           .second {
             color: $text-gray;
             font-size: 0.9rem;
+            transition: all 0.2s ease;
           }
 
           .views {
             color: #0a66c2;
             font-weight: 600;
+            transition: all 0.2s ease;
           }
         }
       }
 
       .premium {
-        padding: 8px 12px;
+        padding: 12px;
         border-radius: $border-radius;
         background: $white;
         margin-bottom: 8px;
         border: 1px solid $border-color;
         cursor: pointer;
 
+        &:hover {
+          .premiun-middle {
+            color: #0a66c2;
+            text-decoration: underline;
+          }
+        }
+
+        .flex {
+          display: flex;
+          margin-top: 10px;
+          padding: 0px 7px;
+        }
+
         .premiun-middle {
           font-size: 0.9rem;
           color: $black;
           font-weight: bold;
           padding-left: 10px;
-
-          &:hover {
-            text-decoration: underline;
-          }
+          transition: all 0.2s ease;
         }
       }
 
       .items {
         display: flex;
-        text-align: center;
         align-items: center;
-        padding: 12px;
-        border-radius: $border-radius;
         background: $white;
+        padding: 8px 12px;
+        border-radius: $border-radius;
         border: 1px solid $border-color;
+        margin-bottom: 8px;
         cursor: pointer;
 
         &:hover {
-          text-decoration: underline;
+          .last {
+            color: #0a66c2;
+            text-decoration: underline;
+          }
+          svg {
+            color: #0a66c2;
+          }
         }
 
         .last {
-          font-size: 0.8rem;
-          color: $black;
+          font-size: 0.9rem;
+          color: $text-gray;
           margin-left: 10px;
+          transition: all 0.2s ease;
+        }
+      }
+
+      .bottom {
+        background: $white;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        width: calc(100% - 2px);
+
+        .bottom-body {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+
+          .bottom-list {
+            color: $text-gray;
+            font-size: 0.9rem;
+            padding: 5px 7px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+
+            &:hover {
+              color: #0a66c2;
+              text-decoration: underline;
+            }
+          }
+
+          .events {
+            @include flex-between;
+            padding: 5px 7px;
+            width: 100%;
+
+            .plus {
+              cursor: pointer;
+              color: $text-gray;
+              transition: all 0.2s ease;
+
+              &:hover {
+                color: #0a66c2;
+              }
+            }
+          }
+        }
+
+        hr {
+          margin: 8px 0;
+          border: none;
+          border-top: 1px solid $border-color;
+          width: 100%;
+        }
+
+        .bottom-h {
+          display: block;
+          color: $text-gray;
+          font-size: 0.9rem;
           padding: 5px 7px;
+          cursor: pointer;
+          text-align: center;
+          width: 100%;
+          transition: all 0.2s ease;
+
+          &:hover {
+            color: #0a66c2;
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -259,15 +350,20 @@ $black: black;
     .profile-card {
       width: 100%;
       background: #fff;
+      border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
       position: relative;
       text-align: center;
+      border: 1px solid $border-color;
 
       .banner {
         width: 100%;
         height: 100px;
+        overflow: hidden;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
 
         img {
           width: 100%;
@@ -279,7 +375,7 @@ $black: black;
       .avatar {
         position: absolute;
         top: 60px;
-        left: 20%;
+        left: 50%;
         transform: translateX(-50%);
         width: 80px;
         height: 80px;
@@ -287,6 +383,7 @@ $black: black;
         border: 4px solid #fff;
         overflow: hidden;
         background: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
         img {
           width: 100%;
@@ -296,12 +393,13 @@ $black: black;
       }
 
       .info {
-        margin-top: 40px;
+        margin-top: 45px;
         padding: 0 15px 20px;
 
         h2 {
           font-size: 16px;
           font-weight: 600;
+          margin-bottom: 4px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -328,6 +426,7 @@ $black: black;
           img {
             width: 16px;
             height: 16px;
+            border-radius: 4px;
           }
 
           span {
@@ -448,6 +547,7 @@ $black: black;
           display: block;
           width: 100%;
           text-align: left;
+          transition: all 0.2s ease;
 
           &:hover {
             color: #0a66c2;
@@ -463,6 +563,7 @@ $black: black;
           .plus {
             cursor: pointer;
             color: $text-gray;
+            transition: all 0.2s ease;
 
             &:hover {
               color: #0a66c2;
@@ -486,6 +587,7 @@ $black: black;
         cursor: pointer;
         text-align: center;
         width: 100%;
+        transition: all 0.2s ease;
 
         &:hover {
           color: #0a66c2;
