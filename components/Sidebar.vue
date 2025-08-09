@@ -19,19 +19,20 @@
         </div>
       </div>
       <div class="container-body">
-        <div class="connection">
-          <div class="connection-body">
-            <span class="first">Connections</span>
-            <span class="view">39</span>
+        <div class="stats-box">
+          <div class="connection">
+            <div class="connection-body">
+              <span class="first">Connections</span>
+              <span class="view">39</span>
+            </div>
+            <span class="first-bold">Grow your Network</span>
           </div>
-          <span class="first-bold">Grow your Network</span>
-        </div>
-        <div class="profile-view">
-          <span class="second">Who`s viewed your profile</span>
-          <span class="views">4</span>
+          <div class="profile-view">
+            <span class="second">Who's viewed your profile</span>
+            <span class="views">4</span>
+          </div>
         </div>
       </div>
-      <hr />
       <div class="premium">
         <span class="second">Access exclusive tools & insights</span>
         <div class="flex">
@@ -45,7 +46,6 @@
           <span class="premiun-middle">Try Premium for Free</span>
         </div>
       </div>
-      <hr />
       <div class="items">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
           width="16" height="16" focusable="false">
@@ -53,22 +53,21 @@
         </svg>
         <span class="last">My Items</span>
       </div>
-    </div>
-    <br>
-    <div class="bottom">
-      <div class="bottom-body">
-        <span class="bottom-list">Groups</span>
-        <div class="events">
-          <span class="bottom-list">Events</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
-            class="plus" width="20" height="20" focusable="false">
-            <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
-          </svg>
+      <div class="bottom">
+        <div class="bottom-body">
+          <span class="bottom-list">Groups</span>
+          <div class="events">
+            <span class="bottom-list">Events</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
+              class="plus" width="20" height="20" focusable="false">
+              <path d="M14 9H9v5H7V9H2V7h5V2h2v5h5z"></path>
+            </svg>
+          </div>
+          <span class="bottom-list">Followed Hashtags</span>
         </div>
-        <span class="bottom-list">Followed Hashtags</span>
+        <hr />
+        <span class="bottom-h">Discover more</span>
       </div>
-      <hr />
-      <span class="bottom-h">Discover more</span>
     </div>
   </div>
 </template>
@@ -89,9 +88,7 @@ export default {
 </script>
 
 <style lang="scss">
-
 $primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-$hover-bg: rgb(221, 218, 218);
 $text-gray: rgb(80, 78, 78);
 $text-dark-gray: rgb(58, 56, 56);
 $border-color: rgb(211, 209, 209);
@@ -101,12 +98,6 @@ $border-radius: 5px;
 $sidebar-width: 24%;
 $white: white;
 $black: black;
-
-@mixin hover-effect {
-  &:hover {
-    background-color: $hover-bg;
-  }
-}
 
 @mixin flex-center {
   display: flex;
@@ -124,19 +115,20 @@ $black: black;
 .container {
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
   // Side container
   .side-container {
     cursor: pointer;
     width: $sidebar-width;
     height: 100%;
-    background: $white !important;
     border-radius: $border-radius;
     margin-top: 5.5rem;
     position: relative;
     align-items: center;
-    border: 1px $border-color solid;
-    background: $background-light;
+    overflow: hidden;
 
     .sidebar-img {
       width: 100%;
@@ -147,249 +139,379 @@ $black: black;
       border: none;
       outline: none;
     }
-  }
 
-  .profile-card {
-    width: 100%;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
-    position: relative;
-    text-align: center;
+    .container-body {
+      margin-top: 8px;
+      padding-top: 7px;
 
-    .banner {
-      width: 100%;
-      height: 100px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .avatar {
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 4px solid #fff;
-      overflow: hidden;
-      background: #fff;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .info {
-      margin-top: 50px;
-      padding: 0 15px 20px;
-
-      h2 {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        white-space: nowrap;
+      .stats-box {
+        background: $white;
+        border: 1px solid $border-color;
+        border-radius: 10px;
         overflow: hidden;
-        text-overflow: ellipsis;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        margin-bottom: 8px;
+
+        .connection {
+          padding: 8px 12px;
+          cursor: pointer;
+
+          &:hover {
+
+            .first,
+            .view,
+            .first-bold {
+              text-decoration: underline;
+              color: #0a66c2;
+            }
+          }
+
+          .connection-body {
+            @include flex-between;
+            margin-bottom: 4px;
+
+            .first {
+              color: #0a66c2;
+              font-size: 0.9rem;
+            }
+
+            .view {
+              color: #0a66c2;
+              font-weight: 600;
+            }
+          }
+
+          .first-bold {
+            display: block;
+            font-weight: 600;
+          }
+        }
+
+        .profile-view {
+          @include flex-between;
+          padding: 8px 12px;
+          cursor: pointer;
+
+          &:hover {
+
+            .second,
+            .views {
+              text-decoration: underline;
+              color: #0a66c2;
+            }
+          }
+
+          .second {
+            color: $text-gray;
+            font-size: 0.9rem;
+          }
+
+          .views {
+            color: #0a66c2;
+            font-weight: 600;
+          }
+        }
       }
 
-      .role {
-        font-size: 13px;
-        color: #333;
-        margin-bottom: 4px;
+      .premium {
+        padding: 8px 12px;
+        border-radius: $border-radius;
+        background: $white;
+        margin-bottom: 8px;
+        border: 1px solid $border-color;
+        cursor: pointer;
+
+        .premiun-middle {
+          font-size: 0.9rem;
+          color: $black;
+          font-weight: bold;
+          padding-left: 10px;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
 
-      .location {
-        font-size: 12px;
-        color: #777;
-        margin-bottom: 10px;
-      }
-
-      .company {
+      .items {
         display: flex;
+        text-align: center;
         align-items: center;
-        justify-content: center;
-        gap: 5px;
+        padding: 12px;
+        border-radius: $border-radius;
+        background: $white;
+        border: 1px solid $border-color;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        .last {
+          font-size: 0.8rem;
+          color: $black;
+          margin-left: 10px;
+          padding: 5px 7px;
+        }
+      }
+    }
+
+    .profile-card {
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+      text-align: center;
+
+      .banner {
+        width: 100%;
+        height: 100px;
 
         img {
-          width: 16px;
-          height: 16px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .avatar {
+        position: absolute;
+        top: 60px;
+        left: 20%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        overflow: hidden;
+        background: #fff;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .info {
+        margin-top: 40px;
+        padding: 0 15px 20px;
+
+        h2 {
+          font-size: 16px;
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        span {
+        .role {
+          font-size: 13px;
+          color: #333;
+          margin-bottom: 4px;
+        }
+
+        .location {
           font-size: 12px;
-          font-weight: 600;
-          color: #000;
+          color: #777;
+          margin-bottom: 10px;
+        }
+
+        .company {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+
+          img {
+            width: 16px;
+            height: 16px;
+          }
+
+          span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #000;
+          }
         }
       }
     }
-  }
 
-  // Connection section
-  .connection {
-    .connection-body {
+    // Connection section
+    .connection {
+      .connection-body {
+        @include flex-between;
+        text-align: center;
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+
+      .view {
+        color: $blue-color;
+      }
+
+      .first-bold {
+        font-size: 0.9rem;
+        color: $text-dark-gray;
+        font-weight: bold;
+        margin-bottom: 5px;
+        padding: 5px;
+      }
+    }
+
+    // Profile view section
+    .profile-view {
       @include flex-between;
       text-align: center;
-      padding: 5px;
-      margin-bottom: 5px;
-      @include hover-effect;
+      padding-right: 12px;
     }
 
-    .view {
-      color: $blue-color;
-    }
-
-    .first-bold {
-      font-size: 0.9rem;
-      color: $text-dark-gray;
-      font-weight: bold;
-      margin-bottom: 5px;
-      padding: 5px;
-    }
-  }
-
-  // Profile view section
-  .profile-view {
-    @include flex-between;
-    text-align: center;
-    padding-right: 12px;
-
-    &:hover {
-      background-color: $hover-bg;
-      height: 100%;
-    }
-
-    .views {
-      color: $blue-color;
-    }
-  }
-
-  // Premium section
-  .premium {
-    @include hover-effect;
-
-    &:hover {
-      height: 100%;
-    }
-
-    .flex {
-      display: flex;
-      margin-top: 10px;
-      padding: 0px 7px;
-    }
-
-    .premiun-middle {
-      font-size: 0.9rem;
-      color: $black;
-      font-weight: bold;
-      text-decoration: underline;
-      padding-left: 10px;
-    }
-  }
-
-  // Items section
-  .items {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-
-    &:hover {
-      background-color: $hover-bg;
-      height: 100%;
-    }
-
-    .last {
-      font-size: 0.8rem;
-      color: $black;
-      margin-left: 10px;
-      padding: 5px 7px;
-    }
-  }
-
-  // Bottom section
-  .bottom {
-    width: $sidebar-width;
-    height: 100%;
-    background: $white !important;
-    border: 1px $border-color solid;
-    border-radius: $border-radius;
-    padding-top: 5px;
-    line-height: 1;
-
-    .bottom-body {
-      padding-left: 10px;
-      color: $blue-color;
-    }
-
-    .bottom-list {
-      padding: 1rem 5px;
-      font-size: 13px;
-      color: $blue-color;
+    // Premium section
+    .premium {
+      padding: 12px;
+      border-radius: $border-radius;
+      background: $white;
+      margin-bottom: 8px;
+      border: 1px solid $border-color;
       cursor: pointer;
 
-      &:hover {
-        text-decoration: underline;
+      .flex {
+        display: flex;
+        margin-top: 10px;
+        padding: 0px 7px;
+      }
+
+      .premiun-middle {
+        font-size: 0.9rem;
+        color: $black;
+        font-weight: bold;
+        padding-left: 10px;
       }
     }
 
-    .events {
-      @include flex-between;
-      padding-right: 10px;
-      font-weight: bold;
+    // Items section
+    .items {
+      display: flex;
+      align-items: center;
+      background: $white;
+      padding: 8px 12px;
+      border-radius: $border-radius;
+      border: 1px solid $border-color;
+      margin-bottom: 8px;
+      cursor: pointer;
 
-      .plus {
-        &:hover {
-          cursor: pointer;
-          border-radius: 100%;
-          background-color: $hover-bg;
-          height: 100%;
+      svg {
+        color: $text-gray;
+      }
+
+      .last {
+        font-size: 0.9rem;
+        color: $text-gray;
+        margin-left: 10px;
+      }
+
+      &:hover {
+        .last {
+          color: #0a66c2;
+          text-decoration: underline;
+        }
+
+        svg {
+          color: #0a66c2;
         }
       }
     }
 
-    .bottom-h {
-      @include flex-center;
-      color: rgb(134, 128, 128);
-      font-size: 1.2rem;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
+    // Bottom section
+    .bottom {
+      background: $white;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      padding: 8px 12px;
       margin-bottom: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      width: calc(100% - 2px); // Adjusted to account for borders
 
-      &:hover {
-        background-color: $hover-bg;
-        border-radius: $border-radius;
+      .bottom-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        .bottom-list {
+          color: $text-gray;
+          font-size: 0.9rem;
+          padding: 5px 7px;
+          cursor: pointer;
+          display: block;
+          width: 100%;
+          text-align: left;
+
+          &:hover {
+            color: #0a66c2;
+            text-decoration: underline;
+          }
+        }
+
+        .events {
+          @include flex-between;
+          padding: 5px 7px;
+          width: 100%;
+
+          .plus {
+            cursor: pointer;
+            color: $text-gray;
+
+            &:hover {
+              color: #0a66c2;
+            }
+          }
+        }
+      }
+
+      hr {
+        margin: 8px 0;
+        border: none;
+        border-top: 1px solid $border-color;
+        width: 100%;
+      }
+
+      .bottom-h {
+        display: block;
+        color: $text-gray;
+        font-size: 0.9rem;
+        padding: 5px 7px;
+        cursor: pointer;
+        text-align: center;
+        width: 100%;
+
+        &:hover {
+          color: #0a66c2;
+          text-decoration: underline;
+        }
       }
     }
   }
-}
 
-.first {
-  color: $text-gray;
-  font-size: 0.9rem;
-}
+  .first {
+    color: $text-gray;
+    font-size: 0.9rem;
+  }
 
-.second {
-  color: $text-gray;
-  padding: 5px;
-  font-size: 0.9rem;
-}
+  .second {
+    color: $text-gray;
+    padding: 5px;
+    font-size: 0.9rem;
+  }
 
-h3 {
-  font-size: 1.2rem;
-}
+  h3 {
+    font-size: 1.2rem;
+  }
 
-p {
-  font-weight: bold;
+  p {
+    font-weight: bold;
+  }
 }
 </style>
