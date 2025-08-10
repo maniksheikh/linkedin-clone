@@ -23,14 +23,14 @@
         </div>
         <!-- Nabvber -->
         <div class="nav">
-          <div class="navber-contents">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'home' }" @click="activeNavItem = 'home'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path d="M23 9v2h-2v7a3 3 0 01-3 3h-4v-6h-4v6H6a3 3 0 01-3-3v-7H1V9l11-7 5 3.18V2h3v5.09z"></path>
             </svg>
             <span>Home</span>
           </div>
-          <div class="navber-contents">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'network' }" @click="activeNavItem = 'network'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -39,7 +39,7 @@
             </svg>
             <span>My Network</span>
           </div>
-          <div class="navber-contents">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'jobs' }" @click="activeNavItem = 'jobs'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -48,7 +48,7 @@
             </svg>
             <span>Jobs</span>
           </div>
-          <div class="navber-contents">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'messaging' }" @click="activeNavItem = 'messaging'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -57,7 +57,7 @@
             </svg>
             <span>Messaging</span>
           </div>
-          <div class="navber-contents">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'notifications' }" @click="activeNavItem = 'notifications'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -223,7 +223,8 @@ export default {
     return {
       visible: false,
       isShowMobileNav: false,
-      MobileNav
+      MobileNav,
+      activeNavItem: 'home' // Add this line to track active nav item
     };
   },
   computed: {
@@ -341,7 +342,6 @@ a {
   align-items: center;
   gap: $spacing-sm;
   flex: 1;
-  max-width: 450px;
 }
 
 #main-logo {
@@ -415,6 +415,29 @@ a {
   border-radius: $spacing-xs;
   transition: $transition;
   min-width: 70px;
+  position: relative; /* Add this line */
+
+  &.active {
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #000000;
+      transition: $transition;
+    }
+
+    svg {
+      color: $text-primary;
+    }
+
+    span {
+      color: $text-primary;
+      font-weight: 500;
+    }
+  }
 
   svg {
     color: $text-secondary;
@@ -446,7 +469,7 @@ a {
 
 .item {
   position: relative;
-  margin-left: $spacing-sm;
+  margin-left: 4px;  /* Reduced from 8px */
 }
 
 .btn {
@@ -461,7 +484,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: $spacing-sm;
+    padding: 4px;  /* Reduced from 8px */
   }
 
   &:focus {
