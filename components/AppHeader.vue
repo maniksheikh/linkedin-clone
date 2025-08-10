@@ -349,8 +349,8 @@ a {
   color: $primary-blue;
   transition: $transition;
   flex-shrink: 0;
-  height: 37px;
-  width: 37px;
+  height: 42px;
+  width: 42px;
 
   &:hover {
     color: $secondary-blue;
@@ -360,11 +360,11 @@ a {
 .search-bar {
   display: flex;
   align-items: center;
-  border: 2px solid rgb(241, 234, 234);
+  border: 1px solid rgb(114, 108, 108);
   border-radius: $spacing-xl;
-  height: 36px;
+  height: 38px;
   width: 100%;
-  max-width: 260px;
+  max-width: 270px;
   padding: 0 $spacing-xs 0 $spacing-sm;
   transition: $transition;
 

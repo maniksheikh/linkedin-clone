@@ -16,8 +16,8 @@
             class="ceo-img">
         </div>
         <div class="body-list">
-          <span class="type">JavaScript</span> <br>
-          <span class="para">Company. E-Larnign</span> <br>
+          <span class="type">JavaScript</span>
+          <span class="para">Company. E-Larnign</span>
           <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
@@ -33,9 +33,8 @@
             class="ceo-img">
         </div>
         <div class="body-list">
-          <span class="type">Nasim Uddin</span> <br>
-          <span class="para">CEO @ SketchToImage, Vocalo.ai & CONNEKT STUDIO Raising Pre-Seed Founder Institute
-            2022</span> <br>
+          <span class="type">Nasim Uddin</span>
+          <span class="para">CEO @ Vocalo.ai & CONNEKT STUDIO Founder</span>
           <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
@@ -51,8 +50,8 @@
             id="ember305" class="coo-img">
         </div>
         <div class="body-list">
-          <span class="type">Md Nasir Uddin</span> <br>
-          <span class="para">COO Founder @ CONNEKT STUDIO | Raising Pre-Seed Founder Institute 2022</span> <br>
+          <span class="type">Md Nasir Uddin</span>
+          <span class="para">COO Founder @ CONNEKT STUDIO</span>
           <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
@@ -133,7 +132,7 @@ div {
   
   .right-title {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     color: $text-dark;
     margin: 0;
   }
@@ -182,21 +181,24 @@ div {
 // Content list
 .body-list {
   padding-left: 20px;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   
   .type {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: $text-dark;
+    font-size:1rem;
+    font-weight: 700;
+    color: rgb(32, 32, 32);
     display: block;
   }
   
   .para {
-    font-size: 16px;
+    font-size: 13px;
     font-weight:500;
     color: $text-medium;
-    line-height: 1.5;
+    line-height: 1.6;
     display: block;
+    margin-bottom: 8px;
   }
 }
 
@@ -210,6 +212,8 @@ div {
   background: $bg-white;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 100px;
+  justify-content: center;
   
   &:hover {
     background: $bg-hover;
@@ -225,6 +229,7 @@ div {
     font-size: 0.875rem;
     font-weight: 500;
     color: $text-medium;
+    white-space: nowrap;
   }
 }
 
