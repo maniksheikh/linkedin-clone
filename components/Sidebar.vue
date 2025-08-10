@@ -375,7 +375,7 @@ $black: black;
       .avatar {
         position: absolute;
         top: 60px;
-        left: 50%;
+        left: 20%;
         transform: translateX(-50%);
         width: 80px;
         height: 80px;
@@ -394,12 +394,11 @@ $black: black;
 
       .info {
         margin-top: 45px;
-        padding: 0 15px 20px;
+        padding: 0 15px 15px;
 
         h2 {
           font-size: 16px;
           font-weight: 600;
-          margin-bottom: 4px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;

@@ -5,18 +5,9 @@
         <div class="section">
           <img :src="currentUser?.photoURL || '/img/default-avatar.svg'" :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text"
-            placeholder="Have a topic that excites you? Post about it" />
+            placeholder="Start a Post" />
         </div>
         <div class="middle-body">
-          <div class="middle-section">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="middle-photo" width="24" height="24" focusable="false">
-              <path
-                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z">
-              </path>
-            </svg>
-            <div class="span">Photo</div>
-          </div>
           <div class="middle-section">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="middle-video" width="24" height="24" focusable="false">
@@ -26,12 +17,12 @@
           </div>
           <div class="middle-section">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
-              class="middle-event" width="24" height="24" focusable="false">
+              class="middle-photo" width="24" height="24" focusable="false">
               <path
-                d="M3 3v15a3 3 0 003 3h12a3 3 0 003-3V3zm13 1.75A1.25 1.25 0 1114.75 6 1.25 1.25 0 0116 4.75zm-8 0A1.25 1.25 0 116.75 6 1.25 1.25 0 018 4.75zM19 18a1 1 0 01-1 1H6a1 1 0 01-1-1V9h14zm-5.9-3a1 1 0 00-1-1H12a3.12 3.12 0 00-1 .2l-1-.2v-3h3.9v1H11v1.15a3.7 3.7 0 011.05-.15 1.89 1.89 0 012 1.78V15a1.92 1.92 0 01-1.84 2H12a1.88 1.88 0 01-2-1.75 1 1 0 010-.25h1a.89.89 0 001 1h.1a.94.94 0 001-.88z">
+                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z">
               </path>
             </svg>
-            <div class="span">Event</div>
+            <div class="span">Photo</div>
           </div>
           <div class="middle-section">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
@@ -152,20 +143,17 @@ export default {
       this.importData = this.importData.filter(p => p !== post);
     },
     handleImageError(event) {
-      // First try to load from static directory if it was a remote URL
       const currentSrc = event.target.src;
       if (currentSrc.startsWith('http')) {
         const fileName = currentSrc.split('/').pop().split('?')[0];
         event.target.src = `/img/${fileName}`;
-        // Add another error handler for the local path attempt
         event.target.onerror = () => {
           event.target.src = '/img/default-avatar.svg';
-          event.target.onerror = null; // Prevent infinite loop
+          event.target.onerror = null;
         };
       } else {
-        // If it was already a local path, go straight to default
         event.target.src = '/img/default-avatar.svg';
-        event.target.onerror = null; // Prevent infinite loop
+        event.target.onerror = null;
       }
     }
   }
@@ -212,15 +200,15 @@ $color-red: #cc1016;
 .section {
   display: flex;
   align-items: center;
-  padding: 16px 12px;
+  padding: 16px;
 
   input {
     flex: 1;
     margin-left: 12px;
     padding: 12px 16px;
-    font-size: $font-size-sm;
+    font-size:18px;
     font-weight: $font-weight-medium;
-    color: $color-gray-700;
+    color:black !important;
     border: 1px solid $color-gray-300;
     border-radius: 35px;
     outline: none;
@@ -278,7 +266,7 @@ $color-red: #cc1016;
 .middle-section {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 8px 30px;
   margin: 0 4px;
   border-radius: 8px;
   transition: all 0.2s ease;
