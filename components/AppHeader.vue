@@ -30,14 +30,12 @@
             </svg>
             <span>Home</span>
           </div>
-          <div class="navber-contents" :class="{ active: activeNavItem === 'network' }" @click="activeNavItem = 'network'">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'profile' }" @click="activeNavItem = 'profile'; $router.push('/profile')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
-              <path
-                d="M12 6.5a4.5 4.5 0 114.5 4.5A4.49 4.49 0 0112 6.5zm6 6.5h-3a3 3 0 00-3 3v6h9v-6a3 3 0 00-3-3zM6.5 6A3.5 3.5 0 1010 9.5 3.5 3.5 0 006.5 6zm1 9h-2A2.5 2.5 0 003 17.5V22h7v-4.5A2.5 2.5 0 007.5 15z">
-              </path>
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
             </svg>
-            <span>My Network</span>
+            <span>Profile</span>
           </div>
           <div class="navber-contents" :class="{ active: activeNavItem === 'jobs' }" @click="activeNavItem = 'jobs'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
@@ -209,7 +207,7 @@
         </div>
       </div>
     </div>
-    <mobile-nav v-show="isShowMobileNav"></mobile-nav>
+    <mobile-nav v-show="isShowMobileNav" @close-mobile-nav="closeMobileNav"></mobile-nav>
   </div>
 </template>
 
@@ -247,6 +245,9 @@ export default {
     },
     toggleMobileNav() {
       this.isShowMobileNav = !this.isShowMobileNav;
+    },
+    closeMobileNav() {
+      this.isShowMobileNav = false;
     },
     handleClickOutside(event) {
       const dropdown = this.$el.querySelector('.dropdown-menu');
@@ -687,9 +688,30 @@ a {
   color: $text-secondary;
 }
 
-.mobile-menu-btn {
-  display: none;
-}
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: $spacing-sm;
+    border-radius: $spacing-xs;
+    transition: $transition;
+    color: $text-secondary;
+
+    &:hover {
+      color: $primary-blue;
+      background: $hover-color;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media screen and (min-width: 769px) {
+      display: none;
+    }
+  }
 
 @media screen and (max-width: 1024px) {
   .main-container {
@@ -737,6 +759,8 @@ a {
     svg {
       width: 24px;
       height: 24px;
+      fill: currentColor;
+      display: block;
     }
   }
 

@@ -401,7 +401,6 @@ footer {
 @media screen and (max-width: 768px) {
   .login-page {
     padding: 1rem 0.5rem;
-    min-height: 100vh;
   }
   
   #login-form {
