@@ -615,4 +615,107 @@ $black: black;
     font-weight: bold;
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .container {
+    .side-container {
+      width: 100%;
+      margin-top: 4rem;
+      
+      .profile-card {
+        .banner {
+          height: 80px;
+        }
+        
+        .avatar {
+          top: 40px;
+          width: 60px;
+          height: 60px;
+        }
+        
+        .info {
+          margin-top: 35px;
+          padding: 0 12px 12px;
+          
+          h2 {
+            font-size: 14px;
+          }
+          
+          .role {
+            font-size: 11px;
+          }
+          
+          .location {
+            font-size: 10px;
+          }
+          
+          .company {
+            img {
+              width: 14px;
+              height: 14px;
+            }
+            
+            span {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+      
+      .container-body {
+        .stats-box .connection {
+          padding: 6px 10px;
+          
+          .connection-body {
+            .first {
+              font-size: 0.8rem;
+            }
+          }
+          
+          .first-bold {
+            font-size: 0.8rem;
+          }
+        }
+        
+        .stats-box .profile-view {
+          padding: 4px;
+          
+          .second {
+            font-size: 0.8rem;
+          }
+        }
+        
+        .premium {
+          padding: 10px;
+          
+          .premiun-middle {
+            font-size: 0.8rem;
+          }
+        }
+        
+        .items {
+          padding: 6px 10px;
+          
+          .last {
+            font-size: 0.8rem;
+          }
+        }
+        
+        .bottom {
+          padding: 6px 10px;
+          
+          .bottom-body .bottom-list {
+            font-size: 0.8rem;
+            padding: 4px 6px;
+          }
+          
+          .bottom-h {
+            font-size: 0.8rem;
+            padding: 4px 6px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

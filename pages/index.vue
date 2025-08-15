@@ -398,52 +398,158 @@ footer {
   }
 }
 
-@media screen and (max-width: 480px) {
-  body {
-    padding: 1rem 0;
+@media screen and (max-width: 768px) {
+  .login-page {
+    padding: 1rem 0.5rem;
+    min-height: 100vh;
   }
   
   #login-form {
-    margin: 1rem;
-    width: calc(100% - 2rem);
+    margin: 0.5rem;
+    width: 97%;
+    max-width: 97%;
+    box-sizing: border-box;
   }
   
   .login-container {
-    padding: 1.25rem 1.5rem;
-  }
-  
-  h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1.25rem;
-  }
-  
-  input[type=email],
-  input[type=password] {
-    padding: 0.625rem;
-    font-size: 1rem;
-  }
-  
-  button {
-    padding: 0.625rem 1rem;
-    font-size: 1rem;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .login-container {
-    padding: 1rem;
+    padding: 1.5rem 1.25rem;
   }
   
   h2 {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .linkedin-img {
+    height: 20px;
+    width: 24px;
+  }
+  
+  input[type=email],
+  input[type=password] {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+  }
+  
+  button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+  }
+  
+  label {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  footer {
+    padding: 0.75rem 0 0 0;
+    
+    p, .create-content {
+      font-size: 0.8rem;
+    }
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  button,
-  input,
-  .create-content {
-    transition: none;
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .login-page {
+    padding: 0.5rem 0.25rem;
+    min-height: 100vh;
+  }
+  
+  #login-form {
+    margin: 0.25rem;
+    width: 97%;
+    max-width: 97%;
+    box-sizing: border-box;
+  }
+  
+  .login-container {
+    padding: 1rem 1rem;
+  }
+  
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .linkedin-img {
+    height: 18px;
+    width: 22px;
+  }
+  
+  input[type=email],
+  input[type=password] {
+    padding: 0.65rem;
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+  }
+  
+  button {
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    margin: 0.4rem 0;
+  }
+  
+  label {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .error {
+    font-size: 0.9rem !important;
+    padding: 0.75rem;
+  }
+  
+  footer {
+    padding: 0.5rem 0 0 0;
+    
+    p, .create-content {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .login-page {
+    padding: 0.25rem 0.125rem;
+  }
+  
+  #login-form {
+    margin: 0.125rem;
+    width: 97%;
+    max-width: 97%;
+  }
+  
+  .login-container {
+    padding: 0.75rem 0.75rem;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .linkedin-img {
+    height: 16px;
+    width: 20px;
+  }
+  
+  input[type=email],
+  input[type=password] {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 }
 </style>
