@@ -2,36 +2,75 @@
     <div class="menu-container">
         <ul class="menu-list">
             <li class="menu-item">
-                <nuxt-link to="#">Use Cases</nuxt-link>
+                <a @click="navigateToFeed" class="menu-link">
+                    <span>Home</span>
+                </a>
             </li>
             <li class="menu-item">
-                <nuxt-link to="#">Features</nuxt-link>
+                <a @click="navigateToProfile" class="menu-link">
+                    <span>Profile</span>
+                </a>
             </li>
             <li class="menu-item">
-                <nuxt-link to="/pricing">Pricing</nuxt-link>
+                <a @click="closeMobileMenu" class="menu-link">
+                    <span>Messaging</span>
+                </a>
             </li>
             <li class="menu-item">
-                <nuxt-link to="#">Affiliates</nuxt-link>
-            </li>
-            <li class="menu-item">
-                <nuxt-link to="#">Blog</nuxt-link>
+                <a @click="closeMobileMenu" class="menu-link">
+                    <span>Notifications</span>
+                </a>
             </li>
         </ul>
-        <button class="try-free-button">
-            <nuxt-link to="/" aria-label="Try For Free" title="Try For Free" class="button-link">
-                <span>Try For Free</span>
-                <img src="https://framerusercontent.com/images/QDgxMHJz2vKvFSMvhZpA6xplIBM.svg" alt="" class="icon" />
-            </nuxt-link>
+        <button v-if="isUserAuth" @click="logout" class="sign-in-button logout-btn">
+            <span>Logout</span>
+        </button>
+        <button v-else @click="goToSignIn" class="sign-in-button">
+            <span>Sign In</span>
         </button>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data() {
         return {
             isShowMobileNav: false
         };
+    },
+    computed: {
+        ...mapState(['user']),
+        isUserAuth() {
+            return this.$store.getters.isAuthenticated;
+        }
+    },
+    methods: {
+        async logout() {
+            try {
+                await this.$store.dispatch('logout');
+                this.$router.push('/');
+                this.closeMobileMenu();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        goToSignIn() {
+            this.$router.push('/');
+            this.closeMobileMenu();
+        },
+        navigateToProfile() {
+            this.$router.push('/profile');
+            this.closeMobileMenu();
+        },
+        navigateToFeed() {
+            this.$router.push('/feed');
+            this.closeMobileMenu();
+        },
+        closeMobileMenu() {
+            this.$emit('close-mobile-nav');
+        }
     }
 };
 
@@ -58,29 +97,16 @@ export default {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
-    overflow: hidden;
+    overflow: visible;
     z-index: 1001;
     border-bottom: 1px solid #e0e0e0;
-
-    @media (min-width: 769px) {
-        display: none !important;
-    }
-
-    @media (max-width: 480px) {
-        top: 56px;
-        width: 100vw;
-        max-width: 100vw;
-    }
-
-    @media (max-width: 375px) {
-        top: 52px;
-    }
+    visibility: visible;
 }
 
 .menu-list {
     display: block;
     color: #535251;
-    font-size: 14px;
+    font-size: 16px;
     padding: 0.75rem;
     text-align: center;
     font-weight: 600;
@@ -88,33 +114,20 @@ export default {
     margin: 0;
     list-style: none;
     background: white;
-    
-    @media (max-width: 480px) {
-        font-size: 13px;
-        padding: 0.5rem;
-    }
-    
-    @media (max-width: 375px) {
-        font-size: 12px;
-        padding: 0.4rem;
-    }
+    visibility: visible;
 }
 
 .menu-item {
-    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 600;
     transition: background-color 0.2s;
     border-bottom: 1px solid #f0f0f0;
     width: 100%;
     box-sizing: border-box;
-    
-    @media (max-width: 480px) {
-        padding: 0.4rem 0.75rem;
-    }
-    
-    @media (max-width: 375px) {
-        padding: 0.35rem 0.5rem;
-    }
+    margin: 0 auto;
+    text-align: center;
 }
 
 .menu-item:last-child {
@@ -129,28 +142,63 @@ export default {
 .menu-item a {
     color: #535251;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 0.5rem 0;
-    
-    @media (max-width: 480px) {
-        padding: 0.3rem 0;
-        font-size: 13px;
-    }
-    
-    @media (max-width: 375px) {
-        padding: 0.25rem 0;
-        font-size: 12px;
-    }
+    text-align: center;
 }
 
-.try-free-button {
+.menu-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #535251;
+    text-decoration: none;
+    padding: 1rem 0;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+}
+
+.menu-link:hover {
+    color: #0a66c2;
+}
+
+.menu-icon {
+    width: 22px;
+    height: 22px;
+    color: #666;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.menu-link:hover .menu-icon {
+    color: #0a66c2;
+}
+
+.menu-link span {
+    text-align: center;
+    display: block;
+    margin: 0;
+    line-height: 1.2;
+    font-size: 16px;
+}
+
+.sign-in-button {
     display: flex;
     justify-content: center;
     margin: 1rem auto 0.5rem;
     background-color: #0a66c2;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     border-radius: 24px;
     padding: 0.625rem 1rem;
     border: none;
@@ -159,52 +207,43 @@ export default {
     max-width: 180px;
     width: 90%;
     box-sizing: border-box;
-    
-    @media (max-width: 480px) {
-        font-size: 13px;
-        padding: 0.5rem 0.75rem;
-        max-width: 160px;
-        margin: 0.75rem auto 0.25rem;
-    }
-    
-    @media (max-width: 375px) {
-        font-size: 12px;
-        padding: 0.4rem 0.6rem;
-        max-width: 140px;
-        margin: 0.5rem auto 0.25rem;
-    }
+    visibility: visible;
 }
 
-.try-free-button:hover {
+.sign-in-button:hover {
     background-color: #084d7a;
     transform: translateY(-1px);
 }
 
 .button-link {
     display: flex;
+    flex-direction: row;
     align-items: center;
     color: inherit;
     text-decoration: none;
     width: 100%;
     justify-content: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
+    text-align: center;
+    
+    span {
+        display: block;
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: initial;
+        line-height: 1.2;
+        text-align: center;
+        margin: 0;
+    }
 }
 
-.icon {
-    margin-left: 0.25rem;
-    width: 1rem;
-    height: 1rem;
-    object-fit: cover;
-    border-radius: inherit;
-    
-    @media (max-width: 480px) {
-        width: 0.875rem;
-        height: 0.875rem;
-    }
-    
-    @media (max-width: 375px) {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
+.button-icon {
+    margin-right: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
 </style>
