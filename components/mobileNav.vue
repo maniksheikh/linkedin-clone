@@ -56,11 +56,24 @@ export default {
     border-radius: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin: 0;
+    padding-left: 0;
+    padding-right: 0;
     overflow: hidden;
-    z-index: 999;
+    z-index: 1001;
+    border-bottom: 1px solid #e0e0e0;
 
-    @media (min-width: 640px) {
-        display: none;
+    @media (min-width: 769px) {
+        display: none !important;
+    }
+
+    @media (max-width: 480px) {
+        top: 56px;
+        width: 100vw;
+        max-width: 100vw;
+    }
+
+    @media (max-width: 375px) {
+        top: 52px;
     }
 }
 
@@ -75,6 +88,16 @@ export default {
     margin: 0;
     list-style: none;
     background: white;
+    
+    @media (max-width: 480px) {
+        font-size: 13px;
+        padding: 0.5rem;
+    }
+    
+    @media (max-width: 375px) {
+        font-size: 12px;
+        padding: 0.4rem;
+    }
 }
 
 .menu-item {
@@ -82,6 +105,16 @@ export default {
     font-weight: 600;
     transition: background-color 0.2s;
     border-bottom: 1px solid #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+        padding: 0.4rem 0.75rem;
+    }
+    
+    @media (max-width: 375px) {
+        padding: 0.35rem 0.5rem;
+    }
 }
 
 .menu-item:last-child {
@@ -98,26 +131,53 @@ export default {
     text-decoration: none;
     display: block;
     width: 100%;
+    padding: 0.5rem 0;
+    
+    @media (max-width: 480px) {
+        padding: 0.3rem 0;
+        font-size: 13px;
+    }
+    
+    @media (max-width: 375px) {
+        padding: 0.25rem 0;
+        font-size: 12px;
+    }
 }
 
 .try-free-button {
     display: flex;
     justify-content: center;
-    margin: 1rem auto;
-    background-color: #ff4f00;
+    margin: 1rem auto 0.5rem;
+    background-color: #0a66c2;
     color: white;
     font-size: 14px;
-    border-radius: 9999px;
+    border-radius: 24px;
     padding: 0.625rem 1rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s;
-    max-width: 200px;
-    width: 100%;
+    max-width: 180px;
+    width: 90%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+        font-size: 13px;
+        padding: 0.5rem 0.75rem;
+        max-width: 160px;
+        margin: 0.75rem auto 0.25rem;
+    }
+    
+    @media (max-width: 375px) {
+        font-size: 12px;
+        padding: 0.4rem 0.6rem;
+        max-width: 140px;
+        margin: 0.5rem auto 0.25rem;
+    }
 }
 
 .try-free-button:hover {
-    background-color: #e64500;
+    background-color: #084d7a;
+    transform: translateY(-1px);
 }
 
 .button-link {
@@ -127,6 +187,7 @@ export default {
     text-decoration: none;
     width: 100%;
     justify-content: center;
+    gap: 0.25rem;
 }
 
 .icon {
@@ -135,5 +196,15 @@ export default {
     height: 1rem;
     object-fit: cover;
     border-radius: inherit;
+    
+    @media (max-width: 480px) {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+    
+    @media (max-width: 375px) {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
 }
 </style>

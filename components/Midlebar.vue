@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-wrapper">
     <div class="middle-container">
       <div class="middle">
         <div class="section">
@@ -187,14 +187,29 @@ $color-red: #cc1016;
   font-family: $font-family-primary;
 }
 
+.main-wrapper {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .middle-container {
   background: white !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .middle {
   border: 1px solid $color-gray-300;
   border-radius: 8px;
   background: white;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .section {
@@ -316,6 +331,9 @@ $color-red: #cc1016;
 
 .post-container {
   margin-top: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .post-body {
@@ -325,6 +343,7 @@ $color-red: #cc1016;
   background: white;
   position: relative;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
 }
 
 .img-title {
@@ -539,98 +558,355 @@ $color-red: #cc1016;
   border-radius: 8px;
 }
 
-// Responsive Styles
+// Enhanced Responsive Styles
 @media (max-width: 768px) {
+  .main-wrapper {
+    width: 100% !important;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .middle-container {
+    width: 97% !important;
+    max-width: 97% !important;
+    margin: 0 auto;
+    overflow-x: hidden;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: 1.5rem !important;
+  }
+
+  .middle {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
   .section {
     flex-direction: column;
-    padding: 12px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
 
     input {
-      width: 100%;
-      margin: 8px 0 0 0;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 12px 0 0 0;
+      box-sizing: border-box;
+      font-size: 16px;
+      padding: 14px 18px;
+      text-align: center;
     }
+  }
+
+  .midle-img {
+    height: 44px;
+    width: 44px;
   }
 
   .middle-body {
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 8px 12px;
   }
 
   .middle-section {
-    justify-content: flex-start;
+    justify-content: center;
     margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 20px;
+
+    .span {
+      font-size: 0.9rem;
+      margin-left: 6px;
+    }
   }
 
   .items-flex {
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
   }
 
-  .post-container,
+  .post-container {
+    width: 97% !important;
+    max-width: 97% !important;
+    margin: 16px auto 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   .post-body {
-    padding: 12px;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin-bottom: 12px;
+  }
+
+  .post-section {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .pro-img-title .midle-img {
+    height: 44px;
+    width: 44px;
+  }
+
+  .align {
+    padding-right: 35px;
+  }
+
+  .post-header {
+    font-size: 0.9rem;
+  }
+
+  .id {
+    font-size: 0.75rem;
   }
 
   .post-react {
-    padding: 6px 8px;
+    padding: 8px 6px;
+    min-width: 0;
+    flex: 1;
+    margin: 0 2px;
+
+    .span {
+      font-size: 0.8rem;
+      margin-left: 6px;
+    }
   }
 
   .pro-height-img {
-    height: 300px;
+    height: 280px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
   }
 
   .post-dec {
     font-size: $font-size-sm;
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .flex-container {
+    width: 100% !important;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .delete-icon {
+    right: 8px;
+    top: 8px;
   }
 }
 
+// Enhanced fixes for small mobile screens
 @media (max-width: 480px) {
+  .main-wrapper {
+    width: 100% !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-  .pro-img,
-  .midle-img,
-  .img-title,
-  .last-image {
+  .middle-container {
+    width: 97% !important;
+    max-width: 97% !important;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    left: 0;
+    right: 0;
+  }
+
+  .section {
+    padding: 12px;
+    
+    input {
+      font-size: 15px;
+      padding: 12px 16px;
+      text-align: center;
+    }
+  }
+
+  .midle-img {
     height: 40px;
     width: 40px;
   }
 
-  .img-title {
-    font-size: $font-size-base;
+  .middle-section {
+    padding: 8px 16px;
+    
+    .span {
+      font-size: 0.85rem;
+    }
   }
 
-  .post-dec {
-    font-size: $font-size-sm;
+  .post-container {
+    width: 97% !important;
+    max-width: 97% !important;
+    margin: 14px auto 0;
+    padding: 0;
+    position: relative;
+    left: 0;
+    right: 0;
+  }
+
+  .post-body {
+    padding: 14px;
+  }
+
+  .pro-img-title .midle-img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .align {
+    padding-right: 30px;
   }
 
   .post-header {
-    font-size: $font-size-sm;
+    font-size: 0.85rem;
   }
 
-  .email {
-    font-size: $font-size-xs;
+  .id {
+    font-size: 0.7rem;
   }
 
-  .section input {
-    font-size: $font-size-sm;
-  }
-
-  .middle-body {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .middle-section {
-    flex-direction: row;
-    align-items: center;
-    padding: 6px 8px;
-  }
-
-  .post-item {
-    margin-left: 52px;
+  .post-dec {
+    font-size: 0.85rem;
   }
 
   .pro-height-img {
-    height: 250px;
+    height: 250px !important;
+  }
+
+  .post-react {
+    padding: 6px 4px;
+    
+    .span {
+      font-size: 0.75rem;
+      margin-left: 4px;
+    }
+  }
+
+  .delete-icon {
+    right: 6px;
+    top: 6px;
+    padding: 4px;
   }
 }
+
+@media (max-width: 414px) {
+  .middle-container {
+    width: 97% !important;
+    max-width: 97% !important;
+  }
+
+  .post-container {
+    width: 97% !important;
+    max-width: 97% !important;
+  }
+
+  .section {
+    padding: 10px;
+  }
+
+  .post-body {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .middle-container {
+    width: 97% !important;
+    max-width: 97% !important;
+  }
+
+  .post-container {
+    width: 97% !important;
+    max-width: 97% !important;
+  }
+
+  .section {
+    padding: 8px;
+    
+    input {
+      font-size: 14px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+  }
+
+  .midle-img {
+    height: 36px;
+    width: 36px;
+  }
+
+  .middle-section {
+    padding: 6px 12px;
+    
+    .span {
+      font-size: 0.8rem;
+    }
+  }
+
+  .post-body {
+    padding: 10px;
+  }
+
+  .pro-img-title .midle-img {
+    height: 36px;
+    width: 36px;
+  }
+
+  .align {
+    padding-right: 28px;
+  }
+
+  .post-header {
+    font-size: 0.8rem;
+  }
+
+  .id {
+    font-size: 0.65rem;
+  }
+
+  .post-dec {
+    font-size: 0.8rem;
+  }
+
+  .pro-height-img {
+    height: 220px !important;
+  }
+
+  .post-react {
+    padding: 5px 3px;
+    
+    .span {
+      font-size: 0.7rem;
+      margin-left: 3px;
+    }
+  }
+}
+
+
 </style>

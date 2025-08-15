@@ -290,25 +290,79 @@ div {
 // Responsive adjustments
 @media (max-width: 768px) {
   .right-container {
-    margin-top: 2rem;
+    display: none !important;
   }
-  
-  .right-section {
-    padding: 12px 16px;
-  }
-  
-  .right .right-title {
-    font-size: 0.875rem;
-  }
-  
-  .body-list {
-    .type {
-      font-size: 0.8125rem;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .right-container {
+    margin-top: 4rem;
+    width: 100%;
+    
+    .right {
+      padding: 12px 16px;
+      
+      .right-title {
+        font-size: 0.9rem;
+      }
     }
     
-    .para {
-      font-size: 0.6875rem;
+    .right-section {
+      padding: 10px 14px;
+      
+      .ceo-img,
+      .coo-img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .body-list {
+        padding-left: 16px;
+        
+        .type {
+          font-size: 0.875rem;
+        }
+        
+        .para {
+          font-size: 0.75rem;
+        }
+        
+        .btn-follow {
+          padding: 4px 12px;
+          width: 85px;
+          
+          .follow {
+            font-size: 0.75rem;
+          }
+        }
+      }
     }
+    
+    .bottom-view {
+      padding: 12px 16px;
+      
+      .viw-bottom {
+        font-size: 0.75rem;
+      }
+    }
+    
+    .right-bottom {
+      margin-top: 12px;
+      
+      .footer {
+        padding: 10px 14px;
+        
+        .footer-body {
+          font-size: 0.6875rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .right-container {
+    display: none !important;
   }
 }
 </style>

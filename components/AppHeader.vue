@@ -224,7 +224,7 @@ export default {
       visible: false,
       isShowMobileNav: false,
       MobileNav,
-      activeNavItem: 'home' // Add this line to track active nav item
+      activeNavItem: 'home'
     };
   },
   computed: {
@@ -295,11 +295,25 @@ $transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   margin: 0;
   font-weight: 400;
   background: $background-light;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 li,
@@ -325,7 +339,11 @@ a {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 1000;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar-content {
@@ -335,6 +353,13 @@ a {
   width: 100%;
   max-width: 1220px;
   padding: 0 $spacing-md;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 $spacing-md;
+  }
 }
 
 .content {
@@ -415,7 +440,7 @@ a {
   border-radius: $spacing-xs;
   transition: $transition;
   min-width: 70px;
-  position: relative; /* Add this line */
+  position: relative;
 
   &.active {
     &::after {
@@ -469,7 +494,7 @@ a {
 
 .item {
   position: relative;
-  margin-left: 4px;  /* Reduced from 8px */
+  margin-left: 4px;
 }
 
 .btn {
@@ -484,7 +509,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4px;  /* Reduced from 8px */
+    padding: 4px;
   }
 
   &:focus {
@@ -663,7 +688,7 @@ a {
 }
 
 .mobile-menu-btn {
-  display: none; /* Hidden by default on large screens */
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -683,19 +708,19 @@ a {
 
 @media screen and (max-width: 768px) {
   .search-bar {
-    display: none;
+    display: none !important;
   }
 
   .nav {
-    display: none;
+    display: none !important;
   }
 
   .outside {
-    display: none;
+    display: none !important;
   }
 
   .mobile-menu-btn {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -716,32 +741,93 @@ a {
   }
 
   .main-container {
-    justify-content: space-between;
-    padding: $spacing-md;
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0;
+    right: 0;
+    padding: 0 !important;
+    margin: 0;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    min-height: 60px;
   }
 
   .navbar-content {
-    padding: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 $spacing-md !important;
+    box-sizing: border-box;
+    min-height: 60px;
+    align-items: center;
   }
 
   .content {
-    max-width: none;
-    flex: none;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #main-logo {
+    height: 36px;
+    width: 36px;
   }
 
   .dropdown-menu {
     width: calc(100vw - 32px);
-    right: -16px;
+    right: $spacing-md;
+    left: auto;
+    max-width: 320px;
+  }
+
+  .profile {
+    width: 32px;
+    height: 32px;
+  }
+
+  .item {
+    margin-left: 0;
+  }
+
+  .btn.dropdown {
+    padding: 2px;
+  }
+
+  .visible.mr-t {
+    font-size: 0.7rem;
   }
 }
 
 @media screen and (max-width: 480px) {
   .main-container {
-    padding: $spacing-sm;
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0;
+    right: 0;
+    padding: 0 !important;
+    margin: 0;
+    min-height: 56px;
+    box-sizing: border-box;
+    justify-content: flex-start;
   }
 
   .navbar-content {
-    padding: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 $spacing-sm !important;
+    min-height: 56px;
+    box-sizing: border-box;
+  }
+
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #main-logo {
+    height: 32px;
+    width: 32px;
   }
 
   .profile {
@@ -750,8 +836,69 @@ a {
   }
 
   .box img {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .dropdown-menu {
+    width: calc(100vw - 16px);
+    right: $spacing-sm;
+    left: auto;
+    max-width: 300px;
+    padding: $spacing-md;
+  }
+
+  .mobile-menu-btn {
+    padding: 6px !important;
+    
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .btn.dropdown {
+    padding: 1px;
+  }
+
+  .visible.mr-t {
+    font-size: 0.65rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .main-container {
+    min-height: 52px;
+  }
+
+  .navbar-content {
+    min-height: 52px;
+    padding: 0 8px !important;
+  }
+
+  #main-logo {
+    height: 30px;
+    width: 30px;
+  }
+
+  .profile {
+    width: 26px;
+    height: 26px;
+  }
+
+  .dropdown-menu {
+    width: calc(100vw - 12px);
+    right: 6px;
+    padding: 10px;
+  }
+
+  .mobile-menu-btn {
+    padding: 4px !important;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
