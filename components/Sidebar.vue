@@ -155,7 +155,6 @@ $black: black;
         .connection {
           padding: 8px 12px;
           cursor: pointer;
-
           &:hover {
             .first,
             .view,
@@ -635,8 +634,7 @@ $black: black;
         
         .info {
           margin-top: 35px;
-          padding: 0 12px 12px;
-          
+          padding: 0 12px 12px;  
           h2 {
             font-size: 14px;
           }
@@ -678,32 +676,28 @@ $black: black;
         }
         
         .stats-box .profile-view {
-          padding: 4px;
-          
+          padding: 4px;         
           .second {
             font-size: 0.8rem;
           }
         }
         
         .premium {
-          padding: 10px;
-          
+          padding: 10px;         
           .premiun-middle {
             font-size: 0.8rem;
           }
         }
         
         .items {
-          padding: 6px 10px;
-          
+          padding: 6px 10px;          
           .last {
             font-size: 0.8rem;
           }
         }
         
         .bottom {
-          padding: 6px 10px;
-          
+          padding: 6px 10px;        
           .bottom-body .bottom-list {
             font-size: 0.8rem;
             padding: 4px 6px;

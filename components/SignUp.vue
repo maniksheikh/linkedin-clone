@@ -25,7 +25,6 @@
                                     {{ day }}
                                 </option>
                             </select>
-
                             <select v-model="selectedmonths">
                                 <option v-for="month in months" :key="month">
                                     {{ month }}
