@@ -215,7 +215,6 @@
 import { mapState } from 'vuex';
 import MobileNav from '~/components/mobileNav.vue'
 
-
 export default {
   data() {
     return {
@@ -377,7 +376,6 @@ a {
   flex-shrink: 0;
   height: 42px;
   width: 42px;
-
   &:hover {
     color: $secondary-blue;
   }
@@ -393,7 +391,6 @@ a {
   max-width: 270px;
   padding: 0 $spacing-xs 0 $spacing-sm;
   transition: $transition;
-
   &:focus-within {
     border-color: $primary-blue;
     box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
@@ -750,7 +747,6 @@ a {
     border-radius: $spacing-xs;
     transition: $transition;
     color: $text-secondary;
-
     &:hover {
       color: $primary-blue;
       background: $hover-color;
@@ -874,7 +870,6 @@ a {
 
   .mobile-menu-btn {
     padding: 6px !important;
-    
     svg {
       width: 22px;
       height: 22px;

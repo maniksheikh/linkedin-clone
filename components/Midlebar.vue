@@ -109,13 +109,11 @@ import { ref, onMounted } from 'vue'
 export default {
   setup() {
     const currentUser = ref(null)
-
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         currentUser.value = user
       })
     })
-
     return { currentUser }
   },
   data() {
@@ -240,7 +238,6 @@ $color-red: #cc1016;
       background: $color-gray-100;
       border-color: $color-gray-500;
       color: $color-gray-900;
-
       &::placeholder {
         color: $color-gray-700;
       }
@@ -907,6 +904,4 @@ $color-red: #cc1016;
     }
   }
 }
-
-
 </style>

@@ -141,7 +141,6 @@ div {
     cursor: pointer;
     color: $text-medium;
     transition: color 0.2s ease;
-    
     &:hover {
       color: $primary-color;
     }
@@ -153,7 +152,6 @@ div {
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  
   &:not(:last-child) {
     border-bottom: 1px solid $border-color;
   }
@@ -301,7 +299,6 @@ div {
     
     .right {
       padding: 12px 16px;
-      
       .right-title {
         font-size: 0.9rem;
       }
@@ -318,7 +315,6 @@ div {
       
       .body-list {
         padding-left: 16px;
-        
         .type {
           font-size: 0.875rem;
         }
@@ -330,7 +326,6 @@ div {
         .btn-follow {
           padding: 4px 12px;
           width: 85px;
-          
           .follow {
             font-size: 0.75rem;
           }
@@ -340,7 +335,6 @@ div {
     
     .bottom-view {
       padding: 12px 16px;
-      
       .viw-bottom {
         font-size: 0.75rem;
       }
