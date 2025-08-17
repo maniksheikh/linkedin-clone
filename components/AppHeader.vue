@@ -5,7 +5,7 @@
         <div class="content">
           <div>
             <svg id="main-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-              fill="currentColor" class="mercado-match" width="45" height="45" focusable="false">
+              fill="currentColor" class="mercado-match" width="45" height="45" focusable="false" @click="$router.push('/feed')">
               <path
                 d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z">
               </path>
@@ -23,17 +23,29 @@
         </div>
         <!-- Nabvber -->
         <div class="nav">
-          <div class="navber-contents" :class="{ active: activeNavItem === 'home' }" @click="activeNavItem = 'home'">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'home' }" @click="activeNavItem = 'home'; $router.push('/feed')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path d="M23 9v2h-2v7a3 3 0 01-3 3h-4v-6h-4v6H6a3 3 0 01-3-3v-7H1V9l11-7 5 3.18V2h3v5.09z"></path>
             </svg>
             <span>Home</span>
           </div>
-          <div class="navber-contents" :class="{ active: activeNavItem === 'profile' }" @click="activeNavItem = 'profile'; $router.push('/profile')">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'network' }"
+            @click="activeNavItem = 'profile'; $router.push('/my-network')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
+              class="mercado-match" width="24" height="24" focusable="false">
+              <path
+                d="M12 16v6H3v-6a3 3 0 013-3h3a3 3 0 013 3zm5.5-3A3.5 3.5 0 1014 9.5a3.5 3.5 0 003.5 3.5zm1 2h-2a2.5 2.5 0 00-2.5 2.5V22h7v-4.5a2.5 2.5 0 00-2.5-2.5zM7.5 2A4.5 4.5 0 1012 6.5 4.49 4.49 0 007.5 2z">
+              </path>
+            </svg>
+            <span>My Network</span>
+          </div>
+          <div class="navber-contents" :class="{ active: activeNavItem === 'profile' }"
+            @click="activeNavItem = 'profile'; $router.push('/profile')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
             <span>Profile</span>
           </div>
@@ -46,7 +58,8 @@
             </svg>
             <span>Jobs</span>
           </div>
-          <div class="navber-contents" :class="{ active: activeNavItem === 'messaging' }" @click="activeNavItem = 'messaging'">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'messaging' }"
+            @click="activeNavItem = 'messaging'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -55,7 +68,8 @@
             </svg>
             <span>Messaging</span>
           </div>
-          <div class="navber-contents" :class="{ active: activeNavItem === 'notifications' }" @click="activeNavItem = 'notifications'">
+          <div class="navber-contents" :class="{ active: activeNavItem === 'notifications' }"
+            @click="activeNavItem = 'notifications'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="mercado-match" width="26" height="26" focusable="false">
               <path
@@ -66,11 +80,11 @@
           </div>
           <li v-if="isUserAuth" class="item">
             <button class="btn dropdown" @click.stop="toggle">
-              <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="" class="profile" />
+              <img :src="getProfileImageUrl()" alt="Profile" class="profile" @error="handleProfileImageError" />
               <div v-if="visible" class="dropdown-menu">
                 <div class="profile-details">
                   <div class="box">
-                    <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="profile"/>
+                    <img :src="getProfileImageUrl()" alt="profile" @error="handleProfileImageError" />
                     <div class="user-info">
                       <span class="title">{{ user ? user.displayName : 'Guest User' }}</span>
                       <span class="email">{{ user ? user.email : '' }}</span>
@@ -202,7 +216,7 @@
         <!-- Mobile Menu Button -->
         <div class="mobile-menu-btn" @click="toggleMobileNav">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
           </svg>
         </div>
       </div>
@@ -254,6 +268,21 @@ export default {
       if (dropdown && !dropdown.contains(event.target) && !profileButton.contains(event.target)) {
         this.visible = false;
       }
+    },
+    getProfileImageUrl() {
+      // First priority: Firebase/Google user photoURL
+      if (this.user && this.user.photoURL) {
+        return this.user.photoURL;
+      }
+      
+      // Fallback to default profile image
+      return '/static/img/profile-img.jpg';
+    },
+    handleProfileImageError(event) {
+      // If the Firebase image fails to load, use local fallback
+      console.warn('Failed to load profile image:', event.target.src);
+      event.target.src = '/static/img/default-avatar.svg';
+      event.target.onerror = null; // Prevent infinite loop
     }
   },
   mounted() {
@@ -266,7 +295,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 $primary-blue: #0a66c2;
 $secondary-blue: #317bb8;
 $text-primary: #000000e6;
@@ -376,6 +404,7 @@ a {
   flex-shrink: 0;
   height: 42px;
   width: 42px;
+
   &:hover {
     color: $secondary-blue;
   }
@@ -391,6 +420,7 @@ a {
   max-width: 270px;
   padding: 0 $spacing-xs 0 $spacing-sm;
   transition: $transition;
+
   &:focus-within {
     border-color: $primary-blue;
     box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
@@ -479,6 +509,7 @@ a {
     svg {
       color: $primary-blue;
     }
+
     span {
       color: $primary-blue;
     }
@@ -685,30 +716,30 @@ a {
   color: $text-secondary;
 }
 
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: $spacing-sm;
-    border-radius: $spacing-xs;
-    transition: $transition;
-    color: $text-secondary;
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: $spacing-sm;
+  border-radius: $spacing-xs;
+  transition: $transition;
+  color: $text-secondary;
 
-    &:hover {
-      color: $primary-blue;
-      background: $hover-color;
-    }
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    @media screen and (min-width: 769px) {
-      display: none;
-    }
+  &:hover {
+    color: $primary-blue;
+    background: $hover-color;
   }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media screen and (min-width: 769px) {
+    display: none;
+  }
+}
 
 @media screen and (max-width: 1024px) {
   .main-container {
@@ -747,6 +778,7 @@ a {
     border-radius: $spacing-xs;
     transition: $transition;
     color: $text-secondary;
+
     &:hover {
       color: $primary-blue;
       background: $hover-color;
@@ -870,6 +902,7 @@ a {
 
   .mobile-menu-btn {
     padding: 6px !important;
+
     svg {
       width: 22px;
       height: 22px;
@@ -913,7 +946,7 @@ a {
 
   .mobile-menu-btn {
     padding: 4px !important;
-    
+
     svg {
       width: 20px;
       height: 20px;
