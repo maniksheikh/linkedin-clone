@@ -8,16 +8,16 @@ import {
   updateProfile,
   signOut
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCLE60xdd5n3Y8Ogh6Qfj0sT1WFhyf6wFQ",
-  authDomain: "linkedin-clone-ff47f.firebaseapp.com",
-  projectId: "linkedin-clone-ff47f",
-  storageBucket: "linkedin-clone-ff47f.firebasestorage.app",
-  messagingSenderId: "191922326361",
-  appId: "1:191922326361:web:efc7a1d0643064d2405a48",
-  measurementId: "G-ZN1ZFYY7X2"
+  apiKey: "AIzaSyCnsRia4APVSeacc0mqb4WTBZwwg7NAgWM",
+  authDomain: "linkedin-clone-6.firebaseapp.com",
+  projectId: "linkedin-clone-6",
+  storageBucket: "linkedin-clone-6.firebasestorage.app",
+  messagingSenderId: "559687341041",
+  appId: "1:559687341041:web:c9b691d7378f79dad0aa50",
+  measurementId: "G-TPM03MEE3Q"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -33,5 +33,8 @@ export {
   signInWithEmailAndPassword,
   updateProfile,
   signOut,
-  db
+  db,
+  doc,
+  setDoc,
+  getDoc
 };
