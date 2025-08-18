@@ -11,8 +11,8 @@
             <div class="signup-group">
                 <form action="#" @submit.prevent="registerUser">
                     <div class="flex">
-                        <input v-model="user.username" class="input" type="text" placeholder="FirstName" required />
-                        <input class="input" type="text" placeholder="LastName" />
+                        <input v-model="user.firstName" class="input" type="text" placeholder="FirstName" required />
+                        <input v-model="user.lastName" class="input" type="text" placeholder="LastName" required />
                     </div>
                     <input v-model="user.email" class="input" type="email" required placeholder="Email address" />
                     <input v-model="user.password" class="input" type="password" required placeholder="New password" />
@@ -77,7 +77,8 @@ export default {
         return {
             error: '',
             user: {
-                username: '',
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: '',
             },
@@ -118,10 +119,13 @@ export default {
         },
         async registerUser() {
             try {
+                // Combine first name and last name
+                const fullName = `${this.user.firstName} ${this.user.lastName}`.trim()
+                
                 await this.$store.dispatch('signup', {
                     email: this.user.email,
                     password: this.user.password,
-                    userName: this.user.username
+                    userName: fullName
                 })
                 this.$router.push('/feed')
             } catch (error) {

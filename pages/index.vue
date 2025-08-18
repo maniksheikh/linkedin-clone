@@ -100,9 +100,7 @@ export default {
       try {
         const result = await signInWithPopup(auth, provider);
         const userData = result.user;
-
         await this.$store.dispatch('loginWithGoogle', userData);
-
         alert('You are successfully logged in with Google! Redirecting...');
         await this.$router.push('/feed');
         this.clearForm();
@@ -117,7 +115,7 @@ export default {
       this.rememberMe = false;
     },
     handleImageError(event) {
-      event.target.src = '/img/linkedin-placeholder.svg'; // Fallback image
+      event.target.src = '/img/linkedin-placeholder.svg';
     }
   },
 };

@@ -17,9 +17,29 @@
               />
             </div>
             <div class="user-details">
-              <h1>{{ user ? user.displayName : 'Guest User' }}</h1>
+              <div class="name-section">
+                <h1 v-if="!isEditingName">{{ user ? user.displayName : 'Guest User' }}</h1>
+                <div v-else class="edit-name-form">
+                  <input 
+                    v-model="editName" 
+                    type="text" 
+                    class="name-input"
+                    placeholder="Enter your full name"
+                    @keyup.enter="saveNameEdit"
+                  />
+                  <div class="edit-buttons">
+                    <button @click="saveNameEdit" class="save-btn">Save</button>
+                    <button @click="cancelNameEdit" class="cancel-btn">Cancel</button>
+                  </div>
+                </div>
+                <button v-if="!isEditingName && user" @click="startNameEdit" class="edit-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
               <p class="title">{{ user ? user.email : 'Please sign in' }}</p>
-              <p class="location">Bogra District, Rajshahi</p>
+              <p class="location">Software Developer</p>
               <div class="connections">
                 <span>39 connections</span>
               </div>
@@ -79,12 +99,40 @@ export default {
   components: {
     AppHeader
   },
+  data() {
+    return {
+      isEditingName: false,
+      editName: ''
+    }
+  },
   computed: {
     ...mapState(['user'])
   },
   methods: {
     handleImageError(event) {
       event.target.src = '/img/placeholder.svg';
+    },
+    startNameEdit() {
+      this.isEditingName = true
+      this.editName = this.user ? this.user.displayName : ''
+    },
+    cancelNameEdit() {
+      this.isEditingName = false
+      this.editName = ''
+    },
+    async saveNameEdit() {
+      if (this.editName.trim()) {
+        try {
+          await this.$store.dispatch('updateUserProfile', {
+            displayName: this.editName.trim()
+          })
+          this.isEditingName = false
+          this.editName = ''
+        } catch (error) {
+          console.error('Error updating profile:', error)
+          alert('Failed to update name. Please try again.')
+        }
+      }
     }
   }
 };
@@ -162,11 +210,90 @@ $spacing-xl: 32px;
 .user-details {
   margin-top: 60px;
   
-  h1 {
-    font-size: 28px;
-    font-weight: 600;
-    color: $text-primary;
-    margin: 0 0 $spacing-sm 0;
+  .name-section {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+    
+    .edit-btn {
+      background: none;
+      border: none;
+      color: $text-secondary;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        color: $primary-blue;
+        background: rgba(10, 102, 194, 0.1);
+      }
+    }
+    
+    .edit-name-form {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+      flex: 1;
+      
+      .name-input {
+        font-size: 28px;
+        font-weight: 600;
+        color: $text-primary;
+        border: 2px solid $primary-blue;
+        border-radius: 4px;
+        padding: 8px 12px;
+        outline: none;
+        background: $background-white;
+        
+        &:focus {
+          border-color: $primary-blue;
+          box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
+        }
+      }
+      
+      .edit-buttons {
+        display: flex;
+        gap: $spacing-sm;
+        
+        button {
+          padding: 6px 16px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 500;
+          transition: all 0.2s ease;
+        }
+        
+        .save-btn {
+          background: $primary-blue;
+          color: white;
+          
+          &:hover {
+            background: darken($primary-blue, 10%);
+          }
+        }
+        
+        .cancel-btn {
+          background: $background-light;
+          color: $text-secondary;
+          border: 1px solid $border-color;
+          
+          &:hover {
+            background: darken($background-light, 5%);
+          }
+        }
+      }
+    }
   }
   
   .title {
@@ -303,8 +430,18 @@ $spacing-xl: 32px;
   .user-details {
     margin-top: 40px;
     
-    h1 {
-      font-size: 24px;
+    .name-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .edit-name-form .name-input {
+        font-size: 24px;
+      }
     }
   }
   
@@ -341,8 +478,14 @@ $spacing-xl: 32px;
   .user-details {
     margin-top: 30px;
     
-    h1 {
-      font-size: 20px;
+    .name-section {
+      h1 {
+        font-size: 20px;
+      }
+      
+      .edit-name-form .name-input {
+        font-size: 20px;
+      }
     }
   }
   

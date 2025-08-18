@@ -25,6 +25,6 @@ export default function ({ store }) {
       const error = new Error('Firebase authentication initialization timeout')
       store.commit('SET_ERROR', error.message)
       reject(error)
-    }, 10000) // Increased timeout to 10 seconds
+    }, 10000)
   })
 } 

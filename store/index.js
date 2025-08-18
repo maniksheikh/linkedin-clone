@@ -21,6 +21,7 @@ export const actions = {
       await updateProfile(userCredential.user, {
         displayName: userName
       })
+      await userCredential.user.reload()
       
       commit('SET_USER', {
         uid: userCredential.user.uid,
@@ -52,7 +53,7 @@ export const actions = {
       commit('SET_USER', {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
-        displayName: userCredential.user.displayName,
+        displayName: userCredential.user.displayName || userCredential.user.email?.split('@')[0],
         photoURL: userCredential.user.photoURL
       })
       return { hasAccount: true, user: userCredential.user }
@@ -67,7 +68,7 @@ export const actions = {
       commit('SET_USER', {
         uid: userData.uid,
         email: userData.email,
-        displayName: userData.displayName,
+        displayName: userData.displayName || userData.email?.split('@')[0],
         photoURL: userData.photoURL
       })
       return { hasAccount: true, user: userData }
@@ -82,11 +83,35 @@ export const actions = {
       commit('SET_USER', {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName,
+        displayName: user.displayName || user.email?.split('@')[0],
         photoURL: user.photoURL
       })
     } else {
       commit('SET_USER', null)
+    }
+  },
+
+  async updateUserProfile({ commit }, { displayName }) {
+    try {
+      const currentUser = auth.currentUser
+      if (currentUser) {
+        await updateProfile(currentUser, {
+          displayName: displayName
+        })
+        await currentUser.reload()
+        
+        commit('SET_USER', {
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: displayName,
+          photoURL: currentUser.photoURL
+        })
+        
+        return currentUser
+      }
+    } catch (error) {
+      commit('SET_ERROR', error.message)
+      throw error
     }
   }
 }
