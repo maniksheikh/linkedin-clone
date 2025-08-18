@@ -6,10 +6,10 @@
           <img src="/img/banner-img.jpg" alt="banner" @error="handleImageError">
         </div>
         <div class="avatar">
-          <img src="/img/profile-img.jpg" alt="profile" @error="handleImageError" />
+          <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="profile" @error="handleImageError" />
         </div>
         <div class="info">
-          <h2>{{ user ? user.displayName : 'Guest User' }}</h2>
+          <h2>{{ user ? user.displayName || 'Guest User' : 'Guest User' }}</h2>
           <p class="role">{{ user ? user.email : 'Please sign in' }}</p>
           <p class="location">Bogra District, Rajshahi</p>
           <div class="company">
@@ -81,7 +81,13 @@ export default {
   },
   methods: {
     handleImageError(event) {
-      event.target.src = '/img/placeholder.svg';
+      if (event.target.src.includes('placeholder.svg')) {
+        return;
+      } else if (event.target.src.includes('profile-img.jpg')) {
+        event.target.src = '/img/placeholder.svg';
+      } else {
+        event.target.src = '/img/profile-img.jpg';
+      }
     }
   }
 };

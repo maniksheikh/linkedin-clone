@@ -72,7 +72,7 @@
                   <div class="box">
                     <img :src="user && user.photoURL ? user.photoURL : '/img/profile-img.jpg'" alt="profile"/>
                     <div class="user-info">
-                      <span class="title">{{ user ? user.displayName : 'Guest User' }}</span>
+                      <span class="title">{{ user ? user.displayName || 'Guest User' : 'Guest User' }}</span>
                       <span class="email">{{ user ? user.email : '' }}</span>
                     </div>
                   </div>
