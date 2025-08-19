@@ -119,9 +119,7 @@ export default {
         },
         async registerUser() {
             try {
-                // Combine first name and last name
                 const fullName = `${this.user.firstName} ${this.user.lastName}`.trim()
-                
                 await this.$store.dispatch('signup', {
                     email: this.user.email,
                     password: this.user.password,

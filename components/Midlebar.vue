@@ -3,9 +3,8 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img :src="currentUser?.photoURL || '/img/default-avatar.svg'"
-            :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
-            @error="handleImageError" />
+          <img :src="getUserProfileImage(currentUser)"
+            :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text" placeholder="Start a Post" />
         </div>
         <div class="middle-body">
@@ -40,9 +39,8 @@
       <div v-for="post in importData" :key="post.id || post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="currentUser?.photoURL || '/img/default-avatar.svg'"
-              :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
-              @error="handleImageError" />
+            <img :src="getUserProfileImage(currentUser)"
+              :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
           </div>
           <div class="align">
             <div class="header">
@@ -109,12 +107,83 @@ import { ref, onMounted } from 'vue'
 export default {
   setup() {
     const currentUser = ref(null)
+    
+    const getUserProfileImage = (user) => {
+      // Debug logging to see what we're getting
+      console.log('getUserProfileImage called with user:', user);
+      
+      // First try to get the photoURL from user
+      if (user && user.photoURL && user.photoURL !== null && user.photoURL !== '') {
+        console.log('Using user photoURL:', user.photoURL);
+        return user.photoURL;
+      }
+      
+      // If no photoURL, use a generated avatar based on email
+      if (user && user.email) {
+        // Use a simple avatar service like UI Avatars
+        const initials = getInitials(user.displayName || user.email);
+        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a66c2&color=fff&size=200&bold=true`;
+        console.log('Using generated avatar URL:', avatarUrl);
+        return avatarUrl;
+      }
+      
+      // Fallback to default image
+      return '/static/img/default-avatar.svg';
+    }
+    
+    const getInitials = (name) => {
+      if (!name) return 'U';
+      
+      // If it's an email, extract the part before @
+      if (name.includes('@')) {
+        name = name.split('@')[0];
+      }
+      
+      // Get initials from name
+      const words = name.split(' ').filter(word => word.length > 0);
+      if (words.length >= 2) {
+        return (words[0][0] + words[1][0]).toUpperCase();
+      } else if (words.length === 1) {
+        return words[0].substring(0, 2).toUpperCase();
+      }
+      return 'U';
+    }
+    
+    const handleImageError = (event) => {
+      console.log('Image error for:', event.target.src);
+      
+      // Prevent infinite loops
+      if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
+        return;
+      }
+      
+      // Try the default avatar SVG first
+      if (!event.target.src.includes('default-avatar.svg')) {
+        event.target.src = '/static/img/default-avatar.svg';
+        return;
+      }
+      
+      // If that fails, try the profile image
+      if (!event.target.src.includes('profile-img.jpg')) {
+        event.target.src = '/static/img/profile-img.jpg';
+        return;
+      }
+      
+      // Final fallback to placeholder
+      event.target.src = '/static/img/placeholder.svg';
+    }
+    
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         currentUser.value = user
       })
     })
-    return { currentUser }
+    
+    return { 
+      currentUser,
+      getUserProfileImage,
+      handleImageError
+    }
   },
   data() {
     return {
@@ -140,20 +209,6 @@ export default {
     },
     deleteImportedPost(post) {
       this.importData = this.importData.filter(p => p !== post);
-    },
-    handleImageError(event) {
-      const currentSrc = event.target.src;
-      if (currentSrc.startsWith('http')) {
-        const fileName = currentSrc.split('/').pop().split('?')[0];
-        event.target.src = `/img/${fileName}`;
-        event.target.onerror = () => {
-          event.target.src = '/img/default-avatar.svg';
-          event.target.onerror = null;
-        };
-      } else {
-        event.target.src = '/img/default-avatar.svg';
-        event.target.onerror = null;
-      }
     }
   }
 }
