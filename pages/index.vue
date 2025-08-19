@@ -99,7 +99,65 @@ export default {
 
       try {
         const result = await signInWithPopup(auth, provider);
-        const userData = result.user;
+        let userData = result.user;
+        
+        // Enhanced logging to debug profile image issue
+        console.log('=== GOOGLE SIGN-IN DEBUG ===');
+        console.log('Full result object:', result);
+        console.log('User Data:', userData);
+        console.log('Photo URL:', userData.photoURL);
+        console.log('Display Name:', userData.displayName);
+        console.log('Email:', userData.email);
+        console.log('Provider Data:', result.providerId);
+        console.log('Additional User Info:', result._tokenResponse);
+        console.log('User metadata:', userData.metadata);
+        console.log('User provider data:', userData.providerData);
+        
+        // Check if photoURL is in provider data
+        if (userData.providerData && userData.providerData.length > 0) {
+          console.log('Provider specific data:');
+          userData.providerData.forEach((provider, index) => {
+            console.log(`Provider ${index}:`, provider);
+            console.log(`Provider ${index} photoURL:`, provider.photoURL);
+          });
+        }
+        
+        // If photoURL is missing, try to reload user data
+        if (!userData.photoURL) {
+          console.log('PhotoURL is missing, attempting to reload user...');
+          try {
+            await userData.reload();
+            console.log('User reloaded. New photoURL:', userData.photoURL);
+          } catch (reloadError) {
+            console.log('User reload failed:', reloadError);
+          }
+        }
+        
+        // Check OAuth access token for additional info
+        if (result._tokenResponse && result._tokenResponse.oauthAccessToken) {
+          console.log('OAuth Access Token available, trying to fetch profile from Google API...');
+          try {
+            const response = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${result._tokenResponse.oauthAccessToken}`);
+            const googleProfile = await response.json();
+            console.log('Google Profile API response:', googleProfile);
+            
+            // If we got a picture from Google API, use it
+            if (googleProfile.picture && !userData.photoURL) {
+              console.log('Found picture in Google API response:', googleProfile.picture);
+              // Create a modified user object with the picture
+              userData = {
+                ...userData,
+                photoURL: googleProfile.picture
+              };
+            }
+          } catch (apiError) {
+            console.log('Google API call failed:', apiError);
+          }
+        }
+        
+        console.log('Final userData before storing:', userData);
+        console.log('=== END DEBUG ===');
+        
         await this.$store.dispatch('loginWithGoogle', userData);
         alert('You are successfully logged in with Google! Redirecting...');
         await this.$router.push('/feed');

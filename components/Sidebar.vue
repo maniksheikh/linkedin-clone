@@ -26,11 +26,11 @@
               <span class="view">39</span>
             </div>
             <span class="first-bold">Grow your Network</span>
-          <div class="profile-view">
-            <span class="second">Who's viewed your profile</span>
-            <span class="views">4</span>
+            <div class="profile-view">
+              <span class="second">Who's viewed your profile</span>
+              <span class="views">4</span>
+            </div>
           </div>
-        </div>
         </div>
       </div>
       <div class="premium">
@@ -81,36 +81,28 @@ export default {
   },
   methods: {
     getUserProfileImage(user) {
-      // Debug logging to see what we're getting
       console.log('getUserProfileImage called with user:', user);
-      
-      // First try to get the photoURL from user
+
       if (user && user.photoURL && user.photoURL !== null && user.photoURL !== '') {
         console.log('Using user photoURL:', user.photoURL);
         return user.photoURL;
       }
-      
-      // If no photoURL, use a generated avatar based on email
+
       if (user && user.email) {
-        // Use a simple avatar service like UI Avatars
         const initials = this.getInitials(user.displayName || user.email);
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a66c2&color=fff&size=200&bold=true`;
         console.log('Using generated avatar URL:', avatarUrl);
         return avatarUrl;
       }
-      
-      // Fallback to default image
+
       return '/static/img/profile-img.jpg';
     },
     getInitials(name) {
       if (!name) return 'U';
-      
-      // If it's an email, extract the part before @
       if (name.includes('@')) {
         name = name.split('@')[0];
       }
-      
-      // Get initials from name
+
       const words = name.split(' ').filter(word => word.length > 0);
       if (words.length >= 2) {
         return (words[0][0] + words[1][0]).toUpperCase();
@@ -121,25 +113,21 @@ export default {
     },
     handleImageError(event) {
       console.log('Image error for:', event.target.src);
-      
-      // Prevent infinite loops
+
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
-      
-      // Try the default avatar SVG first
+
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
       }
-      
-      // If that fails, try the profile image
+
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
       }
-      
-      // Final fallback to placeholder
+
       event.target.src = '/static/img/placeholder.svg';
     }
   }
@@ -214,7 +202,9 @@ $black: black;
         .connection {
           padding: 8px 12px;
           cursor: pointer;
+
           &:hover {
+
             .first,
             .view,
             .first-bold {
@@ -253,6 +243,7 @@ $black: black;
           cursor: pointer;
 
           &:hover {
+
             .second,
             .views {
               color: #0a66c2;
@@ -319,6 +310,7 @@ $black: black;
             color: #0a66c2;
             text-decoration: underline;
           }
+
           svg {
             color: #0a66c2;
           }
@@ -432,11 +424,11 @@ $black: black;
 
       .avatar {
         position: absolute;
-        top: 60px;
+        top: 70px;
         left: 20%;
         transform: translateX(-50%);
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
         border-radius: 50%;
         border: 4px solid #fff;
         overflow: hidden;
@@ -679,89 +671,94 @@ $black: black;
     .side-container {
       width: 100%;
       margin-top: 4rem;
-      
+
       .profile-card {
         .banner {
           height: 80px;
         }
-        
+
         .avatar {
-          top: 40px;
-          width: 60px;
-          height: 60px;
+          top: 45px;
+          width: 50px;
+          height: 50px;
         }
-        
+
         .info {
           margin-top: 35px;
-          padding: 0 12px 12px;  
+          padding: 0 12px 12px;
+
           h2 {
             font-size: 14px;
           }
-          
+
           .role {
             font-size: 11px;
           }
-          
+
           .location {
             font-size: 10px;
           }
-          
+
           .company {
             img {
               width: 14px;
               height: 14px;
             }
-            
+
             span {
               font-size: 10px;
             }
           }
         }
       }
-      
+
       .container-body {
         .stats-box .connection {
           padding: 6px 10px;
-          
+
           .connection-body {
             .first {
               font-size: 0.8rem;
             }
           }
-          
+
           .first-bold {
             font-size: 0.8rem;
           }
         }
-        
+
         .stats-box .profile-view {
-          padding: 4px;         
+          padding: 4px;
+
           .second {
             font-size: 0.8rem;
           }
         }
-        
+
         .premium {
-          padding: 10px;         
+          padding: 10px;
+
           .premiun-middle {
             font-size: 0.8rem;
           }
         }
-        
+
         .items {
-          padding: 6px 10px;          
+          padding: 6px 10px;
+
           .last {
             font-size: 0.8rem;
           }
         }
-        
+
         .bottom {
-          padding: 6px 10px;        
+          padding: 6px 10px;
+
           .bottom-body .bottom-list {
             font-size: 0.8rem;
             padding: 4px 6px;
           }
-          
+
           .bottom-h {
             font-size: 0.8rem;
             padding: 4px 6px;

@@ -65,12 +65,41 @@ export const actions = {
 
   async loginWithGoogle({ commit }, userData) {
     try {
-      commit('SET_USER', {
+      // Enhanced logging to debug photoURL issue
+      console.log('=== STORE LOGIN WITH GOOGLE DEBUG ===')
+      console.log('Received userData:', userData)
+      console.log('userData.photoURL:', userData.photoURL)
+      console.log('userData.photoURL type:', typeof userData.photoURL)
+      console.log('userData.photoURL === null:', userData.photoURL === null)
+      console.log('userData.photoURL === undefined:', userData.photoURL === undefined)
+      console.log('userData.photoURL === "":', userData.photoURL === "")
+      
+      // Try to get photoURL from provider data if main photoURL is null
+      let finalPhotoURL = userData.photoURL;
+      
+      if (!finalPhotoURL && userData.providerData && userData.providerData.length > 0) {
+        console.log('Main photoURL is null/empty, checking provider data...')
+        for (let provider of userData.providerData) {
+          console.log('Checking provider:', provider.providerId, 'photoURL:', provider.photoURL)
+          if (provider.photoURL) {
+            finalPhotoURL = provider.photoURL;
+            console.log('Found photoURL in provider data:', finalPhotoURL)
+            break;
+          }
+        }
+      }
+      
+      const userToStore = {
         uid: userData.uid,
         email: userData.email,
         displayName: userData.displayName || userData.email?.split('@')[0],
-        photoURL: userData.photoURL
-      })
+        photoURL: finalPhotoURL || null
+      }
+      
+      console.log('Final user object to store:', userToStore)
+      console.log('=== END STORE DEBUG ===')
+      
+      commit('SET_USER', userToStore)
       return { hasAccount: true, user: userData }
     } catch (error) {
       commit('SET_ERROR', error.message)
@@ -80,12 +109,36 @@ export const actions = {
   
   setUser({ commit }, user) {
     if (user) {
-      commit('SET_USER', {
+      console.log('=== SET USER DEBUG ===')
+      console.log('setUser called with:', user)
+      console.log('user.photoURL:', user.photoURL)
+      
+      // Try to get photoURL from provider data if main photoURL is null
+      let finalPhotoURL = user.photoURL;
+      
+      if (!finalPhotoURL && user.providerData && user.providerData.length > 0) {
+        console.log('Main photoURL is null/empty in setUser, checking provider data...')
+        for (let provider of user.providerData) {
+          console.log('Checking provider in setUser:', provider.providerId, 'photoURL:', provider.photoURL)
+          if (provider.photoURL) {
+            finalPhotoURL = provider.photoURL;
+            console.log('Found photoURL in provider data (setUser):', finalPhotoURL)
+            break;
+          }
+        }
+      }
+      
+      const userToStore = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName || user.email?.split('@')[0],
-        photoURL: user.photoURL
-      })
+        photoURL: finalPhotoURL
+      }
+      
+      console.log('Final user object in setUser:', userToStore)
+      console.log('=== END SET USER DEBUG ===')
+      
+      commit('SET_USER', userToStore)
     } else {
       commit('SET_USER', null)
     }

@@ -23,6 +23,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+// Add scopes to ensure we get profile information including photo
+provider.addScope('profile');
+provider.addScope('email');
+provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+// Set custom parameters to ensure we get the profile photo
+provider.setCustomParameters({
+  prompt: 'select_account',
+  include_granted_scopes: true
+});
 const db = getFirestore(app);
 
 export { 

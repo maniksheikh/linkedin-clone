@@ -107,39 +107,30 @@ import { ref, onMounted } from 'vue'
 export default {
   setup() {
     const currentUser = ref(null)
-    
     const getUserProfileImage = (user) => {
-      // Debug logging to see what we're getting
       console.log('getUserProfileImage called with user:', user);
-      
-      // First try to get the photoURL from user
       if (user && user.photoURL && user.photoURL !== null && user.photoURL !== '') {
         console.log('Using user photoURL:', user.photoURL);
         return user.photoURL;
       }
       
-      // If no photoURL, use a generated avatar based on email
       if (user && user.email) {
-        // Use a simple avatar service like UI Avatars
         const initials = getInitials(user.displayName || user.email);
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a66c2&color=fff&size=200&bold=true`;
         console.log('Using generated avatar URL:', avatarUrl);
         return avatarUrl;
       }
       
-      // Fallback to default image
       return '/static/img/default-avatar.svg';
     }
     
     const getInitials = (name) => {
       if (!name) return 'U';
       
-      // If it's an email, extract the part before @
       if (name.includes('@')) {
         name = name.split('@')[0];
       }
       
-      // Get initials from name
       const words = name.split(' ').filter(word => word.length > 0);
       if (words.length >= 2) {
         return (words[0][0] + words[1][0]).toUpperCase();
@@ -152,24 +143,20 @@ export default {
     const handleImageError = (event) => {
       console.log('Image error for:', event.target.src);
       
-      // Prevent infinite loops
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
       
-      // Try the default avatar SVG first
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
       }
       
-      // If that fails, try the profile image
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
       }
-      
-      // Final fallback to placeholder
+
       event.target.src = '/static/img/placeholder.svg';
     }
     
@@ -311,8 +298,8 @@ $color-red: #cc1016;
 
 .midle-img {
   cursor: pointer;
-  height: 48px;
-  width: 48px;
+  height: 36px;
+  width: 36px;
   border-radius: 50%;
   object-fit: cover;
   transition: all 0.2s ease;
