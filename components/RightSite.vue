@@ -33,8 +33,8 @@
             class="ceo-img">
         </div>
         <div class="body-list">
-          <span class="type">John Smith</span>
-          <span class="para">CEO @ Tech Solutions & Software Founder</span>
+          <span class="type">Md Nasim Uddin</span>
+          <span class="para">CEO @ Connekt Studio & Software Founder</span>
           <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
@@ -46,12 +46,12 @@
       </div>
       <div class="right-section">
         <div class="right-body">
-          <img width="200" title="Michael Johnson" src="/img/nasir.jpg" height="200" alt="Michael Johnson"
+          <img width="200" title=" Nadir Uddin" src="/img/nasir.jpg" height="200" alt="Nadir Uddin"
             id="ember305" class="coo-img">
         </div>
         <div class="body-list">
-          <span class="type">Michael Johnson</span>
-          <span class="para">COO Founder @ Tech Solutions</span>
+          <span class="type">Md Nadir Uddin</span>
+          <span class="para">COO Founder @ Connekt Studio</span>
           <button class="btn-follow">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor"
               class="follow-match" width="16" height="16" focusable="false">
