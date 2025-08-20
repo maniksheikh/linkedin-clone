@@ -100,8 +100,6 @@ export default {
       try {
         const result = await signInWithPopup(auth, provider);
         let userData = result.user;
-        
-        // Enhanced logging to debug profile image issue
         console.log('=== GOOGLE SIGN-IN DEBUG ===');
         console.log('Full result object:', result);
         console.log('User Data:', userData);
@@ -113,7 +111,6 @@ export default {
         console.log('User metadata:', userData.metadata);
         console.log('User provider data:', userData.providerData);
         
-        // Check if photoURL is in provider data
         if (userData.providerData && userData.providerData.length > 0) {
           console.log('Provider specific data:');
           userData.providerData.forEach((provider, index) => {
@@ -122,7 +119,6 @@ export default {
           });
         }
         
-        // If photoURL is missing, try to reload user data
         if (!userData.photoURL) {
           console.log('PhotoURL is missing, attempting to reload user...');
           try {
@@ -133,7 +129,6 @@ export default {
           }
         }
         
-        // Check OAuth access token for additional info
         if (result._tokenResponse && result._tokenResponse.oauthAccessToken) {
           console.log('OAuth Access Token available, trying to fetch profile from Google API...');
           try {
@@ -141,10 +136,8 @@ export default {
             const googleProfile = await response.json();
             console.log('Google Profile API response:', googleProfile);
             
-            // If we got a picture from Google API, use it
             if (googleProfile.picture && !userData.photoURL) {
               console.log('Found picture in Google API response:', googleProfile.picture);
-              // Create a modified user object with the picture
               userData = {
                 ...userData,
                 photoURL: googleProfile.picture
