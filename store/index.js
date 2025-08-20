@@ -65,7 +65,6 @@ export const actions = {
 
   async loginWithGoogle({ commit }, userData) {
     try {
-      // Enhanced logging to debug photoURL issue
       console.log('=== STORE LOGIN WITH GOOGLE DEBUG ===')
       console.log('Received userData:', userData)
       console.log('userData.photoURL:', userData.photoURL)
@@ -73,8 +72,7 @@ export const actions = {
       console.log('userData.photoURL === null:', userData.photoURL === null)
       console.log('userData.photoURL === undefined:', userData.photoURL === undefined)
       console.log('userData.photoURL === "":', userData.photoURL === "")
-      
-      // Try to get photoURL from provider data if main photoURL is null
+
       let finalPhotoURL = userData.photoURL;
       
       if (!finalPhotoURL && userData.providerData && userData.providerData.length > 0) {
@@ -113,7 +111,6 @@ export const actions = {
       console.log('setUser called with:', user)
       console.log('user.photoURL:', user.photoURL)
       
-      // Try to get photoURL from provider data if main photoURL is null
       let finalPhotoURL = user.photoURL;
       
       if (!finalPhotoURL && user.providerData && user.providerData.length > 0) {
