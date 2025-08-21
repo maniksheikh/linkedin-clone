@@ -120,13 +120,11 @@ export default {
         console.log('Using generated avatar URL:', avatarUrl);
         return avatarUrl;
       }
-      
       return '/static/img/default-avatar.svg';
     }
     
     const getInitials = (name) => {
       if (!name) return 'U';
-      
       if (name.includes('@')) {
         name = name.split('@')[0];
       }
@@ -185,26 +183,20 @@ export default {
   methods: {
     loadPostsFromStorage() {
       try {
-        // Load default posts from JSON file
         this.importData = [...postData];
-        
-        // Load user posts from localStorage
         const savedPosts = localStorage.getItem('userPosts');
         if (savedPosts) {
           const userPosts = JSON.parse(savedPosts);
-          // Add user posts at the beginning
           this.importData = [...userPosts, ...this.importData];
         }
       } catch (error) {
         console.error('Error loading posts from storage:', error);
-        // Fallback to default posts only
         this.importData = [...postData];
       }
     },
     
     saveUserPostsToStorage() {
       try {
-        // Get only user-created posts (those with id property)
         const userPosts = this.importData.filter(post => post.id);
         localStorage.setItem('userPosts', JSON.stringify(userPosts));
       } catch (error) {
@@ -224,16 +216,12 @@ export default {
         };
         this.importData.unshift(newPost);
         this.text = '';
-        
-        // Save to localStorage
         this.saveUserPostsToStorage();
       }
     },
     
     deleteImportedPost(post) {
       this.importData = this.importData.filter(p => p !== post);
-      
-      // If it's a user post (has id), update localStorage
       if (post.id) {
         this.saveUserPostsToStorage();
       }
