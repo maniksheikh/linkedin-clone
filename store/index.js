@@ -145,6 +145,8 @@ export const actions = {
     try {
       const currentUser = auth.currentUser
       if (currentUser) {
+        const oldDisplayName = currentUser.displayName
+        
         await updateProfile(currentUser, {
           displayName: displayName
         })
@@ -156,6 +158,25 @@ export const actions = {
           displayName: displayName,
           photoURL: currentUser.photoURL
         })
+        
+        try {
+          const savedPosts = localStorage.getItem('userPosts')
+          if (savedPosts) {
+            const userPosts = JSON.parse(savedPosts)
+            const updatedPosts = userPosts.map(post => {
+              if (post.name === oldDisplayName && post.title === currentUser.email) {
+                return {
+                  ...post,
+                  name: displayName
+                }
+              }
+              return post
+            })
+            localStorage.setItem('userPosts', JSON.stringify(updatedPosts))
+          }
+        } catch (storageError) {
+          console.error('Error updating posts in storage:', storageError)
+        }
         
         return currentUser
       }

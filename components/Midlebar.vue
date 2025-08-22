@@ -3,8 +3,8 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img :src="getUserProfileImage(currentUser)"
-            :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
+          <img :src="getUserProfileImage(activeUser)"
+            :alt="'Visit profile for ' + (activeUser?.displayName || 'User')" class="midle-img"
             @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text" placeholder="Start a Post" />
         </div>
@@ -40,8 +40,8 @@
       <div v-for="post in importData" :key="post.id || post" class="post-body">
         <div class="post-section">
           <div class="pro-img-title">
-            <img :src="getUserProfileImage(currentUser)"
-              :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
+            <img :src="getUserProfileImage(activeUser)"
+              :alt="'Visit profile for ' + (activeUser?.displayName || 'User')" class="post-profile-img"
               @error="handleImageError" />
           </div>
           <div class="align">
@@ -138,6 +138,7 @@ import { useAuth } from '~/composables/useAuth'
 import { auth } from '~/plugins/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { ref, onMounted } from 'vue'
+import { mapState } from 'vuex'
 
 export default {
   setup() {
@@ -205,6 +206,12 @@ export default {
       handleImageError
     }
   },
+  computed: {
+    ...mapState(['user']),
+    activeUser() {
+      return this.user || this.currentUser
+    }
+  },
   data() {
     return {
       importData: [],
@@ -222,6 +229,17 @@ export default {
 
   beforeDestroy() {
     document.removeEventListener('click', this.handleClickOutside)
+  },
+
+  watch: {
+    user: {
+      handler(newUser, oldUser) {
+        if (newUser && oldUser && newUser.displayName !== oldUser.displayName) {
+          this.loadPostsFromStorage()
+        }
+      },
+      deep: true
+    }
   },
   methods: {
     loadPostsFromStorage() {
@@ -251,10 +269,10 @@ export default {
       if (this.text.trim()) {
         const newPost = {
           id: Date.now(),
-          name: this.currentUser ? this.currentUser.displayName : 'Anonymous',
-          title: this.currentUser ? this.currentUser.email : 'anonymous@user.com',
+          name: this.activeUser ? this.activeUser.displayName : 'Anonymous',
+          title: this.activeUser ? this.activeUser.email : 'anonymous@user.com',
           description: this.text,
-          avatar: this.currentUser ? this.currentUser.photoURL : '/img/default-avatar.svg',
+          avatar: this.activeUser ? this.activeUser.photoURL : '/img/default-avatar.svg',
           img: null
         };
         this.importData.unshift(newPost);
@@ -268,9 +286,8 @@ export default {
       if (post.id) {
         this.saveUserPostsToStorage();
       }
-      // Close dropdown if it was open
+
       this.hideDropdown(post);
-      // Cancel edit mode if this post was being edited
       if (this.editingPost === post) {
         this.cancelEdit();
       }
@@ -283,7 +300,6 @@ export default {
         [key]: !this.showDropdown[key]
       };
 
-      // Close other dropdowns
       Object.keys(this.showDropdown).forEach(k => {
         if (k !== key.toString()) {
           this.showDropdown[k] = false;
@@ -320,7 +336,6 @@ export default {
       this.editText = '';
     },
 
-    // Close dropdowns when clicking outside
     handleClickOutside(event) {
       if (!event.target.closest('.post-menu') && !event.target.closest('.dropdown-menu')) {
         this.showDropdown = {};
@@ -557,6 +572,22 @@ $color-red: #cc1016;
   gap: 4px;
 }
 
+.post-profile-img {
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-color: rgba(10, 102, 194, 0.3);
+  }
+}
+
 .delete-icon {
   background: transparent;
   border: none;
@@ -701,7 +732,7 @@ $color-red: #cc1016;
   color: white;
 
   &:hover {
-    background: darken($color-primary, 10%);
+    background: #084d8a;
     transform: translateY(-1px);
   }
 }
@@ -1042,6 +1073,11 @@ $color-red: #cc1016;
     min-width: 110px;
   }
 
+  .post-profile-img {
+    height: 44px;
+    width: 44px;
+  }
+
   .edit-textarea {
     font-size: 0.9rem;
     min-height: 70px;
@@ -1168,6 +1204,11 @@ $color-red: #cc1016;
     min-width: 100px;
   }
 
+  .post-profile-img {
+    height: 40px;
+    width: 40px;
+  }
+
   .dropdown-item {
     padding: 6px 12px;
     font-size: 0.75rem;
@@ -1244,7 +1285,7 @@ $color-red: #cc1016;
     padding: 10px;
   }
 
-  .pro-img-title .midle-img {
+  .pro-img-title .post-profile-img {
     height: 36px;
     width: 36px;
   }
