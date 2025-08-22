@@ -4,7 +4,8 @@
       <div class="middle">
         <div class="section">
           <img :src="getUserProfileImage(currentUser)"
-            :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
+            :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
+            @error="handleImageError" />
           <input @change="addItems" v-model="text" type="text" placeholder="Start a Post" />
         </div>
         <div class="middle-body">
@@ -40,21 +41,52 @@
         <div class="post-section">
           <div class="pro-img-title">
             <img :src="getUserProfileImage(currentUser)"
-              :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img" @error="handleImageError" />
+              :alt="'Visit profile for ' + (currentUser?.displayName || 'User')" class="midle-img"
+              @error="handleImageError" />
           </div>
           <div class="align">
             <div class="header">
               <span class="post-header">{{ post.name }}</span> <br />
               <span class="id">{{ post.title }}</span>
             </div>
-            <span class="post-dec">{{ post.description }}</span>
+            <div v-if="editingPost === post" class="edit-mode">
+              <textarea v-model="editText" class="edit-textarea" @keydown.enter.ctrl="saveEdit(post)"
+                @keydown.escape="cancelEdit" placeholder="Edit your post..." rows="3"></textarea>
+              <div class="edit-actions">
+                <button @click="saveEdit(post)" class="save-btn">Save</button>
+                <button @click="cancelEdit" class="cancel-btn">Cancel</button>
+              </div>
+            </div>
+            <span v-else class="post-dec">{{ post.description }}</span>
           </div>
-          <button class="delete-icon" @click="deleteImportedPost(post)" title="Delete post">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-              <path
-                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-            </svg>
-          </button>
+          <div class="post-actions">
+            <div class="post-menu">
+              <button class="menu-dots" @click="toggleDropdown(post)" title="More options">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3.25 8C3.25 8.69 2.69 9.25 2 9.25C1.31 9.25 0.75 8.69 0.75 8C0.75 7.31 1.31 6.75 2 6.75C2.69 6.75 3.25 7.31 3.25 8ZM14 6.75C13.31 6.75 12.75 7.31 12.75 8C12.75 8.69 13.31 9.25 14 9.25C14.69 9.25 15.25 8.69 15.25 8C15.25 7.31 14.69 6.75 14 6.75ZM8 6.75C7.31 6.75 6.75 7.31 6.75 8C6.75 8.69 7.31 9.25 8 9.25C8.69 9.25 9.25 8.69 9.25 8C9.25 7.31 8.69 6.75 8 6.75Z"
+                    fill="currentColor"></path>
+                </svg>
+              </button>
+              <div v-if="showDropdown[post.id || post]" class="dropdown-menu">
+                <button @click="startEdit(post)" class="dropdown-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16"
+                    height="16">
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                  </svg>
+                  Edit
+                </button>
+              </div>
+            </div>
+            <button class="delete-icon" @click="deleteImportedPost(post)" title="Delete post">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M13.78 12.72C14.07 13.01 14.07 13.49 13.78 13.78C13.63 13.93 13.44 14 13.25 14C13.06 14 12.87 13.93 12.72 13.78L8 9.06L3.28 13.78C3.13 13.93 2.94 14 2.75 14C2.56 14 2.37 13.93 2.22 13.78C1.93 13.49 1.93 13.01 2.22 12.72L6.94 8L2.22 3.28C1.93 2.99 1.93 2.51 2.22 2.22C2.51 1.93 2.99 1.93 3.28 2.22L8 6.94L12.72 2.22C13.01 1.93 13.49 1.93 13.78 2.22C14.07 2.51 14.07 2.99 13.78 3.28L9.06 8L13.78 12.72Z"
+                  fill="currentColor"></path>
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="height-img" v-if="post.img">
           <img class="pro-height-img" :src="post.img" @error="handleImageError" />
@@ -79,8 +111,11 @@
             <div class="span">Comment</div>
           </div>
           <div class="post-react">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="wish-match" width="20" height="20" focusable="false">
-              <path d="M13.96 5H6c-.55 0-1 .45-1 1v10H3V6c0-1.66 1.34-3 3-3h7.96L12 0h2.37L17 4l-2.63 4H12l1.96-3zm5.54 3H19v10c0 .55-.45 1-1 1h-7.96L12 16H9.63L7 20l2.63 4H12l-1.96-3H18c1.66 0 3-1.34 3-3V8h-1.5z"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
+              class="wish-match" width="20" height="20" focusable="false">
+              <path
+                d="M13.96 5H6c-.55 0-1 .45-1 1v10H3V6c0-1.66 1.34-3 3-3h7.96L12 0h2.37L17 4l-2.63 4H12l1.96-3zm5.54 3H19v10c0 .55-.45 1-1 1h-7.96L12 16H9.63L7 20l2.63 4H12l-1.96-3H18c1.66 0 3-1.34 3-3V8h-1.5z">
+              </path>
             </svg>
             <div class="span">Repost</div>
           </div>
@@ -113,7 +148,7 @@ export default {
         console.log('Using user photoURL:', user.photoURL);
         return user.photoURL;
       }
-      
+
       if (user && user.email) {
         const initials = getInitials(user.displayName || user.email);
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a66c2&color=fff&size=200&bold=true`;
@@ -122,13 +157,13 @@ export default {
       }
       return '/static/img/default-avatar.svg';
     }
-    
+
     const getInitials = (name) => {
       if (!name) return 'U';
       if (name.includes('@')) {
         name = name.split('@')[0];
       }
-      
+
       const words = name.split(' ').filter(word => word.length > 0);
       if (words.length >= 2) {
         return (words[0][0] + words[1][0]).toUpperCase();
@@ -137,19 +172,19 @@ export default {
       }
       return 'U';
     }
-    
+
     const handleImageError = (event) => {
       console.log('Image error for:', event.target.src);
-      
+
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
-      
+
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
       }
-      
+
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
@@ -157,14 +192,14 @@ export default {
 
       event.target.src = '/static/img/placeholder.svg';
     }
-    
+
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         currentUser.value = user
       })
     })
-    
-    return { 
+
+    return {
       currentUser,
       getUserProfileImage,
       handleImageError
@@ -174,11 +209,19 @@ export default {
     return {
       importData: [],
       text: '',
-      email: ''
+      email: '',
+      editingPost: null,
+      editText: '',
+      showDropdown: {}
     }
   },
   mounted() {
     this.loadPostsFromStorage()
+    document.addEventListener('click', this.handleClickOutside)
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('click', this.handleClickOutside)
   },
   methods: {
     loadPostsFromStorage() {
@@ -194,7 +237,7 @@ export default {
         this.importData = [...postData];
       }
     },
-    
+
     saveUserPostsToStorage() {
       try {
         const userPosts = this.importData.filter(post => post.id);
@@ -203,7 +246,7 @@ export default {
         console.error('Error saving posts to storage:', error);
       }
     },
-    
+
     addItems() {
       if (this.text.trim()) {
         const newPost = {
@@ -219,11 +262,68 @@ export default {
         this.saveUserPostsToStorage();
       }
     },
-    
+
     deleteImportedPost(post) {
       this.importData = this.importData.filter(p => p !== post);
       if (post.id) {
         this.saveUserPostsToStorage();
+      }
+      // Close dropdown if it was open
+      this.hideDropdown(post);
+      // Cancel edit mode if this post was being edited
+      if (this.editingPost === post) {
+        this.cancelEdit();
+      }
+    },
+
+    toggleDropdown(post) {
+      const key = post.id || post;
+      this.showDropdown = {
+        ...this.showDropdown,
+        [key]: !this.showDropdown[key]
+      };
+
+      // Close other dropdowns
+      Object.keys(this.showDropdown).forEach(k => {
+        if (k !== key.toString()) {
+          this.showDropdown[k] = false;
+        }
+      });
+    },
+
+    hideDropdown(post) {
+      const key = post.id || post;
+      this.showDropdown = {
+        ...this.showDropdown,
+        [key]: false
+      };
+    },
+
+    startEdit(post) {
+      this.editingPost = post;
+      this.editText = post.description;
+      this.hideDropdown(post);
+    },
+
+    saveEdit(post) {
+      if (this.editText.trim()) {
+        post.description = this.editText.trim();
+        if (post.id) {
+          this.saveUserPostsToStorage();
+        }
+      }
+      this.cancelEdit();
+    },
+
+    cancelEdit() {
+      this.editingPost = null;
+      this.editText = '';
+    },
+
+    // Close dropdowns when clicking outside
+    handleClickOutside(event) {
+      if (!event.target.closest('.post-menu') && !event.target.closest('.dropdown-menu')) {
+        this.showDropdown = {};
       }
     }
   }
@@ -309,6 +409,7 @@ $color-red: #cc1016;
       background: $color-gray-100;
       border-color: $color-gray-500;
       color: $color-gray-900;
+
       &::placeholder {
         color: $color-gray-700;
       }
@@ -447,10 +548,44 @@ $color-red: #cc1016;
   align-items: center;
 }
 
-.delete-icon {
+.post-actions {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.delete-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: $color-gray-500;
+
+  &:hover {
+    background: rgba(204, 16, 22, 0.1);
+    color: $color-red;
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.post-menu {
+  position: relative;
+}
+
+.menu-dots {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -464,13 +599,121 @@ $color-red: #cc1016;
 
   &:hover {
     background: rgba(0, 0, 0, 0.05);
-    color: $color-red;
-    transform: scale(1.15);
+    color: $color-gray-700;
+    transform: scale(1.1);
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 120px;
+  padding: 4px 0;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: $font-size-sm;
+  color: $color-gray-700;
+  transition: all 0.2s ease;
+  text-align: left;
+
+  &:hover {
+    background: $color-gray-100;
+    color: $color-gray-900;
+  }
+
+  &.delete {
+    color: $color-red;
+
+    &:hover {
+      background: rgba(204, 16, 22, 0.1);
+      color: $color-red;
+    }
+  }
+
+  svg {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.edit-mode {
+  margin-top: 8px;
+}
+
+.edit-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  font-size: $font-size-sm;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
+  }
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn {
+  background: $color-primary;
+  color: white;
+
+  &:hover {
+    background: darken($color-primary, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+.cancel-btn {
+  background: transparent;
+  color: $color-gray-700;
+  border: 1px solid $color-gray-300;
+
+  &:hover {
+    background: $color-gray-100;
+    border-color: $color-gray-500;
   }
 }
 
@@ -514,9 +757,9 @@ $color-red: #cc1016;
 .post-dec {
   display: block;
   margin-top: 8px;
-  font-size: $font-size-sm;
+  font-size: 16px;
   font-weight: $font-weight-normal;
-  color: $color-gray-900;
+  color: $color-gray-700;
   line-height: 1.5;
 }
 
@@ -550,12 +793,12 @@ $color-red: #cc1016;
   &:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.08);
-    
+
     .span {
       color: $color-gray-900;
       font-weight: $font-weight-semibold;
     }
-    
+
     svg {
       opacity: 0.8;
       transform: scale(1.05);
@@ -777,9 +1020,37 @@ $color-red: #cc1016;
     gap: 0;
   }
 
-  .delete-icon {
+  .post-actions {
     right: 8px;
     top: 8px;
+    gap: 2px;
+  }
+
+  .delete-icon,
+  .menu-dots {
+    padding: 5px;
+  }
+
+  .delete-icon svg,
+  .menu-dots svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .dropdown-menu {
+    right: 0;
+    min-width: 110px;
+  }
+
+  .edit-textarea {
+    font-size: 0.9rem;
+    min-height: 70px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    padding: 5px 12px;
+    font-size: 0.8rem;
   }
 }
 
@@ -807,7 +1078,7 @@ $color-red: #cc1016;
 
   .section {
     padding: 12px;
-    
+
     input {
       font-size: 15px;
       padding: 12px 16px;
@@ -822,7 +1093,7 @@ $color-red: #cc1016;
 
   .middle-section {
     padding: 8px 16px;
-    
+
     .span {
       font-size: 0.85rem;
     }
@@ -869,17 +1140,49 @@ $color-red: #cc1016;
 
   .post-react {
     padding: 6px 4px;
-    
+
     .span {
       font-size: 0.75rem;
       margin-left: 4px;
     }
   }
 
-  .delete-icon {
+  .post-actions {
     right: 6px;
     top: 6px;
+    gap: 1px;
+  }
+
+  .delete-icon,
+  .menu-dots {
     padding: 4px;
+  }
+
+  .delete-icon svg,
+  .menu-dots svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .dropdown-menu {
+    min-width: 100px;
+  }
+
+  .dropdown-item {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .edit-textarea {
+    font-size: 0.85rem;
+    min-height: 60px;
+    padding: 10px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    padding: 4px 10px;
+    font-size: 0.75rem;
   }
 }
 
@@ -916,7 +1219,7 @@ $color-red: #cc1016;
 
   .section {
     padding: 8px;
-    
+
     input {
       font-size: 14px;
       padding: 10px 14px;
@@ -931,7 +1234,7 @@ $color-red: #cc1016;
 
   .middle-section {
     padding: 6px 12px;
-    
+
     .span {
       font-size: 0.8rem;
     }
@@ -968,7 +1271,7 @@ $color-red: #cc1016;
 
   .post-react {
     padding: 5px 3px;
-    
+
     .span {
       font-size: 0.7rem;
       margin-left: 3px;
