@@ -244,7 +244,6 @@ export default {
         console.log('Using generated avatar URL:', avatarUrl);
         return avatarUrl;
       }
-      
       console.log('Using fallback image');
       return '/static/img/profile-img.jpg';
     },
@@ -264,7 +263,6 @@ export default {
     },
     handleImageError(event) {
       console.log('Image error for:', event.target.src);
-      
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
@@ -278,7 +276,6 @@ export default {
         event.target.src = '/static/img/profile-img.jpg';
         return;
       }
-      
       event.target.src = '/static/img/placeholder.svg';
     },
     async logout() {
@@ -404,7 +401,6 @@ a {
   max-width: 1220px;
   padding: 0 $spacing-md;
   box-sizing: border-box;
-
   @media screen and (max-width: 768px) {
     width: 100% !important;
     max-width: 100% !important;
@@ -467,7 +463,6 @@ a {
   &::placeholder {
     color: $text-secondary;
   }
-
   &:focus {
     outline: none;
   }
@@ -505,7 +500,6 @@ a {
     svg {
       color: $text-primary;
     }
-
     span {
       color: $text-primary;
       font-weight: 500;
@@ -656,11 +650,9 @@ a {
 
   &:hover {
     background: $hover-color;
-
     svg {
       color: $primary-blue;
     }
-
     h4 {
       color: $primary-blue;
     }

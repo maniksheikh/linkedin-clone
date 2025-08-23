@@ -176,7 +176,6 @@ export default {
 
     const handleImageError = (event) => {
       console.log('Image error for:', event.target.src);
-
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
@@ -190,7 +189,6 @@ export default {
         event.target.src = '/static/img/profile-img.jpg';
         return;
       }
-
       event.target.src = '/static/img/placeholder.svg';
     }
 
