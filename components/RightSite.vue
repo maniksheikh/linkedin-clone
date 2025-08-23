@@ -221,8 +221,7 @@ div {
   .follow-match {
     margin-right: 6px;
     color: $text-medium;
-  }
-  
+  } 
   .follow {
     font-size: 0.875rem;
     font-weight: 500;
@@ -241,8 +240,7 @@ div {
     font-weight: 500;
     color: $text-medium;
     margin-right: 8px;
-  }
-  
+  }  
   .icon-match {
     color: $text-medium;
     vertical-align: middle;
@@ -262,8 +260,7 @@ div {
     width: 100%;
     height: auto;
     display: block;
-  }
-  
+  } 
   .footer {
     padding: 12px 16px;
     text-align: center;
@@ -321,8 +318,7 @@ div {
         
         .para {
           font-size: 0.75rem;
-        }
-        
+        }   
         .btn-follow {
           padding: 4px 12px;
           width: 85px;

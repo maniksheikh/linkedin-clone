@@ -94,7 +94,6 @@ export default {
         console.log('Using generated avatar URL:', avatarUrl);
         return avatarUrl;
       }
-
       return '/static/img/profile-img.jpg';
     },
     getInitials(name) {
@@ -127,7 +126,6 @@ export default {
         event.target.src = '/static/img/profile-img.jpg';
         return;
       }
-
       event.target.src = '/static/img/placeholder.svg';
     }
   }
@@ -565,7 +563,6 @@ $black: black;
           color: #0a66c2;
           text-decoration: underline;
         }
-
         svg {
           color: #0a66c2;
         }
@@ -580,7 +577,7 @@ $black: black;
       padding: 8px 12px;
       margin-bottom: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      width: calc(100% - 2px); // Adjusted to account for borders
+      width: calc(100% - 2px);
 
       .bottom-body {
         display: flex;
@@ -660,7 +657,6 @@ $black: black;
   h3 {
     font-size: 1.2rem;
   }
-
   p {
     font-weight: bold;
   }
@@ -694,17 +690,14 @@ $black: black;
           .role {
             font-size: 11px;
           }
-
           .location {
             font-size: 10px;
           }
-
           .company {
             img {
               width: 14px;
               height: 14px;
             }
-
             span {
               font-size: 10px;
             }
