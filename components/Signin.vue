@@ -68,7 +68,6 @@ export default {
         },
     },
 }
-
 </script>
 
 <style scoped>
@@ -179,10 +178,9 @@ p {
     color: #1877f2;
     padding: 0.8rem 0;
     font-size: 1.1rem;
-}
-
-p:hover {
-    text-decoration: underline;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .forgot-pass {

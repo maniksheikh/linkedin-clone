@@ -338,11 +338,9 @@ export default {
     .signup {
         width: 350px;
     }
-
     .signup .signup-group .gender .flex-items {
         gap: 0.3rem;
     }
-
     .signup .signup-group .gender .flex-items .form-control {
         gap: 0.5rem;
     }
