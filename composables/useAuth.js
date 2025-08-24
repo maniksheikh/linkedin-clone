@@ -1,4 +1,4 @@
-// composables/useAuth.js
+
 import { auth, provider, signInWithPopup } from "~/plugins/firebase";
 import { ref } from "vue";
 

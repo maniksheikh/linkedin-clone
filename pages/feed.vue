@@ -122,16 +122,13 @@ export default {
     grid-template-columns: 250px 1fr 280px !important;
     grid-gap: 1rem !important;
   }
-  
   .sidebar {
     width: 100%;
-  }
-  
+  } 
   .midlebar {
     width: 100% !important;
     margin: 0 !important;
   }
-  
   .rightbar {
     width: 100%;
   }
@@ -199,7 +196,6 @@ export default {
 .midlebar::-webkit-scrollbar {
   display: none;
 }
-
 .rightbar {
   width: 300px;
   position: sticky;
