@@ -80,7 +80,6 @@ export default {
           email: this.user.email,
           password: this.user.password,
         });
-
         if (userData && userData.hasAccount) {
           alert('You are successfully logged in! Redirecting...');
           await this.$router.push('/feed');
@@ -96,7 +95,6 @@ export default {
     },
     async signInWithGoogle() {
       this.error = '';
-
       try {
         const result = await signInWithPopup(auth, provider);
         let userData = result.user;
@@ -149,8 +147,7 @@ export default {
         }
         
         console.log('Final userData before storing:', userData);
-        console.log('=== END DEBUG ===');
-        
+        console.log('=== END DEBUG ===');  
         await this.$store.dispatch('loginWithGoogle', userData);
         alert('You are successfully logged in with Google! Redirecting...');
         await this.$router.push('/feed');
@@ -308,7 +305,6 @@ input[type=password] {
   &:focus {
     @include input-focus;
   }
-
   &::placeholder {
     color: $text-secondary;
     font-weight: 400;
@@ -334,21 +330,17 @@ button {
     background-color: $primary-dark;
     @include button-hover-effect;
   }
-
   &:active {
     transform: translateY(0);
   }
-
   &:focus {
     @include focus-style;
   }
-
   &:disabled {
     background-color: $border-color;
     color: $text-muted;
     cursor: not-allowed;
     transform: none;
-
     &:hover {
       background-color: $border-color;
       transform: none;
@@ -373,13 +365,11 @@ button {
       box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3);
       @include button-hover-effect;
     }
-
     &:focus {
       background-color: #f8f9fa;
       border-color: #4285f4;
       box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3);
     }
-
     .google-icon {
       flex-shrink: 0;
     }
@@ -441,7 +431,6 @@ footer {
     color: $primary-dark;
     text-decoration: underline;
   }
-
   &:focus {
     @include focus-style;
   }
@@ -461,13 +450,11 @@ footer {
   
   .login-container {
     padding: 1.5rem 1.25rem;
-  }
-  
+  } 
   h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-  }
-  
+  } 
   .linkedin-img {
     height: 20px;
     width: 24px;
@@ -484,13 +471,11 @@ footer {
     padding: 0.75rem 1.25rem;
     font-size: 0.95rem;
     margin: 0.5rem 0;
-  }
-  
+  } 
   label {
     font-size: 0.8rem;
     margin-bottom: 0.75rem;
-  }
-  
+  } 
   footer {
     padding: 0.75rem 0 0 0;
     
@@ -520,8 +505,7 @@ footer {
   
   .login-container {
     padding: 1rem 1rem;
-  }
-  
+  }  
   h2 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
@@ -549,7 +533,6 @@ footer {
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
   }
-  
   .error {
     font-size: 0.9rem !important;
     padding: 0.75rem;
