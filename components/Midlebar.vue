@@ -46,14 +46,21 @@
                 <div v-for="(media, index) in selectedMedia" :key="index" class="media-preview-item">
                   <div class="media-preview-wrapper">
                     <img v-if="media.type.startsWith('image/')" :src="media.preview" class="media-preview-img" />
-                    <video v-else-if="media.type.startsWith('video/')" :src="media.preview" class="media-preview-video" controls></video>
+                    <div v-else-if="media.type.startsWith('video/')" class="video-preview-container">
+                      <video :src="media.preview" class="media-preview-video" controls></video>
+                      <button @click="removeMedia(index)" class="media-remove-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                      </button>
+                    </div>
                     <div v-else class="media-preview-file">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
                         <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                       </svg>
                       <span class="file-name">{{ media.name }}</span>
+                      <button @click="removeMedia(index)" class="remove-media-btn">&times;</button>
                     </div>
-                    <button @click="removeMedia(index)" class="remove-media-btn">&times;</button>
                   </div>
                 </div>
               </div>
@@ -165,7 +172,18 @@
         <div v-if="post.media && post.media.length > 0" class="post-media-container">
           <div v-for="(media, index) in post.media" :key="index" class="post-media-item">
             <img v-if="media.type.startsWith('image/')" :src="media.url" class="pro-height-img" @error="handleImageError" />
-            <video v-else-if="media.type.startsWith('video/')" :src="media.url" class="pro-height-video" controls></video>
+            <div v-else-if="media.type.startsWith('video/')" class="video-container">
+              <video 
+                :src="media.url" 
+                class="pro-height-video" 
+                controls
+              ></video>
+              <button class="video-delete-btn" @click="removeMediaFromPost(post, index)" title="Remove media">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+              </button>
+            </div>
             <div v-else class="post-file-item">
               <div class="file-icon-container">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
@@ -346,24 +364,103 @@ export default {
   methods: {
     loadPostsFromStorage() {
       try {
+        // Start with default posts
         this.importData = [...postData];
+        
         const savedPosts = localStorage.getItem('userPosts');
         if (savedPosts) {
           const userPosts = JSON.parse(savedPosts);
-          this.importData = [...userPosts, ...this.importData];
+          console.log('Loading user posts from localStorage:', userPosts.length, 'posts');
+          
+          // Process each saved post to ensure media is properly restored
+          const processedUserPosts = userPosts.map(post => {
+            const processedPost = { ...post };
+            
+            // Ensure media array exists and is properly formatted
+            if (processedPost.media && Array.isArray(processedPost.media)) {
+              processedPost.media = processedPost.media.map(media => ({
+                type: media.type,
+                name: media.name,
+                size: media.size,
+                url: media.url, // This should contain base64 data for images/videos
+                preview: media.preview || media.url,
+                isTemporary: false
+              }));
+              console.log(`Post ${post.id} has ${processedPost.media.length} media items`);
+            } else {
+              processedPost.media = [];
+            }
+            
+            return processedPost;
+          });
+          
+          // Add user posts at the beginning
+          this.importData = [...processedUserPosts, ...this.importData];
+          console.log('Successfully loaded posts from localStorage. Total posts:', this.importData.length);
+        } else {
+          console.log('No saved posts found in localStorage');
         }
       } catch (error) {
         console.error('Error loading posts from storage:', error);
         this.importData = [...postData];
+        this.showErrorNotification('Failed to load saved posts');
       }
     },
 
     saveUserPostsToStorage() {
       try {
-        const userPosts = this.importData.filter(post => post.id);
+        const userPosts = this.importData.filter(post => post.id).map(post => {
+          // Create a deep copy of the post and include all media (images, videos, documents)
+          const postCopy = { 
+            ...post,
+            // Ensure all post properties are preserved
+            id: post.id,
+            name: post.name,
+            title: post.title,
+            description: post.description,
+            avatar: post.avatar,
+            img: post.img || null
+          };
+          
+          if (postCopy.media && postCopy.media.length > 0) {
+            // Save all media types including videos and images with complete data
+            postCopy.media = postCopy.media.map(media => ({
+              type: media.type,
+              name: media.name,
+              size: media.size,
+              url: media.url, // This includes base64 data for images/videos or blob URLs for documents
+              preview: media.preview || media.url, // Ensure preview is saved for images/videos
+              isTemporary: false // Mark as permanently saved
+            }));
+          } else {
+            // Ensure media array exists even if empty
+            postCopy.media = [];
+          }
+          
+          return postCopy;
+        });
+        
+        console.log('Saving user posts to localStorage:', userPosts.length, 'posts');
         localStorage.setItem('userPosts', JSON.stringify(userPosts));
+        
+        // Verify the save was successful
+        const savedData = localStorage.getItem('userPosts');
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          console.log('Verification: Successfully saved', parsedData.length, 'posts to localStorage');
+          
+          // Count total media items saved
+          const totalMedia = parsedData.reduce((total, post) => {
+            return total + (post.media ? post.media.length : 0);
+          }, 0);
+          console.log('Total media items saved:', totalMedia);
+        } else {
+          console.error('Verification failed: Posts not found in localStorage after save');
+        }
       } catch (error) {
         console.error('Error saving posts to storage:', error);
+        // Show user-friendly error notification
+        this.showErrorNotification('Failed to save post. Please try again.');
       }
     },
 
@@ -434,7 +531,7 @@ export default {
 
     processFile(file) {
       if (file.size > 100 * 1024 * 1024) { // 100MB limit
-        alert('File size must be less than 100MB');
+        this.showErrorNotification('File size must be less than 100MB');
         return;
       }
 
@@ -444,19 +541,35 @@ export default {
         type: file.type,
         size: file.size,
         preview: null,
-        url: null
+        url: null,
+        isTemporary: false // All media will be saved permanently
       };
 
       if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           mediaItem.preview = e.target.result;
-          mediaItem.url = e.target.result; // For demo purposes, using data URL
+          mediaItem.url = e.target.result; // Save as base64 data URL for persistence
+          console.log(`Processed ${file.type} file: ${file.name}, size: ${file.size} bytes`);
+        };
+        reader.onerror = (e) => {
+          console.error('Error reading file:', file.name, e);
+          this.showErrorNotification(`Failed to process file: ${file.name}`);
         };
         reader.readAsDataURL(file);
       } else {
-        // For documents, we'll use a placeholder
-        mediaItem.url = URL.createObjectURL(file);
+        // For documents, also convert to base64 for persistence
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          mediaItem.url = e.target.result; // Save as base64 for documents too
+          mediaItem.preview = e.target.result;
+          console.log(`Processed document file: ${file.name}, size: ${file.size} bytes`);
+        };
+        reader.onerror = (e) => {
+          console.error('Error reading document file:', file.name, e);
+          this.showErrorNotification(`Failed to process document: ${file.name}`);
+        };
+        reader.readAsDataURL(file);
       }
 
       this.selectedMedia.push(mediaItem);
@@ -475,24 +588,39 @@ export default {
     createPost() {
       if (!this.canPost) return;
 
+      // Ensure all media files are properly processed before creating post
+      const processedMedia = this.selectedMedia.map(media => ({
+        type: media.type,
+        name: media.name,
+        size: media.size,
+        url: media.url || media.preview, // Use url first, fallback to preview
+        preview: media.preview || media.url, // Ensure preview exists
+        isTemporary: false // All media is now permanently saved
+      }));
+
       const newPost = {
         id: Date.now(),
         name: this.activeUser ? this.activeUser.displayName : 'Anonymous',
         title: this.activeUser ? this.activeUser.email : 'anonymous@user.com',
         description: this.postText,
         avatar: this.activeUser ? this.activeUser.photoURL : '/img/default-avatar.svg',
-        media: this.selectedMedia.length > 0 ? this.selectedMedia.map(media => ({
-          type: media.type,
-          name: media.name,
-          size: media.size,
-          url: media.url
-        })) : [],
+        media: processedMedia,
         img: null // Keep for backward compatibility
       };
 
+      console.log('Creating new post with media:', processedMedia.length, 'items');
       this.importData.unshift(newPost);
+      
+      // Save all media including images and videos to localStorage
       this.saveUserPostsToStorage();
       this.closePostModal();
+      
+      // Show success notification for all media types
+      const hasMedia = this.selectedMedia.length > 0;
+      if (hasMedia) {
+        const mediaTypes = [...new Set(this.selectedMedia.map(m => m.type.split('/')[0]))];
+        this.showMediaUploadNotification(mediaTypes);
+      }
     },
 
     formatFileSize(bytes) {
@@ -562,6 +690,181 @@ export default {
       if (!event.target.closest('.post-menu') && !event.target.closest('.dropdown-menu')) {
         this.showDropdown = {};
       }
+    },
+
+    removeMediaFromPost(post, mediaIndex) {
+      // Remove the media (video/image/document) from the post's media array
+      if (post.media && post.media[mediaIndex]) {
+        // Clean up the blob URL if it exists to prevent memory leaks
+        if (post.media[mediaIndex].url && post.media[mediaIndex].url.startsWith('blob:')) {
+          URL.revokeObjectURL(post.media[mediaIndex].url);
+        }
+        
+        // Get media type for notification
+        const mediaType = post.media[mediaIndex].type.startsWith('video/') ? 'Video' : 
+                          post.media[mediaIndex].type.startsWith('image/') ? 'Image' : 'File';
+        
+        // Remove the media from the media array
+        post.media.splice(mediaIndex, 1);
+        
+        // If this was a user post (has an id), update localStorage
+        if (post.id) {
+          this.saveUserPostsToStorage();
+        }
+        
+        // Show a brief notification
+        this.showMediaRemovedNotification(mediaType);
+      }
+    },
+
+    showMediaRemovedNotification(mediaType = 'Media') {
+      // Create a temporary notification element
+      const notification = document.createElement('div');
+      notification.textContent = `${mediaType} removed successfully`;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #333;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 2 seconds with fade out
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 2000);
+    },
+
+    showMediaUploadNotification(mediaTypes = []) {
+      // Create a temporary notification element
+      const notification = document.createElement('div');
+      const typeText = mediaTypes.length > 0 ? mediaTypes.join(' & ') : 'Media';
+      notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+          </svg>
+          <span>${typeText} uploaded and saved successfully! Will persist after refresh.</span>
+        </div>
+      `;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #057642;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        max-width: 350px;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 4 seconds with fade out
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 4000);
+    },
+
+    showErrorNotification(message = 'An error occurred') {
+      // Create a temporary error notification element
+      const notification = document.createElement('div');
+      notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+          </svg>
+          <span>${message}</span>
+        </div>
+      `;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #cc1016;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        max-width: 350px;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 4 seconds with fade out
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 4000);
+    },
+
+    // Debug method to test persistence (can be called from browser console)
+    testMediaPersistence() {
+      console.log('=== MEDIA PERSISTENCE TEST ===');
+      const savedPosts = localStorage.getItem('userPosts');
+      if (savedPosts) {
+        const userPosts = JSON.parse(savedPosts);
+        console.log('Found', userPosts.length, 'saved posts');
+        
+        userPosts.forEach((post, index) => {
+          console.log(`Post ${index + 1}:`, {
+            id: post.id,
+            description: post.description?.substring(0, 50) + '...',
+            mediaCount: post.media?.length || 0,
+            mediaTypes: post.media?.map(m => m.type) || []
+          });
+          
+          if (post.media && post.media.length > 0) {
+            post.media.forEach((media, mediaIndex) => {
+              console.log(`  Media ${mediaIndex + 1}:`, {
+                type: media.type,
+                name: media.name,
+                size: media.size,
+                hasUrl: !!media.url,
+                urlType: media.url?.startsWith('data:') ? 'base64' : 'other'
+              });
+            });
+          }
+        });
+      } else {
+        console.log('No saved posts found in localStorage');
+      }
+      console.log('=== END TEST ===');
     }
   }
 }
@@ -768,9 +1071,18 @@ $color-red: #cc1016;
     align-items: center;
     justify-content: center;
     font-size: 14px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    z-index: 10;
     
     &:hover {
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(204, 16, 22, 0.9);
+      transform: scale(1.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    &:active {
+      transform: scale(0.95);
     }
   }
 }
@@ -782,10 +1094,49 @@ $color-red: #cc1016;
   display: block;
 }
 
+.video-preview-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .media-preview-video {
   width: 100%;
   max-height: 200px;
   display: block;
+}
+
+.media-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(204, 16, 22, 0.9);
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  svg {
+    pointer-events: none;
+  }
 }
 
 .media-preview-file {
@@ -879,11 +1230,50 @@ $color-red: #cc1016;
   }
 }
 
+.video-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .pro-height-video {
   width: 100%;
   max-height: 400px;
   border-radius: 8px;
   display: block;
+}
+
+.video-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(204, 16, 22, 0.9);
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  svg {
+    pointer-events: none;
+  }
 }
 
 .post-file-item {
@@ -1680,6 +2070,24 @@ $color-red: #cc1016;
     box-sizing: border-box;
   }
 
+  .pro-height-video {
+    height: 280px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .video-delete-btn {
+    // Make button slightly larger on mobile for easier interaction
+    width: 36px;
+    height: 36px;
+    top: 12px;
+    right: 12px;
+    
+    // Always visible on mobile (no hover required)
+    background: rgba(0, 0, 0, 0.8);
+  }
+
   .post-dec {
     font-size: $font-size-sm;
     width: 100%;
@@ -1818,6 +2226,10 @@ $color-red: #cc1016;
     height: 250px !important;
   }
 
+  .pro-height-video {
+    height: 250px !important;
+  }
+
   .post-react {
     padding: 6px 4px;
 
@@ -1951,6 +2363,10 @@ $color-red: #cc1016;
   }
 
   .pro-height-img {
+    height: 220px !important;
+  }
+
+  .pro-height-video {
     height: 220px !important;
   }
 
