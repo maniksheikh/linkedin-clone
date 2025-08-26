@@ -6,17 +6,90 @@
           <img :src="getUserProfileImage(activeUser)"
             :alt="'Visit profile for ' + (activeUser?.displayName || 'User')" class="midle-img"
             @error="handleImageError" />
-          <input @change="addItems" v-model="text" type="text" placeholder="Start a Post" />
+          <div class="post-input-container">
+            <input @click="focusPostArea" v-model="text" type="text" placeholder="Start a Post" readonly />
+            <div v-if="showPostModal" class="post-modal">
+              <div class="modal-header">
+                <img :src="getUserProfileImage(activeUser)" class="modal-avatar" @error="handleImageError" />
+                <div class="user-info">
+                  <span class="user-name">{{ activeUser?.displayName || 'Anonymous' }}</span>
+                </div>
+                <button @click="closePostModal" class="close-btn">&times;</button>
+              </div>
+              <div 
+                class="textarea-container"
+                @dragover.prevent="dragOver = true"
+                @dragenter.prevent="dragOver = true"
+                @dragleave.prevent="dragOver = false"
+                @drop.prevent="handleDrop"
+                :class="{ 'drag-over': dragOver }"
+              >
+                <textarea 
+                  ref="postTextarea"
+                  v-model="postText" 
+                  placeholder="What do you want to talk about?" 
+                  class="post-textarea" 
+                  @input="autoResize"
+                ></textarea>
+                <div v-if="dragOver" class="drag-overlay">
+                  <div class="drag-message">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    </svg>
+                    <p>Drop files here</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Media Preview Area -->
+              <div v-if="selectedMedia.length > 0" class="media-preview-container">
+                <div v-for="(media, index) in selectedMedia" :key="index" class="media-preview-item">
+                  <div class="media-preview-wrapper">
+                    <img v-if="media.type.startsWith('image/')" :src="media.preview" class="media-preview-img" />
+                    <video v-else-if="media.type.startsWith('video/')" :src="media.preview" class="media-preview-video" controls></video>
+                    <div v-else class="media-preview-file">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                      </svg>
+                      <span class="file-name">{{ media.name }}</span>
+                    </div>
+                    <button @click="removeMedia(index)" class="remove-media-btn">&times;</button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- File Input (Hidden) -->
+              <input ref="fileInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.txt" @change="handleFileSelect" style="display: none;" />
+              
+              <div class="modal-actions">
+                <div class="media-buttons">
+                  <button @click="selectFiles" class="media-btn" title="Add photos/videos">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                      <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                    </svg>
+                    <span>Media</span>
+                  </button>
+                  <button @click="selectFiles" class="media-btn" title="Add a document">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    </svg>
+                    <span>Document</span>
+                  </button>
+                </div>
+                <button @click="createPost" :disabled="!canPost" class="post-btn" :class="{ active: canPost }">Post</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="middle-body">
-          <div class="middle-section">
+          <div class="middle-section" @click="openPostModalWithMedia('video')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="middle-video" width="24" height="24" focusable="false">
               <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
             </svg>
             <div class="span">Video</div>
           </div>
-          <div class="middle-section">
+          <div class="middle-section" @click="openPostModalWithMedia('photo')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="middle-photo" width="24" height="24" focusable="false">
               <path
@@ -25,7 +98,7 @@
             </svg>
             <div class="span">Photo</div>
           </div>
-          <div class="middle-section">
+          <div class="middle-section" @click="openPostModalWithMedia('document')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"
               class="middle-write" width="24" height="24" focusable="false">
               <path d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z"></path>
@@ -88,7 +161,31 @@
             </button>
           </div>
         </div>
-        <div class="height-img" v-if="post.img">
+        <!-- Media Display Section -->
+        <div v-if="post.media && post.media.length > 0" class="post-media-container">
+          <div v-for="(media, index) in post.media" :key="index" class="post-media-item">
+            <img v-if="media.type.startsWith('image/')" :src="media.url" class="pro-height-img" @error="handleImageError" />
+            <video v-else-if="media.type.startsWith('video/')" :src="media.url" class="pro-height-video" controls></video>
+            <div v-else class="post-file-item">
+              <div class="file-icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                </svg>
+              </div>
+              <div class="file-info">
+                <span class="file-name">{{ media.name }}</span>
+                <span class="file-size">{{ formatFileSize(media.size) }}</span>
+              </div>
+              <a :href="media.url" :download="media.name" class="download-btn" title="Download file">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                  <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Legacy image support -->
+        <div class="height-img" v-else-if="post.img">
           <img class="pro-height-img" :src="post.img" @error="handleImageError" />
         </div>
         <div class="flex-container">
@@ -208,16 +305,23 @@ export default {
     ...mapState(['user']),
     activeUser() {
       return this.user || this.currentUser
+    },
+    canPost() {
+      return this.postText.trim().length > 0 || this.selectedMedia.length > 0
     }
   },
   data() {
     return {
       importData: [],
       text: '',
+      postText: '',
       email: '',
       editingPost: null,
       editText: '',
-      showDropdown: {}
+      showDropdown: {},
+      showPostModal: false,
+      selectedMedia: [],
+      dragOver: false
     }
   },
   mounted() {
@@ -277,6 +381,126 @@ export default {
         this.text = '';
         this.saveUserPostsToStorage();
       }
+    },
+
+    focusPostArea() {
+      this.showPostModal = true;
+      this.text = '';
+      this.$nextTick(() => {
+        if (this.$refs.postTextarea) {
+          this.$refs.postTextarea.focus();
+        }
+      });
+    },
+
+    closePostModal() {
+      this.showPostModal = false;
+      this.postText = '';
+      this.selectedMedia = [];
+      this.text = '';
+    },
+
+    openPostModalWithMedia(mediaType) {
+      this.showPostModal = true;
+      this.$nextTick(() => {
+        if (mediaType === 'photo') {
+          this.selectFiles('image/*');
+        } else if (mediaType === 'video') {
+          this.selectFiles('video/*');
+        } else if (mediaType === 'document') {
+          this.selectFiles('.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx');
+        }
+      });
+    },
+
+    selectFiles(accept = 'image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx') {
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.accept = accept;
+        this.$refs.fileInput.click();
+      }
+    },
+
+    handleFileSelect(event) {
+      const files = Array.from(event.target.files);
+      files.forEach(file => this.processFile(file));
+      event.target.value = ''; // Reset input
+    },
+
+    handleDrop(event) {
+      this.dragOver = false;
+      const files = Array.from(event.dataTransfer.files);
+      files.forEach(file => this.processFile(file));
+    },
+
+    processFile(file) {
+      if (file.size > 100 * 1024 * 1024) { // 100MB limit
+        alert('File size must be less than 100MB');
+        return;
+      }
+
+      const mediaItem = {
+        file: file,
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        preview: null,
+        url: null
+      };
+
+      if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          mediaItem.preview = e.target.result;
+          mediaItem.url = e.target.result; // For demo purposes, using data URL
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // For documents, we'll use a placeholder
+        mediaItem.url = URL.createObjectURL(file);
+      }
+
+      this.selectedMedia.push(mediaItem);
+    },
+
+    removeMedia(index) {
+      this.selectedMedia.splice(index, 1);
+    },
+
+    autoResize(event) {
+      const textarea = event.target;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    },
+
+    createPost() {
+      if (!this.canPost) return;
+
+      const newPost = {
+        id: Date.now(),
+        name: this.activeUser ? this.activeUser.displayName : 'Anonymous',
+        title: this.activeUser ? this.activeUser.email : 'anonymous@user.com',
+        description: this.postText,
+        avatar: this.activeUser ? this.activeUser.photoURL : '/img/default-avatar.svg',
+        media: this.selectedMedia.length > 0 ? this.selectedMedia.map(media => ({
+          type: media.type,
+          name: media.name,
+          size: media.size,
+          url: media.url
+        })) : [],
+        img: null // Keep for backward compatibility
+      };
+
+      this.importData.unshift(newPost);
+      this.saveUserPostsToStorage();
+      this.closePostModal();
+    },
+
+    formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     },
 
     deleteImportedPost(post) {
@@ -359,6 +583,7 @@ $color-primary: #0a66c2;
 $color-gray-100: #f3f2ef;
 $color-gray-300: #ddd;
 $color-gray-500: #666;
+$color-gray-600: #555;
 $color-gray-700: #333;
 $color-gray-900: #000;
 $color-green: #057642;
@@ -367,6 +592,352 @@ $color-red: #cc1016;
 
 * {
   font-family: $font-family-primary;
+}
+
+// Post Modal Styles
+.post-input-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 5px;
+  box-sizing: border-box;
+}
+
+.post-modal {
+  position: fixed;
+  top: 40%;
+  left: 49.5%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 90%;
+  max-width: 560px;
+  max-height: 80vh;
+  overflow-y: auto;
+  
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid $color-gray-300;
+  
+  .modal-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+  }
+  
+  .user-info {
+    flex: 1;
+    
+    .user-name {
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      color: $color-gray-900;
+    }
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: $color-gray-500;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: $color-gray-100;
+      color: $color-gray-700;
+    }
+  }
+}
+
+.textarea-container {
+  position: relative;
+  
+  &.drag-over {
+    .post-textarea {
+      opacity: 0.5;
+    }
+  }
+}
+
+.post-textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 20px;
+  font-size: 18px;
+  font-family: inherit;
+  resize: none;
+  min-height: 120px;
+  color: $color-gray-900;
+  
+  &::placeholder {
+    color: $color-gray-500;
+  }
+}
+
+.drag-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 102, 194, 0.1);
+  border: 2px dashed $color-primary;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  
+  .drag-message {
+    text-align: center;
+    color: $color-primary;
+    
+    svg {
+      margin-bottom: 8px;
+    }
+    
+    p {
+      margin: 0;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+// Media Preview Styles
+.media-preview-container {
+  padding: 0 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  border-bottom: 1px solid $color-gray-300;
+}
+
+.media-preview-item {
+  margin-bottom: 12px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.media-preview-wrapper {
+  position: relative;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  overflow: hidden;
+  
+  .remove-media-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+  }
+}
+
+.media-preview-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.media-preview-video {
+  width: 100%;
+  max-height: 200px;
+  display: block;
+}
+
+.media-preview-file {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: $color-gray-100;
+  
+  svg {
+    color: $color-gray-500;
+    margin-right: 12px;
+  }
+  
+  .file-name {
+    font-size: $font-size-sm;
+    color: $color-gray-700;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Modal Actions
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-top: 1px solid $color-gray-300;
+}
+
+.media-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.media-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: $color-gray-600;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: $color-gray-100;
+    color: $color-gray-900;
+  }
+  
+  svg {
+    color: $color-primary;
+  }
+}
+
+.post-btn {
+  background: $color-gray-300;
+  color: $color-gray-500;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 20px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  cursor: not-allowed;
+  transition: all 0.2s ease;
+  
+  &.active {
+    background: $color-primary;
+    color: white;
+    cursor: pointer;
+    
+    &:hover {
+      background: #084d8a;
+    }
+  }
+}
+
+// Post Media Display Styles
+.post-media-container {
+  margin: 12px 0;
+}
+
+.post-media-item {
+  margin-bottom: 8px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.pro-height-video {
+  width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  display: block;
+}
+
+.post-file-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid $color-gray-300;
+  border-radius: 8px;
+  background: $color-gray-100;
+  
+  .file-icon-container {
+    margin-right: 12px;
+    
+    svg {
+      color: $color-gray-500;
+    }
+  }
+  
+  .file-info {
+    flex: 1;
+    
+    .file-name {
+      display: block;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $color-gray-900;
+      margin-bottom: 2px;
+    }
+    
+    .file-size {
+      font-size: $font-size-xs;
+      color: $color-gray-500;
+    }
+  }
+  
+  .download-btn {
+    padding: 8px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid $color-gray-300;
+    color: $color-gray-600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: white;
+    }
+  }
 }
 
 .main-wrapper {
@@ -401,6 +972,8 @@ $color-red: #cc1016;
 
   input {
     flex: 1;
+    width: 100%;
+    max-width: 96%;
     margin-left: 12px;
     padding: 12px 16px;
     font-size: 18px;
@@ -411,6 +984,7 @@ $color-red: #cc1016;
     outline: none;
     background: white;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 
     &::placeholder {
       color: $color-gray-500;
@@ -898,6 +1472,76 @@ $color-red: #cc1016;
   border-radius: 8px;
 }
 
+// Post Modal Responsive Styles
+@media (max-width: 768px) {
+  .post-modal {
+    width: 95%;
+    max-width: 95%;
+    top: 20px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    max-height: calc(100vh - 40px);
+  }
+  
+  .modal-header {
+    padding: 16px;
+    
+    .modal-avatar {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .user-name {
+      font-size: $font-size-sm;
+    }
+  }
+  
+  .post-textarea {
+    padding: 16px;
+    font-size: 16px;
+    min-height: 100px;
+  }
+  
+  .media-preview-container {
+    padding: 0 16px;
+  }
+  
+  .modal-actions {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 12px;
+    
+    .media-buttons {
+      width: 100%;
+      justify-content: space-around;
+    }
+    
+    .post-btn {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .post-modal {
+    width: 98%;
+    top: 10px;
+    bottom: 10px;
+    max-height: calc(100vh - 20px);
+  }
+  
+  .media-btn {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    
+    span {
+      display: none;
+    }
+  }
+}
+
 // Enhanced Responsive Styles
 @media (max-width: 768px) {
   .main-wrapper {
@@ -936,10 +1580,12 @@ $color-red: #cc1016;
       width: 100% !important;
       max-width: 100% !important;
       margin: 12px 0 0 0;
+      margin-left: 0 !important;
       box-sizing: border-box;
       font-size: 16px;
       padding: 14px 18px;
       text-align: center;
+      flex: none;
     }
   }
 
