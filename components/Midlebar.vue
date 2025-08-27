@@ -359,7 +359,6 @@ export default {
   methods: {
     loadPostsFromStorage() {
       try {
-        // Start with default posts
         this.importData = [...postData];
 
         const savedPosts = localStorage.getItem('userPosts');
@@ -367,17 +366,15 @@ export default {
           const userPosts = JSON.parse(savedPosts);
           console.log('Loading user posts from localStorage:', userPosts.length, 'posts');
 
-          // Process each saved post to ensure media is properly restored
           const processedUserPosts = userPosts.map(post => {
             const processedPost = { ...post };
 
-            // Ensure media array exists and is properly formatted
             if (processedPost.media && Array.isArray(processedPost.media)) {
               processedPost.media = processedPost.media.map(media => ({
                 type: media.type,
                 name: media.name,
                 size: media.size,
-                url: media.url, // This should contain base64 data for images/videos
+                url: media.url
                 preview: media.preview || media.url,
                 isTemporary: false
               }));
@@ -385,7 +382,6 @@ export default {
             } else {
               processedPost.media = [];
             }
-
             return processedPost;
           });
 
@@ -405,10 +401,8 @@ export default {
     saveUserPostsToStorage() {
       try {
         const userPosts = this.importData.filter(post => post.id).map(post => {
-          // Create a deep copy of the post and include all media (images, videos, documents)
           const postCopy = {
             ...post,
-            // Ensure all post properties are preserved
             id: post.id,
             name: post.name,
             title: post.title,
@@ -418,17 +412,15 @@ export default {
           };
 
           if (postCopy.media && postCopy.media.length > 0) {
-            // Save all media types including videos and images with complete data
             postCopy.media = postCopy.media.map(media => ({
               type: media.type,
               name: media.name,
               size: media.size,
-              url: media.url, // This includes base64 data for images/videos or blob URLs for documents
-              preview: media.preview || media.url, // Ensure preview is saved for images/videos
-              isTemporary: false // Mark as permanently saved
+              url: media.url,
+              preview: media.preview || media.url,
+              isTemporary: false
             }));
           } else {
-            // Ensure media array exists even if empty
             postCopy.media = [];
           }
 
@@ -438,13 +430,11 @@ export default {
         console.log('Saving user posts to localStorage:', userPosts.length, 'posts');
         localStorage.setItem('userPosts', JSON.stringify(userPosts));
 
-        // Verify the save was successful
         const savedData = localStorage.getItem('userPosts');
         if (savedData) {
           const parsedData = JSON.parse(savedData);
           console.log('Verification: Successfully saved', parsedData.length, 'posts to localStorage');
 
-          // Count total media items saved
           const totalMedia = parsedData.reduce((total, post) => {
             return total + (post.media ? post.media.length : 0);
           }, 0);
@@ -454,7 +444,6 @@ export default {
         }
       } catch (error) {
         console.error('Error saving posts to storage:', error);
-        // Show user-friendly error notification
         this.showErrorNotification('Failed to save post. Please try again.');
       }
     },
@@ -515,7 +504,7 @@ export default {
     handleFileSelect(event) {
       const files = Array.from(event.target.files);
       files.forEach(file => this.processFile(file));
-      event.target.value = ''; // Reset input
+      event.target.value = '';
     },
 
     handleDrop(event) {
@@ -525,7 +514,7 @@ export default {
     },
 
     processFile(file) {
-      if (file.size > 100 * 1024 * 1024) { // 100MB limit
+      if (file.size > 100 * 1024 * 1024) {
         this.showErrorNotification('File size must be less than 100MB');
         return;
       }
@@ -537,14 +526,14 @@ export default {
         size: file.size,
         preview: null,
         url: null,
-        isTemporary: false // All media will be saved permanently
+        isTemporary: false
       };
 
       if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           mediaItem.preview = e.target.result;
-          mediaItem.url = e.target.result; // Save as base64 data URL for persistence
+          mediaItem.url = e.target.result;
           console.log(`Processed ${file.type} file: ${file.name}, size: ${file.size} bytes`);
         };
         reader.onerror = (e) => {
@@ -553,10 +542,9 @@ export default {
         };
         reader.readAsDataURL(file);
       } else {
-        // For documents, also convert to base64 for persistence
         const reader = new FileReader();
         reader.onload = (e) => {
-          mediaItem.url = e.target.result; // Save as base64 for documents too
+          mediaItem.url = e.target.result;
           mediaItem.preview = e.target.result;
           console.log(`Processed document file: ${file.name}, size: ${file.size} bytes`);
         };
@@ -582,15 +570,13 @@ export default {
 
     createPost() {
       if (!this.canPost) return;
-
-      // Ensure all media files are properly processed before creating post
       const processedMedia = this.selectedMedia.map(media => ({
         type: media.type,
         name: media.name,
         size: media.size,
-        url: media.url || media.preview, // Use url first, fallback to preview
-        preview: media.preview || media.url, // Ensure preview exists
-        isTemporary: false // All media is now permanently saved
+        url: media.url || media.preview,
+        preview: media.preview || media.url,
+        isTemporary: false
       }));
 
       const newPost = {
@@ -600,17 +586,15 @@ export default {
         description: this.postText,
         avatar: this.activeUser ? this.activeUser.photoURL : '/img/default-avatar.svg',
         media: processedMedia,
-        img: null // Keep for backward compatibility
+        img: null
       };
 
       console.log('Creating new post with media:', processedMedia.length, 'items');
       this.importData.unshift(newPost);
 
-      // Save all media including images and videos to localStorage
       this.saveUserPostsToStorage();
       this.closePostModal();
 
-      // Show success notification for all media types
       const hasMedia = this.selectedMedia.length > 0;
       if (hasMedia) {
         const mediaTypes = [...new Set(this.selectedMedia.map(m => m.type.split('/')[0]))];
