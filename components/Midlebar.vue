@@ -3,9 +3,8 @@
     <div class="middle-container">
       <div class="middle">
         <div class="section">
-          <img :src="getUserProfileImage(activeUser)"
-            :alt="'Visit profile for ' + (activeUser?.displayName || 'User')" class="midle-img"
-            @error="handleImageError" />
+          <img :src="getUserProfileImage(activeUser)" :alt="'Visit profile for ' + (activeUser?.displayName || 'User')"
+            class="midle-img" @error="handleImageError" />
           <div class="post-input-container">
             <input @click="focusPostArea" v-model="text" type="text" placeholder="Start a Post" readonly />
             <div v-if="showPostModal" class="post-modal">
@@ -16,31 +15,21 @@
                 </div>
                 <button @click="closePostModal" class="close-btn">&times;</button>
               </div>
-              <div 
-                class="textarea-container"
-                @dragover.prevent="dragOver = true"
-                @dragenter.prevent="dragOver = true"
-                @dragleave.prevent="dragOver = false"
-                @drop.prevent="handleDrop"
-                :class="{ 'drag-over': dragOver }"
-              >
-                <textarea 
-                  ref="postTextarea"
-                  v-model="postText" 
-                  placeholder="What do you want to talk about?" 
-                  class="post-textarea" 
-                  @input="autoResize"
-                ></textarea>
+              <div class="textarea-container" @dragover.prevent="dragOver = true" @dragenter.prevent="dragOver = true"
+                @dragleave.prevent="dragOver = false" @drop.prevent="handleDrop" :class="{ 'drag-over': dragOver }">
+                <textarea ref="postTextarea" v-model="postText" placeholder="What do you want to talk about?"
+                  class="post-textarea" @input="autoResize"></textarea>
                 <div v-if="dragOver" class="drag-overlay">
                   <div class="drag-message">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
-                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48"
+                      height="48">
+                      <path
+                        d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                     </svg>
                     <p>Drop files here</p>
                   </div>
                 </div>
               </div>
-              
               <!-- Media Preview Area -->
               <div v-if="selectedMedia.length > 0" class="media-preview-container">
                 <div v-for="(media, index) in selectedMedia" :key="index" class="media-preview-item">
@@ -49,14 +38,18 @@
                     <div v-else-if="media.type.startsWith('video/')" class="video-preview-container">
                       <video :src="media.preview" class="media-preview-video" controls></video>
                       <button @click="removeMedia(index)" class="media-remove-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16"
+                          height="16">
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                         </svg>
                       </button>
                     </div>
                     <div v-else class="media-preview-file">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="40"
+                        height="40">
+                        <path
+                          d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                       </svg>
                       <span class="file-name">{{ media.name }}</span>
                       <button @click="removeMedia(index)" class="remove-media-btn">&times;</button>
@@ -64,26 +57,31 @@
                   </div>
                 </div>
               </div>
-              
               <!-- File Input (Hidden) -->
-              <input ref="fileInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.txt" @change="handleFileSelect" style="display: none;" />
-              
+              <input ref="fileInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.txt"
+                @change="handleFileSelect" style="display: none;" />
               <div class="modal-actions">
                 <div class="media-buttons">
                   <button @click="selectFiles" class="media-btn" title="Add photos/videos">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                      <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24"
+                      height="24">
+                      <path
+                        d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z">
+                      </path>
                     </svg>
                     <span>Media</span>
                   </button>
                   <button @click="selectFiles" class="media-btn" title="Add a document">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                      <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24"
+                      height="24">
+                      <path
+                        d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                     </svg>
                     <span>Document</span>
                   </button>
                 </div>
-                <button @click="createPost" :disabled="!canPost" class="post-btn" :class="{ active: canPost }">Post</button>
+                <button @click="createPost" :disabled="!canPost" class="post-btn"
+                  :class="{ active: canPost }">Post</button>
               </div>
             </div>
           </div>
@@ -171,16 +169,14 @@
         <!-- Media Display Section -->
         <div v-if="post.media && post.media.length > 0" class="post-media-container">
           <div v-for="(media, index) in post.media" :key="index" class="post-media-item">
-            <img v-if="media.type.startsWith('image/')" :src="media.url" class="pro-height-img" @error="handleImageError" />
+            <img v-if="media.type.startsWith('image/')" :src="media.url" class="pro-height-img"
+              @error="handleImageError" />
             <div v-else-if="media.type.startsWith('video/')" class="video-container">
-              <video 
-                :src="media.url" 
-                class="pro-height-video" 
-                controls
-              ></video>
+              <video :src="media.url" class="pro-height-video" controls></video>
               <button class="video-delete-btn" @click="removeMediaFromPost(post, index)" title="Remove media">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                 </svg>
               </button>
             </div>
@@ -294,7 +290,6 @@ export default {
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
-
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
@@ -366,16 +361,16 @@ export default {
       try {
         // Start with default posts
         this.importData = [...postData];
-        
+
         const savedPosts = localStorage.getItem('userPosts');
         if (savedPosts) {
           const userPosts = JSON.parse(savedPosts);
           console.log('Loading user posts from localStorage:', userPosts.length, 'posts');
-          
+
           // Process each saved post to ensure media is properly restored
           const processedUserPosts = userPosts.map(post => {
             const processedPost = { ...post };
-            
+
             // Ensure media array exists and is properly formatted
             if (processedPost.media && Array.isArray(processedPost.media)) {
               processedPost.media = processedPost.media.map(media => ({
@@ -390,10 +385,10 @@ export default {
             } else {
               processedPost.media = [];
             }
-            
+
             return processedPost;
           });
-          
+
           // Add user posts at the beginning
           this.importData = [...processedUserPosts, ...this.importData];
           console.log('Successfully loaded posts from localStorage. Total posts:', this.importData.length);
@@ -411,7 +406,7 @@ export default {
       try {
         const userPosts = this.importData.filter(post => post.id).map(post => {
           // Create a deep copy of the post and include all media (images, videos, documents)
-          const postCopy = { 
+          const postCopy = {
             ...post,
             // Ensure all post properties are preserved
             id: post.id,
@@ -421,7 +416,7 @@ export default {
             avatar: post.avatar,
             img: post.img || null
           };
-          
+
           if (postCopy.media && postCopy.media.length > 0) {
             // Save all media types including videos and images with complete data
             postCopy.media = postCopy.media.map(media => ({
@@ -436,19 +431,19 @@ export default {
             // Ensure media array exists even if empty
             postCopy.media = [];
           }
-          
+
           return postCopy;
         });
-        
+
         console.log('Saving user posts to localStorage:', userPosts.length, 'posts');
         localStorage.setItem('userPosts', JSON.stringify(userPosts));
-        
+
         // Verify the save was successful
         const savedData = localStorage.getItem('userPosts');
         if (savedData) {
           const parsedData = JSON.parse(savedData);
           console.log('Verification: Successfully saved', parsedData.length, 'posts to localStorage');
-          
+
           // Count total media items saved
           const totalMedia = parsedData.reduce((total, post) => {
             return total + (post.media ? post.media.length : 0);
@@ -610,11 +605,11 @@ export default {
 
       console.log('Creating new post with media:', processedMedia.length, 'items');
       this.importData.unshift(newPost);
-      
+
       // Save all media including images and videos to localStorage
       this.saveUserPostsToStorage();
       this.closePostModal();
-      
+
       // Show success notification for all media types
       const hasMedia = this.selectedMedia.length > 0;
       if (hasMedia) {
@@ -699,19 +694,19 @@ export default {
         if (post.media[mediaIndex].url && post.media[mediaIndex].url.startsWith('blob:')) {
           URL.revokeObjectURL(post.media[mediaIndex].url);
         }
-        
+
         // Get media type for notification
-        const mediaType = post.media[mediaIndex].type.startsWith('video/') ? 'Video' : 
-                          post.media[mediaIndex].type.startsWith('image/') ? 'Image' : 'File';
-        
+        const mediaType = post.media[mediaIndex].type.startsWith('video/') ? 'Video' :
+          post.media[mediaIndex].type.startsWith('image/') ? 'Image' : 'File';
+
         // Remove the media from the media array
         post.media.splice(mediaIndex, 1);
-        
+
         // If this was a user post (has an id), update localStorage
         if (post.id) {
           this.saveUserPostsToStorage();
         }
-        
+
         // Show a brief notification
         this.showMediaRemovedNotification(mediaType);
       }
@@ -735,9 +730,9 @@ export default {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         transition: all 0.3s ease;
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       // Remove after 2 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
@@ -777,9 +772,9 @@ export default {
         transition: all 0.3s ease;
         max-width: 350px;
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       // Remove after 4 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
@@ -818,9 +813,9 @@ export default {
         transition: all 0.3s ease;
         max-width: 350px;
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       // Remove after 4 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
@@ -840,7 +835,7 @@ export default {
       if (savedPosts) {
         const userPosts = JSON.parse(savedPosts);
         console.log('Found', userPosts.length, 'saved posts');
-        
+
         userPosts.forEach((post, index) => {
           console.log(`Post ${index + 1}:`, {
             id: post.id,
@@ -848,7 +843,7 @@ export default {
             mediaCount: post.media?.length || 0,
             mediaTypes: post.media?.map(m => m.type) || []
           });
-          
+
           if (post.media && post.media.length > 0) {
             post.media.forEach((media, mediaIndex) => {
               console.log(`  Media ${mediaIndex + 1}:`, {
@@ -920,7 +915,7 @@ $color-red: #cc1016;
   max-width: 560px;
   max-height: 80vh;
   overflow-y: auto;
-  
+
   &::before {
     content: '';
     position: fixed;
@@ -938,7 +933,7 @@ $color-red: #cc1016;
   align-items: center;
   padding: 20px;
   border-bottom: 1px solid $color-gray-300;
-  
+
   .modal-avatar {
     width: 48px;
     height: 48px;
@@ -946,17 +941,17 @@ $color-red: #cc1016;
     object-fit: cover;
     margin-right: 12px;
   }
-  
+
   .user-info {
     flex: 1;
-    
+
     .user-name {
       font-size: $font-size-base;
       font-weight: $font-weight-semibold;
       color: $color-gray-900;
     }
   }
-  
+
   .close-btn {
     background: none;
     border: none;
@@ -970,7 +965,7 @@ $color-red: #cc1016;
     justify-content: center;
     border-radius: 50%;
     transition: all 0.2s ease;
-    
+
     &:hover {
       background: $color-gray-100;
       color: $color-gray-700;
@@ -980,7 +975,7 @@ $color-red: #cc1016;
 
 .textarea-container {
   position: relative;
-  
+
   &.drag-over {
     .post-textarea {
       opacity: 0.5;
@@ -998,7 +993,7 @@ $color-red: #cc1016;
   resize: none;
   min-height: 120px;
   color: $color-gray-900;
-  
+
   &::placeholder {
     color: $color-gray-500;
   }
@@ -1017,15 +1012,15 @@ $color-red: #cc1016;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  
+
   .drag-message {
     text-align: center;
     color: $color-primary;
-    
+
     svg {
       margin-bottom: 8px;
     }
-    
+
     p {
       margin: 0;
       font-size: $font-size-lg;
@@ -1044,7 +1039,7 @@ $color-red: #cc1016;
 
 .media-preview-item {
   margin-bottom: 12px;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -1055,7 +1050,7 @@ $color-red: #cc1016;
   border: 1px solid $color-gray-300;
   border-radius: 8px;
   overflow: hidden;
-  
+
   .remove-media-btn {
     position: absolute;
     top: 8px;
@@ -1074,13 +1069,13 @@ $color-red: #cc1016;
     transition: all 0.3s ease;
     backdrop-filter: blur(4px);
     z-index: 10;
-    
+
     &:hover {
       background: rgba(204, 16, 22, 0.9);
       transform: scale(1.1);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    
+
     &:active {
       transform: scale(0.95);
     }
@@ -1123,17 +1118,17 @@ $color-red: #cc1016;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
   z-index: 10;
-  
+
   &:hover {
     background: rgba(204, 16, 22, 0.9);
     transform: scale(1.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
-  
+
   svg {
     pointer-events: none;
   }
@@ -1144,12 +1139,12 @@ $color-red: #cc1016;
   align-items: center;
   padding: 16px;
   background: $color-gray-100;
-  
+
   svg {
     color: $color-gray-500;
     margin-right: 12px;
   }
-  
+
   .file-name {
     font-size: $font-size-sm;
     color: $color-gray-700;
@@ -1184,12 +1179,12 @@ $color-red: #cc1016;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background: $color-gray-100;
     color: $color-gray-900;
   }
-  
+
   svg {
     color: $color-primary;
   }
@@ -1205,12 +1200,12 @@ $color-red: #cc1016;
   font-weight: $font-weight-semibold;
   cursor: not-allowed;
   transition: all 0.2s ease;
-  
+
   &.active {
     background: $color-primary;
     color: white;
     cursor: pointer;
-    
+
     &:hover {
       background: #084d8a;
     }
@@ -1224,7 +1219,7 @@ $color-red: #cc1016;
 
 .post-media-item {
   margin-bottom: 8px;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -1260,17 +1255,17 @@ $color-red: #cc1016;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
   z-index: 10;
-  
+
   &:hover {
     background: rgba(204, 16, 22, 0.9);
     transform: scale(1.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
-  
+
   svg {
     pointer-events: none;
   }
@@ -1283,18 +1278,18 @@ $color-red: #cc1016;
   border: 1px solid $color-gray-300;
   border-radius: 8px;
   background: $color-gray-100;
-  
+
   .file-icon-container {
     margin-right: 12px;
-    
+
     svg {
       color: $color-gray-500;
     }
   }
-  
+
   .file-info {
     flex: 1;
-    
+
     .file-name {
       display: block;
       font-size: $font-size-sm;
@@ -1302,13 +1297,13 @@ $color-red: #cc1016;
       color: $color-gray-900;
       margin-bottom: 2px;
     }
-    
+
     .file-size {
       font-size: $font-size-xs;
       color: $color-gray-500;
     }
   }
-  
+
   .download-btn {
     padding: 8px;
     border-radius: 50%;
@@ -1321,7 +1316,7 @@ $color-red: #cc1016;
     justify-content: center;
     text-decoration: none;
     transition: all 0.2s ease;
-    
+
     &:hover {
       background: $color-primary;
       border-color: $color-primary;
@@ -1874,40 +1869,40 @@ $color-red: #cc1016;
     height: auto;
     max-height: calc(100vh - 40px);
   }
-  
+
   .modal-header {
     padding: 16px;
-    
+
     .modal-avatar {
       width: 40px;
       height: 40px;
     }
-    
+
     .user-name {
       font-size: $font-size-sm;
     }
   }
-  
+
   .post-textarea {
     padding: 16px;
     font-size: 16px;
     min-height: 100px;
   }
-  
+
   .media-preview-container {
     padding: 0 16px;
   }
-  
+
   .modal-actions {
     padding: 12px 16px;
     flex-direction: column;
     gap: 12px;
-    
+
     .media-buttons {
       width: 100%;
       justify-content: space-around;
     }
-    
+
     .post-btn {
       width: 100%;
     }
@@ -1921,11 +1916,11 @@ $color-red: #cc1016;
     bottom: 10px;
     max-height: calc(100vh - 20px);
   }
-  
+
   .media-btn {
     padding: 6px 8px;
     font-size: 0.8rem;
-    
+
     span {
       display: none;
     }
@@ -2083,7 +2078,7 @@ $color-red: #cc1016;
     height: 36px;
     top: 12px;
     right: 12px;
-    
+
     // Always visible on mobile (no hover required)
     background: rgba(0, 0, 0, 0.8);
   }
