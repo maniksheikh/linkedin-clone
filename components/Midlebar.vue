@@ -672,32 +672,22 @@ export default {
     },
 
     removeMediaFromPost(post, mediaIndex) {
-      // Remove the media (video/image/document) from the post's media array
       if (post.media && post.media[mediaIndex]) {
-        // Clean up the blob URL if it exists to prevent memory leaks
         if (post.media[mediaIndex].url && post.media[mediaIndex].url.startsWith('blob:')) {
           URL.revokeObjectURL(post.media[mediaIndex].url);
         }
 
-        // Get media type for notification
         const mediaType = post.media[mediaIndex].type.startsWith('video/') ? 'Video' :
           post.media[mediaIndex].type.startsWith('image/') ? 'Image' : 'File';
-
-        // Remove the media from the media array
         post.media.splice(mediaIndex, 1);
-
-        // If this was a user post (has an id), update localStorage
         if (post.id) {
           this.saveUserPostsToStorage();
         }
-
-        // Show a brief notification
         this.showMediaRemovedNotification(mediaType);
       }
     },
 
     showMediaRemovedNotification(mediaType = 'Media') {
-      // Create a temporary notification element
       const notification = document.createElement('div');
       notification.textContent = `${mediaType} removed successfully`;
       notification.style.cssText = `
@@ -717,7 +707,6 @@ export default {
 
       document.body.appendChild(notification);
 
-      // Remove after 2 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
         notification.style.transform = 'translateX(100%)';
@@ -730,7 +719,6 @@ export default {
     },
 
     showMediaUploadNotification(mediaTypes = []) {
-      // Create a temporary notification element
       const notification = document.createElement('div');
       const typeText = mediaTypes.length > 0 ? mediaTypes.join(' & ') : 'Media';
       notification.innerHTML = `
@@ -758,8 +746,6 @@ export default {
       `;
 
       document.body.appendChild(notification);
-
-      // Remove after 4 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
         notification.style.transform = 'translateX(100%)';
@@ -772,7 +758,6 @@ export default {
     },
 
     showErrorNotification(message = 'An error occurred') {
-      // Create a temporary error notification element
       const notification = document.createElement('div');
       notification.innerHTML = `
         <div style="display: flex; align-items: center; gap: 8px;">
@@ -799,8 +784,6 @@ export default {
       `;
 
       document.body.appendChild(notification);
-
-      // Remove after 4 seconds with fade out
       setTimeout(() => {
         notification.style.opacity = '0';
         notification.style.transform = 'translateX(100%)';
@@ -812,7 +795,6 @@ export default {
       }, 4000);
     },
 
-    // Debug method to test persistence (can be called from browser console)
     testMediaPersistence() {
       console.log('=== MEDIA PERSISTENCE TEST ===');
       const savedPosts = localStorage.getItem('userPosts');
