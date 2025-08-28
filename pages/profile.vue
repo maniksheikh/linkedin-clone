@@ -172,14 +172,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// Define SCSS variables
 $primary-blue: #0a66c2;
-$text-primary: #000000e6;
-$text-secondary: #666666;
-$text-muted: #8b8888;
 $background-white: #ffffff;
 $background-light: #f3f2ef;
+$background-gray: #f8f9fa;
+$text-primary: #000000;
+$text-secondary: #666666;
+$text-muted: #8b8888;
 $border-color: #d9d9d9;
 $border-radius: 8px;
+$spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
@@ -312,7 +315,7 @@ $spacing-xl: 32px;
           color: white;
 
           &:hover {
-            background: darken($primary-blue, 10%);
+            background: #085a9c;
           }
         }
 
@@ -322,7 +325,7 @@ $spacing-xl: 32px;
           border: 1px solid $border-color;
 
           &:hover {
-            background: darken($background-light, 5%);
+            background: $background-gray;
           }
         }
       }
