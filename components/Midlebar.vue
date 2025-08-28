@@ -374,7 +374,7 @@ export default {
                 type: media.type,
                 name: media.name,
                 size: media.size,
-                url: media.url
+                url: media.url,
                 preview: media.preview || media.url,
                 isTemporary: false
               }));
