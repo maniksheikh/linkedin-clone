@@ -320,7 +320,10 @@ export default {
       return this.user || this.currentUser
     },
     canPost() {
-      return this.postText.trim().length > 0 || this.selectedMedia.length > 0
+      const hasText = this.postText.trim().length > 0;
+      const hasProcessedMedia = this.selectedMedia.length > 0 && 
+        this.selectedMedia.every(m => !m.processing && (m.url || m.preview));
+      return hasText || hasProcessedMedia;
     }
   },
   data() {
@@ -338,7 +341,28 @@ export default {
     }
   },
   mounted() {
-    this.loadPostsFromStorage()
+    // Ensure we're in the browser before accessing localStorage
+    if (process.client) {
+      this.loadPostsFromStorage()
+      
+      // Make debug methods available globally for testing
+      if (typeof window !== 'undefined') {
+        window.debugVideoStorage = this.debugVideoStorage;
+        window.testMediaPersistence = this.testMediaPersistence;
+        window.forceReloadPosts = this.forceReloadPosts;
+        window.clearAllSavedPosts = this.clearAllSavedPosts;
+        window.testVideoStorageFlow = this.testVideoStorageFlow;
+        
+        console.log('🎥 === VIDEO DEBUG METHODS AVAILABLE ===');
+        console.log('  - window.debugVideoStorage() - Check video data in localStorage');
+        console.log('  - window.testMediaPersistence() - Test all media persistence');
+        console.log('  - window.forceReloadPosts() - Force reload posts from storage');
+        console.log('  - window.clearAllSavedPosts() - Clear all saved posts (for testing)');
+        console.log('  - window.testVideoStorageFlow() - Test current video storage state');
+        console.log('🎥 === USE THESE TO DEBUG VIDEO ISSUES ===');
+      }
+    }
+    
     document.addEventListener('click', this.handleClickOutside)
   },
 
@@ -361,7 +385,13 @@ export default {
       try {
         this.importData = [...postData];
 
-        const savedPosts = localStorage.getItem('userPosts');
+        // Check if localStorage is available (browser only)
+        if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+          console.log('localStorage not available (SSR mode)');
+          return;
+        }
+
+        const savedPosts = this.safeGetItem('userPosts');
         if (savedPosts) {
           const userPosts = JSON.parse(savedPosts);
           console.log('Loading user posts from localStorage:', userPosts.length, 'posts');
@@ -370,15 +400,32 @@ export default {
             const processedPost = { ...post };
 
             if (processedPost.media && Array.isArray(processedPost.media)) {
-              processedPost.media = processedPost.media.map(media => ({
-                type: media.type,
-                name: media.name,
-                size: media.size,
-                url: media.url,
-                preview: media.preview || media.url,
-                isTemporary: false
-              }));
-              console.log(`Post ${post.id} has ${processedPost.media.length} media items`);
+              processedPost.media = processedPost.media.map(media => {
+                const mediaItem = {
+                  type: media.type,
+                  name: media.name,
+                  size: media.size,
+                  url: media.url,
+                  preview: media.preview || media.url,
+                  isTemporary: false
+                };
+                
+                // Enhanced video loading
+                if (media.type && media.type.startsWith('video/')) {
+                  console.log(`Loading video: ${media.name}, type: ${media.type}, hasUrl: ${!!media.url}`);
+                  
+                  // Ensure video URL is properly restored
+                  if (media.url) {
+                    mediaItem.url = media.url;
+                    mediaItem.preview = media.url;
+                  }
+                }
+                
+                return mediaItem;
+              });
+              
+              const videoCount = processedPost.media.filter(m => m.type.startsWith('video/')).length;
+              console.log(`Post ${post.id} has ${processedPost.media.length} media items (${videoCount} videos)`);
             } else {
               processedPost.media = [];
             }
@@ -387,7 +434,21 @@ export default {
 
           // Add user posts at the beginning
           this.importData = [...processedUserPosts, ...this.importData];
+          
+          const totalVideos = processedUserPosts.reduce((total, post) => {
+            return total + (post.media ? post.media.filter(m => m.type.startsWith('video/')).length : 0);
+          }, 0);
+          
           console.log('Successfully loaded posts from localStorage. Total posts:', this.importData.length);
+          console.log(`Total videos loaded: ${totalVideos}`);
+          
+          // Debug: List all video posts loaded
+          processedUserPosts.forEach((post, index) => {
+            if (post.media && post.media.some(m => m.type.startsWith('video/'))) {
+              const videos = post.media.filter(m => m.type.startsWith('video/'));
+              console.log(`Loaded video post ${index + 1} (ID: ${post.id}): ${videos.length} video(s)`);
+            }
+          });
         } else {
           console.log('No saved posts found in localStorage');
         }
@@ -400,6 +461,12 @@ export default {
 
     saveUserPostsToStorage() {
       try {
+        // Check if localStorage is available (browser only)
+        if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+          console.warn('localStorage not available, cannot save posts');
+          return;
+        }
+
         const userPosts = this.importData.filter(post => post.id).map(post => {
           const postCopy = {
             ...post,
@@ -408,18 +475,36 @@ export default {
             title: post.title,
             description: post.description,
             avatar: post.avatar,
-            img: post.img || null
+            img: post.img || null,
+            timestamp: post.timestamp || Date.now()
           };
 
+          // Enhanced media handling for video persistence
           if (postCopy.media && postCopy.media.length > 0) {
-            postCopy.media = postCopy.media.map(media => ({
-              type: media.type,
-              name: media.name,
-              size: media.size,
-              url: media.url,
-              preview: media.preview || media.url,
-              isTemporary: false
-            }));
+            postCopy.media = postCopy.media.map(media => {
+              const mediaItem = {
+                type: media.type,
+                name: media.name,
+                size: media.size,
+                url: media.url,
+                preview: media.preview || media.url,
+                isTemporary: false
+              };
+              
+              // Ensure video data is properly preserved
+              if (media.type && media.type.startsWith('video/')) {
+                console.log(`Saving video: ${media.name}, type: ${media.type}, size: ${media.size}`);
+                // Ensure the video URL is properly saved
+                if (media.url && (media.url.startsWith('data:') || media.url.startsWith('blob:'))) {
+                  mediaItem.url = media.url;
+                  mediaItem.preview = media.url;
+                }
+              }
+              
+              return mediaItem;
+            });
+            
+            console.log(`Post ${post.id} has ${postCopy.media.length} media items, including ${postCopy.media.filter(m => m.type.startsWith('video/')).length} videos`);
           } else {
             postCopy.media = [];
           }
@@ -428,9 +513,25 @@ export default {
         });
 
         console.log('Saving user posts to localStorage:', userPosts.length, 'posts');
-        localStorage.setItem('userPosts', JSON.stringify(userPosts));
+        
+        // Enhanced logging for video posts
+        const videoPosts = userPosts.filter(post => 
+          post.media && post.media.some(m => m.type.startsWith('video/'))
+        );
+        console.log(`Found ${videoPosts.length} posts with videos to save`);
+        
+        // Try to save to localStorage with error handling
+        try {
+          this.safeSetItem('userPosts', JSON.stringify(userPosts));
+          console.log('✅ Successfully saved to localStorage');
+        } catch (storageError) {
+          console.error('❌ Failed to save to localStorage:', storageError);
+          this.showStorageErrorNotification('save');
+          return; // Exit early if save failed
+        }
 
-        const savedData = localStorage.getItem('userPosts');
+        // Enhanced verification
+        const savedData = this.safeGetItem('userPosts');
         if (savedData) {
           const parsedData = JSON.parse(savedData);
           console.log('Verification: Successfully saved', parsedData.length, 'posts to localStorage');
@@ -438,13 +539,29 @@ export default {
           const totalMedia = parsedData.reduce((total, post) => {
             return total + (post.media ? post.media.length : 0);
           }, 0);
+          
+          const totalVideos = parsedData.reduce((total, post) => {
+            return total + (post.media ? post.media.filter(m => m.type.startsWith('video/')).length : 0);
+          }, 0);
+          
           console.log('Total media items saved:', totalMedia);
+          console.log('Total video items saved:', totalVideos);
+          
+          // Verify each video post
+          parsedData.forEach((post, index) => {
+            if (post.media && post.media.some(m => m.type.startsWith('video/'))) {
+              const videos = post.media.filter(m => m.type.startsWith('video/'));
+              console.log(`Post ${index + 1} (ID: ${post.id}) has ${videos.length} video(s):`, 
+                videos.map(v => ({ name: v.name, hasUrl: !!v.url }))
+              );
+            }
+          });
         } else {
           console.error('Verification failed: Posts not found in localStorage after save');
         }
       } catch (error) {
         console.error('Error saving posts to storage:', error);
-        this.showErrorNotification('Failed to save post. Please try again.');
+        this.showStorageErrorNotification('save');
       }
     },
 
@@ -514,10 +631,24 @@ export default {
     },
 
     processFile(file) {
+      // Check storage health before processing large files
+      const storageHealth = this.checkStorageHealth();
+      if (!storageHealth.available) {
+        this.showStorageErrorNotification('process');
+        return;
+      }
+
       if (file.size > 100 * 1024 * 1024) {
         this.showErrorNotification('File size must be less than 100MB');
         return;
       }
+
+      // Warn about large files that might cause storage issues
+      if (file.size > 10 * 1024 * 1024) {
+        console.warn(`⚠️ Large file detected: ${file.name} (${this.formatFileSize(file.size)}). This may cause storage issues.`);
+      }
+
+      console.log(`🔄 Starting to process file: ${file.name}, type: ${file.type}`);
 
       const mediaItem = {
         file: file,
@@ -526,36 +657,60 @@ export default {
         size: file.size,
         preview: null,
         url: null,
-        isTemporary: false
+        isTemporary: false,
+        processing: true // Add processing flag
       };
+
+      // Add to selectedMedia immediately but mark as processing
+      this.selectedMedia.push(mediaItem);
+      const mediaIndex = this.selectedMedia.length - 1;
 
       if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          mediaItem.preview = e.target.result;
-          mediaItem.url = e.target.result;
-          console.log(`Processed ${file.type} file: ${file.name}, size: ${file.size} bytes`);
+          // Update the existing media item in the array
+          this.selectedMedia[mediaIndex].preview = e.target.result;
+          this.selectedMedia[mediaIndex].url = e.target.result;
+          this.selectedMedia[mediaIndex].processing = false;
+          
+          // Enhanced logging for video files
+          if (file.type.startsWith('video/')) {
+            console.log(`🎥 ✅ Successfully processed video file: ${file.name}`);
+            console.log(`  Type: ${file.type}`);
+            console.log(`  Size: ${file.size} bytes (${this.formatFileSize(file.size)})`);
+            console.log(`  Data URL length: ${e.target.result.length} characters`);
+            console.log(`  Data URL starts with: ${e.target.result.substring(0, 50)}...`);
+            console.log(`  Video ready for posting: ${!!e.target.result}`);
+          } else {
+            console.log(`📷 ✅ Successfully processed image file: ${file.name}, size: ${file.size} bytes`);
+          }
+          
+          // Force reactivity update
+          this.$forceUpdate();
         };
         reader.onerror = (e) => {
-          console.error('Error reading file:', file.name, e);
+          console.error('❌ Error reading file:', file.name, e);
           this.showErrorNotification(`Failed to process file: ${file.name}`);
+          // Remove the failed item
+          this.selectedMedia.splice(mediaIndex, 1);
         };
         reader.readAsDataURL(file);
       } else {
         const reader = new FileReader();
         reader.onload = (e) => {
-          mediaItem.url = e.target.result;
-          mediaItem.preview = e.target.result;
-          console.log(`Processed document file: ${file.name}, size: ${file.size} bytes`);
+          this.selectedMedia[mediaIndex].url = e.target.result;
+          this.selectedMedia[mediaIndex].preview = e.target.result;
+          this.selectedMedia[mediaIndex].processing = false;
+          console.log(`📄 ✅ Successfully processed document file: ${file.name}, size: ${file.size} bytes`);
+          this.$forceUpdate();
         };
         reader.onerror = (e) => {
-          console.error('Error reading document file:', file.name, e);
+          console.error('❌ Error reading document file:', file.name, e);
           this.showErrorNotification(`Failed to process document: ${file.name}`);
+          this.selectedMedia.splice(mediaIndex, 1);
         };
         reader.readAsDataURL(file);
       }
-
-      this.selectedMedia.push(mediaItem);
     },
 
     removeMedia(index) {
@@ -568,16 +723,67 @@ export default {
       textarea.style.height = textarea.scrollHeight + 'px';
     },
 
-    createPost() {
+    async createPost() {
       if (!this.canPost) return;
-      const processedMedia = this.selectedMedia.map(media => ({
-        type: media.type,
-        name: media.name,
-        size: media.size,
-        url: media.url || media.preview,
-        preview: media.preview || media.url,
-        isTemporary: false
-      }));
+      
+      console.log('🚀 Starting post creation...');
+      console.log('Selected media items:', this.selectedMedia.length);
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        this.showErrorNotification('Cannot save posts: localStorage not available');
+        return;
+      }
+      
+      // Check if any media is still processing
+      const processingMedia = this.selectedMedia.filter(m => m.processing);
+      if (processingMedia.length > 0) {
+        console.log(`⏳ Waiting for ${processingMedia.length} media items to finish processing...`);
+        this.showErrorNotification('Please wait for all media to finish processing');
+        return;
+      }
+      
+      // Validate that all media has proper URLs
+      const invalidMedia = this.selectedMedia.filter(m => !m.url && !m.preview);
+      if (invalidMedia.length > 0) {
+        console.error('❌ Found media without URLs:', invalidMedia);
+        this.showErrorNotification('Some media failed to process. Please try again.');
+        return;
+      }
+      
+      // Enhanced media processing with better video handling
+      const processedMedia = this.selectedMedia.map(media => {
+        const mediaItem = {
+          type: media.type,
+          name: media.name,
+          size: media.size,
+          url: media.url || media.preview,
+          preview: media.preview || media.url,
+          isTemporary: false
+        };
+        
+        // Special handling for video files
+        if (media.type && media.type.startsWith('video/')) {
+          console.log(`🎥 Processing video for post: ${media.name}, type: ${media.type}`);
+          console.log(`  Original URL present: ${!!media.url}`);
+          console.log(`  Original preview present: ${!!media.preview}`);
+          
+          // Ensure video URL is properly set
+          if (media.url) {
+            mediaItem.url = media.url;
+            mediaItem.preview = media.url;
+            console.log(`  ✅ Video URL set: ${media.url.substring(0, 50)}...`);
+          } else if (media.preview) {
+            mediaItem.url = media.preview;
+            mediaItem.preview = media.preview;
+            console.log(`  ✅ Video URL set from preview: ${media.preview.substring(0, 50)}...`);
+          } else {
+            console.log(`  ❌ No URL or preview found for video!`);
+          }
+        }
+        
+        return mediaItem;
+      });
 
       const newPost = {
         id: Date.now(),
@@ -586,19 +792,106 @@ export default {
         description: this.postText,
         avatar: this.activeUser ? this.activeUser.photoURL : '/img/default-avatar.svg',
         media: processedMedia,
-        img: null
+        img: null,
+        timestamp: Date.now(),
+        createdAt: new Date().toISOString()
       };
 
-      console.log('Creating new post with media:', processedMedia.length, 'items');
+      console.log('📝 Creating new post with media:', processedMedia.length, 'items');
+      
+      // Log video-specific information
+      const videoMedia = processedMedia.filter(m => m.type.startsWith('video/'));
+      if (videoMedia.length > 0) {
+        console.log(`🎥 Post contains ${videoMedia.length} video(s):`);
+        videoMedia.forEach((v, index) => {
+          console.log(`  Video ${index + 1}:`, {
+            name: v.name,
+            type: v.type,
+            hasUrl: !!v.url,
+            urlLength: v.url ? v.url.length : 0,
+            urlType: v.url?.startsWith('data:video/') ? 'Data URL (base64)' : 'Other'
+          });
+        });
+      }
+      
+      // Add post to the beginning of the array
       this.importData.unshift(newPost);
+      console.log('📌 Post added to importData. Total posts:', this.importData.length);
 
-      this.saveUserPostsToStorage();
+      // Save immediately after creating the post
+      console.log('💾 Saving to localStorage...');
+      console.log('💾 Post to save:', {
+        id: newPost.id,
+        description: newPost.description?.substring(0, 50),
+        mediaCount: newPost.media.length,
+        videoCount: newPost.media.filter(m => m.type.startsWith('video/')).length
+      });
+      
+      try {
+        this.saveUserPostsToStorage();
+        console.log('✅ Post successfully saved to localStorage');
+      } catch (saveError) {
+        console.error('❌ Error saving post:', saveError);
+        // Remove the post from importData if save failed
+        this.importData = this.importData.filter(p => p.id !== newPost.id);
+        this.showStorageErrorNotification('save');
+        return;
+      }
+      
+      // Immediate verification
+      console.log('🔍 Immediate verification...');
+      const immediateCheck = this.safeGetItem('userPosts');
+      if (immediateCheck) {
+        const posts = JSON.parse(immediateCheck);
+        const justSaved = posts.find(p => p.id === newPost.id);
+        if (justSaved) {
+          console.log('✅ IMMEDIATE CHECK: Post found in localStorage');
+          if (justSaved.media && justSaved.media.length > 0) {
+            const videos = justSaved.media.filter(m => m.type.startsWith('video/'));
+            console.log(`✅ IMMEDIATE CHECK: Post has ${videos.length} video(s) saved`);
+          }
+        } else {
+          console.log('❌ IMMEDIATE CHECK: Post NOT found in localStorage!');
+        }
+      }
+      
+      // Delayed verification
+      setTimeout(() => {
+        console.log('🔍 Delayed verification...');
+        const savedPosts = this.safeGetItem('userPosts');
+        if (savedPosts) {
+          const posts = JSON.parse(savedPosts);
+          const savedPost = posts.find(p => p.id === newPost.id);
+          if (savedPost && savedPost.media && savedPost.media.length > 0) {
+            const savedVideos = savedPost.media.filter(m => m.type.startsWith('video/'));
+            if (savedVideos.length > 0) {
+              console.log(`✅ DELAYED VERIFICATION: Video post saved successfully! Found ${savedVideos.length} video(s) in localStorage`);
+              savedVideos.forEach((video, index) => {
+                console.log(`  Video ${index + 1}: ${video.name}, URL present: ${!!video.url}`);
+              });
+            } else {
+              console.log('❌ DELAYED VERIFICATION: No videos found in saved post!');
+            }
+          } else {
+            console.log('❌ DELAYED VERIFICATION: Post not found or has no media!');
+          }
+        } else {
+          console.log('❌ DELAYED VERIFICATION: No localStorage data found!');
+        }
+      }, 500);
+      
       this.closePostModal();
 
       const hasMedia = this.selectedMedia.length > 0;
       if (hasMedia) {
         const mediaTypes = [...new Set(this.selectedMedia.map(m => m.type.split('/')[0]))];
-        this.showMediaUploadNotification(mediaTypes);
+        const hasVideos = this.selectedMedia.some(m => m.type.startsWith('video/'));
+        
+        if (hasVideos) {
+          this.showVideoUploadSuccessNotification(mediaTypes);
+        } else {
+          this.showMediaUploadNotification(mediaTypes);
+        }
       }
     },
 
@@ -757,6 +1050,48 @@ export default {
       }, 4000);
     },
 
+    showVideoUploadSuccessNotification(mediaTypes = []) {
+      const notification = document.createElement('div');
+      const videoCount = this.selectedMedia.filter(m => m.type.startsWith('video/')).length;
+      const typeText = mediaTypes.length > 0 ? mediaTypes.join(' & ') : 'Media';
+      
+      notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
+          </svg>
+          <span>🎥 ${videoCount} Video${videoCount > 1 ? 's' : ''} & ${typeText} saved to localStorage! Data will persist after page refresh.</span>
+        </div>
+      `;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #057642;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: inherit;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        max-width: 400px;
+        line-height: 1.4;
+      `;
+
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 5000);
+    },
+
     showErrorNotification(message = 'An error occurred') {
       const notification = document.createElement('div');
       notification.innerHTML = `
@@ -796,18 +1131,40 @@ export default {
     },
 
     testMediaPersistence() {
-      console.log('=== MEDIA PERSISTENCE TEST ===');
-      const savedPosts = localStorage.getItem('userPosts');
+      console.log('=== ENHANCED MEDIA PERSISTENCE TEST ===');
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.error('localStorage not available for testing');
+        return;
+      }
+      
+              const savedPosts = this.safeGetItem('userPosts');
       if (savedPosts) {
         const userPosts = JSON.parse(savedPosts);
         console.log('Found', userPosts.length, 'saved posts');
 
+        let totalVideos = 0;
+        let totalImages = 0;
+        let totalOtherMedia = 0;
+
         userPosts.forEach((post, index) => {
+          const videos = post.media?.filter(m => m.type.startsWith('video/')) || [];
+          const images = post.media?.filter(m => m.type.startsWith('image/')) || [];
+          const others = post.media?.filter(m => !m.type.startsWith('video/') && !m.type.startsWith('image/')) || [];
+          
+          totalVideos += videos.length;
+          totalImages += images.length;
+          totalOtherMedia += others.length;
+
           console.log(`Post ${index + 1}:`, {
             id: post.id,
             description: post.description?.substring(0, 50) + '...',
+            timestamp: post.timestamp,
             mediaCount: post.media?.length || 0,
-            mediaTypes: post.media?.map(m => m.type) || []
+            videoCount: videos.length,
+            imageCount: images.length,
+            otherMediaCount: others.length
           });
 
           if (post.media && post.media.length > 0) {
@@ -817,15 +1174,253 @@ export default {
                 name: media.name,
                 size: media.size,
                 hasUrl: !!media.url,
-                urlType: media.url?.startsWith('data:') ? 'base64' : 'other'
+                urlType: media.url?.startsWith('data:') ? 'base64' : 
+                         media.url?.startsWith('blob:') ? 'blob' : 'other',
+                urlLength: media.url?.length || 0,
+                isVideo: media.type.startsWith('video/')
               });
+              
+              // Special check for videos
+              if (media.type.startsWith('video/')) {
+                console.log(`    🎥 VIDEO DETAILS:`, {
+                  canPlay: !!media.url,
+                  urlValid: media.url && (media.url.startsWith('data:') || media.url.startsWith('blob:')),
+                  previewMatches: media.preview === media.url
+                });
+              }
             });
           }
         });
+
+        console.log('=== SUMMARY ===');
+        console.log(`Total Videos: ${totalVideos}`);
+        console.log(`Total Images: ${totalImages}`);
+        console.log(`Total Other Media: ${totalOtherMedia}`);
+        console.log(`Total Posts: ${userPosts.length}`);
       } else {
         console.log('No saved posts found in localStorage');
       }
-      console.log('=== END TEST ===');
+      console.log('=== END ENHANCED TEST ===');
+    },
+
+    // Add method to force reload posts and test persistence
+    forceReloadPosts() {
+      console.log('🔄 Force reloading posts from storage...');
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.error('localStorage not available for reload');
+        return;
+      }
+      
+      this.importData = [];
+      this.$nextTick(() => {
+        this.loadPostsFromStorage();
+        this.testMediaPersistence();
+      });
+    },
+
+    // Debug method to check localStorage video data
+    debugVideoStorage() {
+      console.log('🎥 === VIDEO STORAGE DEBUG ===');
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.error('localStorage not available for debug');
+        return;
+      }
+      
+              const savedPosts = this.safeGetItem('userPosts');
+      if (savedPosts) {
+        try {
+          const posts = JSON.parse(savedPosts);
+          const videoPosts = posts.filter(post => 
+            post.media && post.media.some(m => m.type.startsWith('video/'))
+          );
+          
+          console.log(`Found ${videoPosts.length} posts with videos in localStorage`);
+          
+          videoPosts.forEach((post, index) => {
+            const videos = post.media.filter(m => m.type.startsWith('video/'));
+            console.log(`Video Post ${index + 1} (ID: ${post.id}):`);
+            console.log(`  Description: ${post.description?.substring(0, 50)}...`);
+            console.log(`  Videos: ${videos.length}`);
+            
+            videos.forEach((video, vIndex) => {
+              console.log(`    Video ${vIndex + 1}:`);
+              console.log(`      Name: ${video.name}`);
+              console.log(`      Type: ${video.type}`);
+              console.log(`      Size: ${video.size} bytes`);
+              console.log(`      Has URL: ${!!video.url}`);
+              console.log(`      URL Type: ${video.url?.startsWith('data:') ? 'Data URL (base64)' : 'Other'}`);
+              console.log(`      URL Length: ${video.url?.length || 0} characters`);
+            });
+          });
+          
+          return videoPosts;
+        } catch (error) {
+          console.error('Error parsing localStorage data:', error);
+        }
+      } else {
+        console.log('No posts found in localStorage');
+      }
+      console.log('🎥 === END VIDEO STORAGE DEBUG ===');
+    },
+
+    // Method to clear all saved posts (for testing)
+    clearAllSavedPosts() {
+      console.log('🗑️ Clearing all saved posts from localStorage...');
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.error('localStorage not available for clearing');
+        return;
+      }
+      
+      try {
+        this.safeRemoveItem('userPosts');
+        this.importData = [...postData]; // Reset to default posts
+        console.log('✅ All saved posts cleared. Refreshing display...');
+        this.loadPostsFromStorage();
+      } catch (error) {
+        console.error('❌ Error clearing saved posts:', error);
+        this.showErrorNotification('Failed to clear saved posts');
+      }
+    },
+
+    // Method to test video storage step by step
+    testVideoStorageFlow() {
+      console.log('🔬 === TESTING VIDEO STORAGE FLOW ===');
+      
+      // Check if localStorage is available
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.error('localStorage not available for testing');
+        return;
+      }
+      
+      console.log('1. Current importData length:', this.importData.length);
+      console.log('2. Current selectedMedia length:', this.selectedMedia.length);
+      
+      if (this.selectedMedia.length > 0) {
+        console.log('3. Selected media details:');
+        this.selectedMedia.forEach((media, index) => {
+          console.log(`   Media ${index + 1}:`, {
+            name: media.name,
+            type: media.type,
+            processing: media.processing,
+            hasUrl: !!media.url,
+            hasPreview: !!media.preview
+          });
+        });
+      }
+      
+      console.log('4. Checking localStorage current state...');
+              const savedPosts = this.safeGetItem('userPosts');
+      if (savedPosts) {
+        const posts = JSON.parse(savedPosts);
+        console.log(`   Found ${posts.length} saved posts in localStorage`);
+        const videoPosts = posts.filter(p => p.media && p.media.some(m => m.type.startsWith('video/')));
+        console.log(`   ${videoPosts.length} of them contain videos`);
+      } else {
+        console.log('   No posts found in localStorage');
+      }
+      
+      console.log('🔬 === END TEST ===');
+    },
+
+    // Method to check localStorage quota and availability
+    checkStorageHealth() {
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        return { available: false, error: 'localStorage not available (SSR mode)' };
+      }
+
+      try {
+        // Test if localStorage is working by trying to set a test item
+        const testKey = '__storage_test__';
+        const testValue = 'test';
+        localStorage.setItem(testKey, testValue);
+        const retrieved = localStorage.getItem(testKey);
+        localStorage.removeItem(testKey);
+        
+        if (retrieved !== testValue) {
+          return { available: false, error: 'localStorage read/write test failed' };
+        }
+
+        // Check available space (approximate)
+        let used = 0;
+        for (let key in localStorage) {
+          if (localStorage.hasOwnProperty(key)) {
+            used += localStorage[key].length + key.length;
+          }
+        }
+
+        return { 
+          available: true, 
+          used: used,
+          usedMB: (used / (1024 * 1024)).toFixed(2),
+          error: null 
+        };
+      } catch (error) {
+        return { 
+          available: false, 
+          error: error.name === 'QuotaExceededError' ? 'Storage quota exceeded' : error.message 
+        };
+      }
+    },
+
+    // Enhanced error notification with storage health check
+    showStorageErrorNotification(operation = 'save') {
+      const health = this.checkStorageHealth();
+      let message = `Failed to ${operation} data.`;
+      
+      if (!health.available) {
+        if (health.error.includes('quota')) {
+          message += ' Storage is full. Please delete some posts or media.';
+        } else if (health.error.includes('SSR')) {
+          message += ' Please wait for page to fully load.';
+        } else {
+          message += ` Storage error: ${health.error}`;
+        }
+      }
+      
+      this.showErrorNotification(message);
+    },
+
+    // Safe localStorage wrapper methods
+    safeGetItem(key) {
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        return null;
+      }
+      try {
+        return localStorage.getItem(key);
+      } catch (error) {
+        console.error(`Error reading from localStorage (key: ${key}):`, error);
+        return null;
+      }
+    },
+
+    safeSetItem(key, value) {
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        throw new Error('localStorage not available');
+      }
+      try {
+        localStorage.setItem(key, value);
+        return true;
+      } catch (error) {
+        console.error(`Error writing to localStorage (key: ${key}):`, error);
+        throw error;
+      }
+    },
+
+    safeRemoveItem(key) {
+      if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        return;
+      }
+      try {
+        localStorage.removeItem(key);
+      } catch (error) {
+        console.error(`Error removing from localStorage (key: ${key}):`, error);
+      }
     }
   }
 }
