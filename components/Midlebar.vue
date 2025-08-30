@@ -1386,7 +1386,6 @@ export default {
           message += ` Storage error: ${health.error}`;
         }
       }
-
       this.showErrorNotification(message);
     },
 
@@ -1429,8 +1428,7 @@ export default {
 
     // Method to validate and fix video data integrity
     validateAndFixVideoData() {
-      console.log('🔧 === VALIDATING AND FIXING VIDEO DATA ===');
-      
+      console.log('🔧 === VALIDATING AND FIXING VIDEO DATA ===');  
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for validation');
         return false;
@@ -1438,7 +1436,6 @@ export default {
       
       let fixesApplied = 0;
       
-      // Check current in-memory data
       this.importData.forEach((post, postIndex) => {
         if (post.media && post.media.length > 0) {
           post.media.forEach((media, mediaIndex) => {
