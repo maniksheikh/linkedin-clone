@@ -1162,7 +1162,6 @@ export default {
       if (savedPosts) {
         const userPosts = JSON.parse(savedPosts);
         console.log('Found', userPosts.length, 'saved posts');
-
         let totalVideos = 0;
         let totalImages = 0;
         let totalOtherMedia = 0;
@@ -1199,7 +1198,6 @@ export default {
                 isVideo: media.type.startsWith('video/')
               });
 
-              // Special check for videos
               if (media.type.startsWith('video/')) {
                 console.log(`    🎥 VIDEO DETAILS:`, {
                   canPlay: !!media.url,
@@ -1229,7 +1227,6 @@ export default {
         console.error('localStorage not available for reload');
         return;
       }
-
       this.importData = [];
       this.$nextTick(() => {
         this.loadPostsFromStorage();
@@ -1239,8 +1236,7 @@ export default {
 
     // Debug method to check localStorage video data
     debugVideoStorage() {
-      console.log('🎥 === VIDEO STORAGE DEBUG ===');
-
+    console.log('🎥 === VIDEO STORAGE DEBUG ===');
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for debug');
         return;
@@ -1255,7 +1251,6 @@ export default {
           );
 
           console.log(`Found ${videoPosts.length} posts with videos in localStorage`);
-
           videoPosts.forEach((post, index) => {
             const videos = post.media.filter(m => m.type.startsWith('video/'));
             console.log(`Video Post ${index + 1} (ID: ${post.id}):`);
@@ -1283,11 +1278,8 @@ export default {
       console.log('🎥 === END VIDEO STORAGE DEBUG ===');
     },
 
-    // Method to clear all saved posts (for testing)
     clearAllSavedPosts() {
       console.log('🗑️ Clearing all saved posts from localStorage...');
-
-      // Check if localStorage is available
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for clearing');
         return;
@@ -1308,7 +1300,6 @@ export default {
     testVideoStorageFlow() {
       console.log('🔬 === TESTING VIDEO STORAGE FLOW ===');
 
-      // Check if localStorage is available
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for testing');
         return;
@@ -1340,7 +1331,6 @@ export default {
       } else {
         console.log('   No posts found in localStorage');
       }
-
       console.log('🔬 === END TEST ===');
     },
 
@@ -1356,7 +1346,6 @@ export default {
         localStorage.setItem(testKey, testValue);
         const retrieved = localStorage.getItem(testKey);
         localStorage.removeItem(testKey);
-
         if (retrieved !== testValue) {
           return { available: false, error: 'localStorage read/write test failed' };
         }
