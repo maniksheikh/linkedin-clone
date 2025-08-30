@@ -704,12 +704,10 @@ export default {
               return;
             }
             
-            // Double-check the media item has the data
             if (!this.selectedMedia[mediaIndex].url) {
               console.error(`❌ Video URL not set properly for ${file.name}`);
               this.selectedMedia[mediaIndex].url = e.target.result;
-            }
-            
+            }          
             console.log(`🎥 Video validation passed for ${file.name}`);
           } else {
             console.log(`📷 ✅ Successfully processed image file: ${file.name}, size: ${file.size} bytes`);
@@ -752,7 +750,6 @@ export default {
 
     async createPost() {
       if (!this.canPost) return;
-
       console.log('🚀 Starting post creation...');
       console.log('Selected media items:', this.selectedMedia.length)
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
@@ -800,7 +797,6 @@ export default {
             console.log(`  ✅ Video URL set from preview: ${media.preview.substring(0, 50)}...`);
           } else {
             console.error(`  ❌ CRITICAL: No URL or preview found for video ${media.name}!`);
-            // Don't include this media item if it has no data
             return null;
           }
           
@@ -811,7 +807,7 @@ export default {
           }
         }
         return mediaItem;
-      }).filter(media => media !== null); // Remove any invalid media items
+      }).filter(media => media !== null);
 
       const newPost = {
         id: Date.now(),
