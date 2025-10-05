@@ -562,8 +562,8 @@ a {
 
 .profile {
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   object-fit: cover;
   margin-bottom: 2px;
 }
@@ -607,8 +607,8 @@ a {
 
   img {
     border-radius: 50%;
-    width: 56px;
-    height: 56px;
+    width: 38px;
+    height: 38px;
     object-fit: cover;
   }
 }
