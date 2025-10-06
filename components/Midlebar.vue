@@ -575,7 +575,6 @@ export default {
 
           if (validationErrors.length > 0) {
             console.warn('⚠️ Validation warnings found:', validationErrors);
-            // Continue saving but log warnings
           }
 
           const dataToSave = JSON.stringify(userPosts);
@@ -794,7 +793,6 @@ export default {
               this.selectedMedia.splice(mediaIndex, 1);
               return;
             }
-            
             console.log(`📷 Image validation passed for ${file.name}`);
           }
           this.$forceUpdate();
@@ -866,7 +864,7 @@ export default {
           isTemporary: false
         };
 
-                if (media.type && media.type.startsWith('video/')) {
+        if (media.type && media.type.startsWith('video/')) {
           console.log(`🎥 Processing video for post: ${media.name}, type: ${media.type}`);
           console.log(`  Original URL present: ${!!media.url}`);
           console.log(`  Original preview present: ${!!media.preview}`);
@@ -1166,8 +1164,7 @@ export default {
         font-family: inherit;
         font-size: 14px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
-      `;
+        transition: all 0.3s ease`;
 
       document.body.appendChild(notification);
 
@@ -1206,8 +1203,7 @@ export default {
         font-size: 14px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         transition: all 0.3s ease;
-        max-width: 350px;
-      `;
+        max-width: 350px`;
 
       document.body.appendChild(notification);
       setTimeout(() => {
@@ -1232,8 +1228,7 @@ export default {
             <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
           </svg>
           <span>🎥 ${videoCount} Video${videoCount > 1 ? 's' : ''} & ${typeText} saved to localStorage! Data will persist after page refresh.</span>
-        </div>
-      `;
+        </div>`;
       notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -1410,13 +1405,13 @@ export default {
             console.log(`  Videos: ${videos.length}`);
 
             videos.forEach((video, vIndex) => {
-              console.log(`    Video ${vIndex + 1}:`);
-              console.log(`      Name: ${video.name}`);
-              console.log(`      Type: ${video.type}`);
-              console.log(`      Size: ${video.size} bytes`);
-              console.log(`      Has URL: ${!!video.url}`);
-              console.log(`      URL Type: ${video.url?.startsWith('data:') ? 'Data URL (base64)' : 'Other'}`);
-              console.log(`      URL Length: ${video.url?.length || 0} characters`);
+              console.log(`Video ${vIndex + 1}:`);
+              console.log(`Name: ${video.name}`);
+              console.log(`Type: ${video.type}`);
+              console.log(`Size: ${video.size} bytes`);
+              console.log(`Has URL: ${!!video.url}`);
+              console.log(`URL Type: ${video.url?.startsWith('data:') ? 'Data URL (base64)' : 'Other'}`);
+              console.log(`URL Length: ${video.url?.length || 0} characters`);
             });
           });
 
@@ -1620,8 +1615,7 @@ export default {
           console.log(`🔄 Retrying save in ${(retryCount + 1) * 1000}ms...`);
           await new Promise(resolve => setTimeout(resolve, (retryCount + 1) * 1000));
           return this.safeSetItem(key, value, retryCount + 1);
-        }
-        
+        } 
         throw error;
       }
     },
