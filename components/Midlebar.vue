@@ -368,9 +368,9 @@ export default {
         console.log('🎥📷 === USE THESE TO DEBUG MEDIA ISSUES ===');
         
         // Auto-validate media data on load
-        setTimeout(() => {
-          this.validateAndFixVideoData();
-          this.validateAndFixImageData();
+        setTimeout(async () => {
+          await this.validateAndFixVideoData();
+          await this.validateAndFixImageData();
         }, 1000);
       }
     }
@@ -471,7 +471,7 @@ export default {
       }
     },
 
-    saveUserPostsToStorage() {
+    async saveUserPostsToStorage() {
       try {
         if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
           console.warn('localStorage not available, cannot save posts');
@@ -564,11 +564,25 @@ export default {
             });
           }
 
+          // Validate posts before saving
+          const validationErrors = [];
+          userPosts.forEach((post, index) => {
+            const errors = this.validatePostData(post);
+            if (errors.length > 0) {
+              validationErrors.push(`Post ${index + 1} (ID: ${post.id}): ${errors.join(', ')}`);
+            }
+          });
+
+          if (validationErrors.length > 0) {
+            console.warn('⚠️ Validation warnings found:', validationErrors);
+            // Continue saving but log warnings
+          }
+
           const dataToSave = JSON.stringify(userPosts);
           console.log(`💾 Attempting to save ${dataToSave.length} characters to localStorage`);
           console.log(`💾 Data size: ${(dataToSave.length / 1024 / 1024).toFixed(2)} MB`);
           
-          this.safeSetItem('userPosts', dataToSave);
+          await this.safeSetItem('userPosts', dataToSave);
           console.log('✅ Successfully saved to localStorage');
         } catch (storageError) {
           console.error('❌ Failed to save to localStorage:', storageError);
@@ -616,7 +630,7 @@ export default {
       }
     },
 
-    addItems() {
+    async addItems() {
       if (this.text.trim()) {
         const newPost = {
           id: Date.now(),
@@ -628,7 +642,12 @@ export default {
         };
         this.importData.unshift(newPost);
         this.text = '';
-        this.saveUserPostsToStorage();
+        try {
+          await this.saveUserPostsToStorage();
+        } catch (error) {
+          console.error('Failed to save post:', error);
+          this.showStorageErrorNotification('save');
+        }
       }
     },
 
@@ -955,7 +974,7 @@ export default {
       });
 
       try {
-        this.saveUserPostsToStorage();
+        await this.saveUserPostsToStorage();
         console.log('✅ Post successfully saved to localStorage');
       } catch (saveError) {
         console.error('❌ Error saving post:', saveError);
@@ -1040,10 +1059,15 @@ export default {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     },
 
-    deleteImportedPost(post) {
+    async deleteImportedPost(post) {
       this.importData = this.importData.filter(p => p !== post);
       if (post.id) {
-        this.saveUserPostsToStorage();
+        try {
+          await this.saveUserPostsToStorage();
+        } catch (error) {
+          console.error('Failed to save after deleting post:', error);
+          this.showStorageErrorNotification('save');
+        }
       }
 
       this.hideDropdown(post);
@@ -1080,11 +1104,16 @@ export default {
       this.hideDropdown(post);
     },
 
-    saveEdit(post) {
+    async saveEdit(post) {
       if (this.editText.trim()) {
         post.description = this.editText.trim();
         if (post.id) {
-          this.saveUserPostsToStorage();
+          try {
+            await this.saveUserPostsToStorage();
+          } catch (error) {
+            console.error('Failed to save edited post:', error);
+            this.showStorageErrorNotification('save');
+          }
         }
       }
       this.cancelEdit();
@@ -1101,7 +1130,7 @@ export default {
       }
     },
 
-    removeMediaFromPost(post, mediaIndex) {
+    async removeMediaFromPost(post, mediaIndex) {
       if (post.media && post.media[mediaIndex]) {
         if (post.media[mediaIndex].url && post.media[mediaIndex].url.startsWith('blob:')) {
           URL.revokeObjectURL(post.media[mediaIndex].url);
@@ -1111,7 +1140,12 @@ export default {
           post.media[mediaIndex].type.startsWith('image/') ? 'Image' : 'File';
         post.media.splice(mediaIndex, 1);
         if (post.id) {
-          this.saveUserPostsToStorage();
+          try {
+            await this.saveUserPostsToStorage();
+          } catch (error) {
+            console.error('Failed to save after removing media:', error);
+            this.showStorageErrorNotification('save');
+          }
         }
         this.showMediaRemovedNotification(mediaType);
       }
@@ -1515,28 +1549,79 @@ export default {
       this.showErrorNotification(message);
     },
 
-    // Safe localStorage wrapper methods
+    // Enhanced localStorage wrapper methods with compression and fallback
     safeGetItem(key) {
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+        console.warn('localStorage not available (SSR mode)');
         return null;
       }
       try {
-        return localStorage.getItem(key);
+        const item = localStorage.getItem(key);
+        if (item && item.startsWith('COMPRESSED:')) {
+          // Decompress data
+          const compressed = item.substring(11);
+          return this.decompressData(compressed);
+        }
+        return item;
       } catch (error) {
         console.error(`Error reading from localStorage (key: ${key}):`, error);
-        return null;
+        // Try to recover from IndexedDB if available
+        return this.fallbackGetItem(key);
       }
     },
 
-    safeSetItem(key, value) {
+    async safeSetItem(key, value, retryCount = 0) {
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         throw new Error('localStorage not available');
       }
+      
+      const maxRetries = 3;
+      const originalSize = value.length;
+      
       try {
+        // First attempt: try to save as-is
         localStorage.setItem(key, value);
+        console.log(`✅ Successfully saved ${key} (${this.formatFileSize(originalSize)})`);
         return true;
       } catch (error) {
-        console.error(`Error writing to localStorage (key: ${key}):`, error);
+        console.warn(`❌ Failed to save ${key} (attempt ${retryCount + 1}/${maxRetries + 1}):`, error.message);
+        
+        if (error.name === 'QuotaExceededError' || error.message.includes('quota')) {
+          // Try compression
+          try {
+            const compressed = this.compressData(value);
+            const compressedData = 'COMPRESSED:' + compressed;
+            
+            if (compressedData.length < originalSize * 0.8) { // Only use if significantly smaller
+              localStorage.setItem(key, compressedData);
+              console.log(`✅ Successfully saved ${key} with compression (${this.formatFileSize(originalSize)} → ${this.formatFileSize(compressedData.length)})`);
+              return true;
+            }
+          } catch (compressionError) {
+            console.error('Compression failed:', compressionError);
+          }
+          
+          // Try cleaning up old data
+          if (retryCount === 0) {
+            console.log('🧹 Attempting to free up storage space...');
+            await this.cleanupOldData();
+            return this.safeSetItem(key, value, retryCount + 1);
+          }
+          
+          // Try fallback storage
+          if (retryCount < maxRetries) {
+            console.log('💾 Attempting fallback storage...');
+            return await this.fallbackSetItem(key, value);
+          }
+        }
+        
+        // Retry for other errors
+        if (retryCount < maxRetries) {
+          console.log(`🔄 Retrying save in ${(retryCount + 1) * 1000}ms...`);
+          await new Promise(resolve => setTimeout(resolve, (retryCount + 1) * 1000));
+          return this.safeSetItem(key, value, retryCount + 1);
+        }
+        
         throw error;
       }
     },
@@ -1553,7 +1638,7 @@ export default {
     },
 
     // Method to validate and fix video data integrity
-    validateAndFixVideoData() {
+    async validateAndFixVideoData() {
       console.log('🔧 === VALIDATING AND FIXING VIDEO DATA ===');  
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for validation');
@@ -1582,7 +1667,11 @@ export default {
       
       if (fixesApplied > 0) {
         console.log(`🔧 Applied ${fixesApplied} fixes to video data. Saving to localStorage...`);
-        this.saveUserPostsToStorage();
+        try {
+          await this.saveUserPostsToStorage();
+        } catch (error) {
+          console.error('Failed to save after video data fixes:', error);
+        }
         return true;
       } else {
         console.log('🔧 No video data fixes needed');
@@ -1635,7 +1724,7 @@ export default {
     },
 
     // Method to validate and fix image data integrity
-    validateAndFixImageData() {
+    async validateAndFixImageData() {
       console.log('🔧 === VALIDATING AND FIXING IMAGE DATA ===');  
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for validation');
@@ -1664,7 +1753,11 @@ export default {
       
       if (fixesApplied > 0) {
         console.log(`🔧 Applied ${fixesApplied} fixes to image data. Saving to localStorage...`);
-        this.saveUserPostsToStorage();
+        try {
+          await this.saveUserPostsToStorage();
+        } catch (error) {
+          console.error('Failed to save after image data fixes:', error);
+        }
         return true;
       } else {
         console.log('🔧 No image data fixes needed');
@@ -1774,6 +1867,187 @@ export default {
         selectedMedia: this.selectedMedia.length,
         canSave: health.available
       };
+    },
+
+    // Data compression methods
+    compressData(data) {
+      try {
+        // Simple compression using base64 and string manipulation
+        // For better compression, consider using libraries like pako or lz-string
+        const compressed = btoa(unescape(encodeURIComponent(data)));
+        return compressed;
+      } catch (error) {
+        console.error('Compression failed:', error);
+        return data;
+      }
+    },
+
+    decompressData(compressedData) {
+      try {
+        const decompressed = decodeURIComponent(escape(atob(compressedData)));
+        return decompressed;
+      } catch (error) {
+        console.error('Decompression failed:', error);
+        return compressedData;
+      }
+    },
+
+    // Fallback storage using IndexedDB
+    async fallbackSetItem(key, value) {
+      try {
+        if (!window.indexedDB) {
+          throw new Error('IndexedDB not available');
+        }
+
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open('LinkedInCloneStorage', 1);
+          
+          request.onerror = () => reject(request.error);
+          
+          request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('posts')) {
+              db.createObjectStore('posts', { keyPath: 'key' });
+            }
+          };
+          
+          request.onsuccess = (event) => {
+            const db = event.target.result;
+            const transaction = db.transaction(['posts'], 'readwrite');
+            const store = transaction.objectStore('posts');
+            
+            store.put({ key, value, timestamp: Date.now() });
+            
+            transaction.oncomplete = () => {
+              console.log(`✅ Successfully saved ${key} to IndexedDB fallback storage`);
+              resolve(true);
+            };
+            
+            transaction.onerror = () => reject(transaction.error);
+          };
+        });
+      } catch (error) {
+        console.error('Fallback storage failed:', error);
+        throw error;
+      }
+    },
+
+    async fallbackGetItem(key) {
+      try {
+        if (!window.indexedDB) {
+          return null;
+        }
+
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open('LinkedInCloneStorage', 1);
+          
+          request.onerror = () => resolve(null);
+          
+          request.onsuccess = (event) => {
+            const db = event.target.result;
+            
+            if (!db.objectStoreNames.contains('posts')) {
+              resolve(null);
+              return;
+            }
+            
+            const transaction = db.transaction(['posts'], 'readonly');
+            const store = transaction.objectStore('posts');
+            const getRequest = store.get(key);
+            
+            getRequest.onsuccess = () => {
+              const result = getRequest.result;
+              resolve(result ? result.value : null);
+            };
+            
+            getRequest.onerror = () => resolve(null);
+          };
+        });
+      } catch (error) {
+        console.error('Fallback retrieval failed:', error);
+        return null;
+      }
+    },
+
+    // Clean up old data to free storage space
+    async cleanupOldData() {
+      try {
+        console.log('🧹 Starting storage cleanup...');
+        
+        // Remove old temporary data
+        const keysToCheck = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && (key.startsWith('temp_') || key.startsWith('cache_'))) {
+            keysToCheck.push(key);
+          }
+        }
+        
+        keysToCheck.forEach(key => {
+          try {
+            localStorage.removeItem(key);
+            console.log(`🗑️ Removed temporary data: ${key}`);
+          } catch (error) {
+            console.warn(`Failed to remove ${key}:`, error);
+          }
+        });
+
+        // Compress existing posts if they're taking too much space
+        const existingPosts = this.safeGetItem('userPosts');
+        if (existingPosts && existingPosts.length > 1024 * 1024) { // > 1MB
+          try {
+            const compressed = this.compressData(existingPosts);
+            if (compressed.length < existingPosts.length * 0.8) {
+              localStorage.setItem('userPosts', 'COMPRESSED:' + compressed);
+              console.log(`🗜️ Compressed existing posts: ${this.formatFileSize(existingPosts.length)} → ${this.formatFileSize(compressed.length + 11)}`);
+            }
+          } catch (compressionError) {
+            console.warn('Failed to compress existing posts:', compressionError);
+          }
+        }
+
+        console.log('✅ Storage cleanup completed');
+      } catch (error) {
+        console.error('Storage cleanup failed:', error);
+      }
+    },
+
+    // Enhanced data validation
+    validatePostData(post) {
+      const errors = [];
+      
+      if (!post.id) errors.push('Missing post ID');
+      if (!post.name) errors.push('Missing post name');
+      if (!post.description) errors.push('Missing post description');
+      
+      if (post.media && Array.isArray(post.media)) {
+        post.media.forEach((media, index) => {
+          if (!media.type) errors.push(`Media ${index}: Missing type`);
+          if (!media.name) errors.push(`Media ${index}: Missing name`);
+          if (!media.url && !media.preview) errors.push(`Media ${index}: Missing URL and preview`);
+          
+          // Validate data URLs
+          if (media.url && media.url.startsWith('data:')) {
+            if (media.type.startsWith('video/') && !media.url.startsWith('data:video/')) {
+              errors.push(`Media ${index}: Video type mismatch`);
+            }
+            if (media.type.startsWith('image/') && !media.url.startsWith('data:image/')) {
+              errors.push(`Media ${index}: Image type mismatch`);
+            }
+          }
+        });
+      }
+      
+      return errors;
+    },
+
+    // Format file size for display
+    formatFileSize(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
   }
 }
