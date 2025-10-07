@@ -1935,8 +1935,7 @@ export default {
           request.onerror = () => resolve(null);
           
           request.onsuccess = (event) => {
-            const db = event.target.result;
-            
+            const db = event.target.result; 
             if (!db.objectStoreNames.contains('posts')) {
               resolve(null);
               return;
@@ -1949,8 +1948,7 @@ export default {
             getRequest.onsuccess = () => {
               const result = getRequest.result;
               resolve(result ? result.value : null);
-            };
-            
+            };   
             getRequest.onerror = () => resolve(null);
           };
         });
@@ -1996,7 +1994,6 @@ export default {
             console.warn('Failed to compress existing posts:', compressionError);
           }
         }
-
         console.log('✅ Storage cleanup completed');
       } catch (error) {
         console.error('Storage cleanup failed:', error);
@@ -2027,8 +2024,7 @@ export default {
             }
           }
         });
-      }
-      
+      }    
       return errors;
     },
 
