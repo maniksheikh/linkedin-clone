@@ -2119,7 +2119,6 @@ $color-red: #cc1016;
 
   .user-info {
     flex: 1;
-
     .user-name {
       font-size: $font-size-base;
       font-weight: $font-weight-semibold;
@@ -2140,7 +2139,6 @@ $color-red: #cc1016;
     justify-content: center;
     border-radius: 50%;
     transition: all 0.2s ease;
-
     &:hover {
       background: $color-gray-100;
       color: $color-gray-700;
@@ -2168,7 +2166,6 @@ $color-red: #cc1016;
   resize: none;
   min-height: 120px;
   color: $color-gray-900;
-
   &::placeholder {
     color: $color-gray-500;
   }
@@ -2191,7 +2188,6 @@ $color-red: #cc1016;
   .drag-message {
     text-align: center;
     color: $color-primary;
-
     svg {
       margin-bottom: 8px;
     }
@@ -2214,7 +2210,6 @@ $color-red: #cc1016;
 
 .media-preview-item {
   margin-bottom: 12px;
-
   &:last-child {
     margin-bottom: 0;
   }
@@ -2244,13 +2239,11 @@ $color-red: #cc1016;
     transition: all 0.3s ease;
     backdrop-filter: blur(4px);
     z-index: 10;
-
     &:hover {
       background: rgba(204, 16, 22, 0.9);
       transform: scale(1.1);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-
     &:active {
       transform: scale(0.95);
     }
