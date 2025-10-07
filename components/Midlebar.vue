@@ -1697,13 +1697,13 @@ export default {
             console.log(`  Images: ${images.length}`);
 
             images.forEach((image, iIndex) => {
-              console.log(`    Image ${iIndex + 1}:`);
-              console.log(`      Name: ${image.name}`);
-              console.log(`      Type: ${image.type}`);
-              console.log(`      Size: ${image.size} bytes`);
-              console.log(`      Has URL: ${!!image.url}`);
-              console.log(`      URL Type: ${image.url?.startsWith('data:') ? 'Data URL (base64)' : 'Other'}`);
-              console.log(`      URL Length: ${image.url?.length || 0} characters`);
+              console.log(`Image ${iIndex + 1}:`);
+              console.log(`Name: ${image.name}`);
+              console.log(`Type: ${image.type}`);
+              console.log(`Size: ${image.size} bytes`);
+              console.log(`Has URL: ${!!image.url}`);
+              console.log(`URL Type: ${image.url?.startsWith('data:') ? 'Data URL (base64)' : 'Other'}`);
+              console.log(`URL Length: ${image.url?.length || 0} characters`);
             });
           });
 
@@ -1851,7 +1851,6 @@ export default {
       } catch (error) {
         console.error('❌ Save simulation failed:', error);
       }
-      
       console.log('🔍 === END COMPREHENSIVE DEBUG ===');
       
       // Return summary
@@ -1866,8 +1865,6 @@ export default {
     // Data compression methods
     compressData(data) {
       try {
-        // Simple compression using base64 and string manipulation
-        // For better compression, consider using libraries like pako or lz-string
         const compressed = btoa(unescape(encodeURIComponent(data)));
         return compressed;
       } catch (error) {
