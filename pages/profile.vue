@@ -449,14 +449,12 @@ $spacing-xl: 32px;
   .main-content {
     padding: $spacing-md;
   }
-
   .cover-photo {
     height: 150px;
   }
 
   .avatar-section {
     top: -40px;
-
     .profile-avatar {
       width: 80px;
       height: 80px;
@@ -470,11 +468,9 @@ $spacing-xl: 32px;
       flex-direction: column;
       align-items: flex-start;
       gap: $spacing-sm;
-
       h1 {
         font-size: 24px;
       }
-
       .edit-name-form .name-input {
         font-size: 24px;
       }
@@ -504,7 +500,6 @@ $spacing-xl: 32px;
   .avatar-section {
     top: -30px;
     left: $spacing-md;
-
     .profile-avatar {
       width: 60px;
       height: 60px;
@@ -518,7 +513,6 @@ $spacing-xl: 32px;
       h1 {
         font-size: 20px;
       }
-
       .edit-name-form .name-input {
         font-size: 20px;
       }
