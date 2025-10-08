@@ -323,10 +323,9 @@ $spacing-xl: 32px;
           background: $background-light;
           color: $text-secondary;
           border: 1px solid $border-color;
-
-          &:hover {
-            background: $background-gray;
-          }
+             &:hover {
+             background: $background-gray;
+             }
         }
       }
     }
@@ -350,10 +349,9 @@ $spacing-xl: 32px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-
-      &:hover {
+        &:hover {
         text-decoration: underline;
-      }
+        }
     }
   }
 }
@@ -413,13 +411,11 @@ $spacing-xl: 32px;
       color: $text-secondary;
       margin: 0 0 4px 0;
     }
-
     .duration {
       font-size: 12px;
       color: $text-muted;
       margin: 0 0 $spacing-sm 0;
     }
-
     .description {
       font-size: 14px;
       color: $text-secondary;
