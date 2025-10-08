@@ -176,8 +176,7 @@ export const actions = {
           }
         } catch (storageError) {
           console.error('Error updating posts in storage:', storageError)
-        }
-        
+        }  
         return currentUser
       }
     } catch (error) {
