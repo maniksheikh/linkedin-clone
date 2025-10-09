@@ -426,11 +426,10 @@ footer {
   margin-left: 0.5rem;
   text-decoration: none;
   transition: color $transition;
-
-  &:hover {
+    &:hover {
     color: $primary-dark;
     text-decoration: underline;
-  }
+    }
   &:focus {
     @include focus-style;
   }
