@@ -85,7 +85,6 @@ export default {
     overflow-y: visible !important;
     box-sizing: border-box;
   }
-
   .rightbar {
     display: none !important;
   }
@@ -96,8 +95,7 @@ export default {
     width: 100% !important;
     margin: 0;
     padding: 0;
-  }
-  
+  } 
   .midlebar {
     width: 100% !important;
     padding: 0 1.5% !important;
@@ -117,7 +115,6 @@ export default {
     width: 97% !important;
     max-width: 97% !important;
   }
-  
   .grid {
     grid-template-columns: 250px 1fr 280px !important;
     grid-gap: 1rem !important;
@@ -141,7 +138,6 @@ export default {
     width: 100% !important;
   }
 }
-
 
 .midlebar {
   position: relative;
