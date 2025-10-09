@@ -75,7 +75,6 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
-
 div {
     border-radius: 10px;
 }
@@ -178,9 +177,9 @@ p {
     color: #1877f2;
     padding: 0.8rem 0;
     font-size: 1.1rem;
-    &:hover {
+      &:hover {
         text-decoration: underline;
-    }
+       }
 }
 
 .forgot-pass {
