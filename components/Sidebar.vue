@@ -682,7 +682,6 @@ $black: black;
         .info {
           margin-top: 35px;
           padding: 0 12px 12px;
-
           h2 {
             font-size: 14px;
           }
@@ -708,13 +707,11 @@ $black: black;
       .container-body {
         .stats-box .connection {
           padding: 6px 10px;
-
           .connection-body {
             .first {
               font-size: 0.8rem;
             }
           }
-
           .first-bold {
             font-size: 0.8rem;
           }
@@ -722,7 +719,6 @@ $black: black;
 
         .stats-box .profile-view {
           padding: 4px;
-
           .second {
             font-size: 0.8rem;
           }
@@ -730,7 +726,6 @@ $black: black;
 
         .premium {
           padding: 10px;
-
           .premiun-middle {
             font-size: 0.8rem;
           }
@@ -738,7 +733,6 @@ $black: black;
 
         .items {
           padding: 6px 10px;
-
           .last {
             font-size: 0.8rem;
           }
@@ -746,12 +740,10 @@ $black: black;
 
         .bottom {
           padding: 6px 10px;
-
           .bottom-body .bottom-list {
             font-size: 0.8rem;
             padding: 4px 6px;
           }
-
           .bottom-h {
             font-size: 0.8rem;
             padding: 4px 6px;
