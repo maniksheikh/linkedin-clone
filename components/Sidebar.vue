@@ -308,7 +308,6 @@ $black: black;
             color: #0a66c2;
             text-decoration: underline;
           }
-
           svg {
             color: #0a66c2;
           }
@@ -362,7 +361,6 @@ $black: black;
               cursor: pointer;
               color: $text-gray;
               transition: all 0.2s ease;
-
               &:hover {
                 color: #0a66c2;
               }
@@ -634,11 +632,10 @@ $black: black;
         text-align: center;
         width: 100%;
         transition: all 0.2s ease;
-
-        &:hover {
+          &:hover {
           color: #0a66c2;
           text-decoration: underline;
-        }
+         }
       }
     }
   }
