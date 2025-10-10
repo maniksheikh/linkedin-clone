@@ -200,7 +200,6 @@ $black: black;
         .connection {
           padding: 8px 12px;
           cursor: pointer;
-
           &:hover {
 
             .first,
@@ -241,7 +240,6 @@ $black: black;
           cursor: pointer;
 
           &:hover {
-
             .second,
             .views {
               color: #0a66c2;
@@ -270,7 +268,6 @@ $black: black;
         margin-bottom: 8px;
         border: 1px solid $border-color;
         cursor: pointer;
-
         &:hover {
           .premiun-middle {
             color: #0a66c2;
