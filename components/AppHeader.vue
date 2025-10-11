@@ -944,7 +944,6 @@ img {
 
   .mobile-menu-btn {
     padding: 4px !important;
-    
     svg {
       width: 20px;
       height: 20px;
@@ -956,7 +955,6 @@ img {
   .search-bar {
     border: 1px solid $text-secondary;
   }
-
   .dropdown-menu {
     border: 2px solid $text-primary;
   }
