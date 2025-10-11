@@ -604,8 +604,7 @@ a {
   display: flex;
   align-items: center;
   gap: $spacing-md;
-
-  img {
+img {
     border-radius: 50%;
     width: 38px;
     height: 38px;
@@ -657,7 +656,6 @@ a {
       color: $primary-blue;
     }
   }
-
   &:focus {
     outline: 2px solid $primary-blue;
     outline-offset: 2px;
@@ -686,7 +684,6 @@ a {
     font-weight: 600;
     cursor: pointer;
     transition: $transition;
-
     &:hover {
       color: #b8730a;
     }
