@@ -705,7 +705,6 @@ img {
   align-items: center;
   gap: $spacing-xs;
   margin-top: $spacing-xs;
-
   span {
     font-size: $font-size-xs;
     color: $text-muted;
@@ -743,8 +742,7 @@ img {
       width: 24px;
       height: 24px;
     }
-
-    @media screen and (min-width: 769px) {
+   @media screen and (min-width: 769px) {
       display: none;
     }
   }
@@ -753,11 +751,9 @@ img {
   .main-container {
     padding: $spacing-sm;
   }
-
   .nav {
     gap: 0;
   }
-
   .navber-contents {
     min-width: 70px;
     padding: $spacing-sm;
@@ -839,20 +835,16 @@ img {
     left: auto;
     max-width: 320px;
   }
-
   .profile {
     width: 32px;
     height: 32px;
   }
-
   .item {
     margin-left: 0;
   }
-
   .btn.dropdown {
     padding: 2px;
   }
-
   .visible.mr-t {
     font-size: 0.7rem;
   }
