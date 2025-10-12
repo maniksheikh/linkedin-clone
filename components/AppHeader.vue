@@ -580,7 +580,6 @@ a {
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -633,7 +632,6 @@ img {
     color: $text-secondary;
     transition: $transition;
   }
-
   h4 {
     font-size: $font-size-sm;
     font-weight: 400;
@@ -641,7 +639,6 @@ img {
     margin: 0;
     transition: $transition;
   }
-
   &:hover {
     background: $hover-color;
     svg {
@@ -670,7 +667,6 @@ img {
   border-left: 1px solid $border-color;
   padding-left: $spacing-md;
   margin-left: $spacing-md;
-
   p {
     font-size: $font-size-xs;
     color: #915907;
@@ -732,7 +728,6 @@ img {
       color: $primary-blue;
       background: $hover-color;
     }
-
     svg {
       width: 24px;
       height: 24px;
@@ -781,7 +776,6 @@ img {
       color: $primary-blue;
       background: $hover-color;
     }
-
     svg {
       width: 24px;
       height: 24px;
@@ -905,7 +899,6 @@ img {
   .btn.dropdown {
     padding: 1px;
   }
-
   .visible.mr-t {
     font-size: 0.65rem;
   }
