@@ -516,7 +516,6 @@ a {
     font-weight: 400;
     transition: $transition;
   }
-
   &:hover {
     svg {
       color: $primary-blue;
@@ -544,14 +543,12 @@ a {
   padding: 0;
   border-radius: $spacing-xs;
   transition: $transition;
-
   &.dropdown {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 4px;
   }
-
   &:focus {
     outline: 2px solid $primary-blue;
     outline-offset: 2px;
