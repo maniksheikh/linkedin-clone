@@ -459,13 +459,12 @@ a {
   color: $text-primary;
   padding: 0;
   margin-left: 2px;
-
-  &::placeholder {
+    &::placeholder {
     color: $text-secondary;
-  }
-  &:focus {
+    }
+    &:focus {
     outline: none;
-  }
+    }
 }
 
 .nav {
@@ -496,7 +495,6 @@ a {
       background-color: #000000;
       transition: $transition;
     }
-
     svg {
       color: $text-primary;
     }
