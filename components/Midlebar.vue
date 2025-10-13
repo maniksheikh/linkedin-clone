@@ -2090,7 +2090,6 @@ $color-red: #cc1016;
   max-width: 560px;
   max-height: 80vh;
   overflow-y: auto;
-
   &::before {
     content: '';
     position: fixed;
@@ -2148,7 +2147,6 @@ $color-red: #cc1016;
 
 .textarea-container {
   position: relative;
-
   &.drag-over {
     .post-textarea {
       opacity: 0.5;
@@ -2191,7 +2189,6 @@ $color-red: #cc1016;
     svg {
       margin-bottom: 8px;
     }
-
     p {
       margin: 0;
       font-size: $font-size-lg;
