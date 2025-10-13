@@ -2289,11 +2289,9 @@ $color-red: #cc1016;
     transform: scale(1.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-
   &:active {
     transform: scale(0.95);
   }
-
   svg {
     pointer-events: none;
   }
@@ -2309,7 +2307,6 @@ $color-red: #cc1016;
     color: $color-gray-500;
     margin-right: 12px;
   }
-
   .file-name {
     font-size: $font-size-sm;
     color: $color-gray-700;
@@ -2349,8 +2346,7 @@ $color-red: #cc1016;
     background: $color-gray-100;
     color: $color-gray-900;
   }
-
-  svg {
+ svg {
     color: $color-primary;
   }
 }
@@ -2370,8 +2366,7 @@ $color-red: #cc1016;
     background: $color-primary;
     color: white;
     cursor: pointer;
-
-    &:hover {
+   &:hover {
       background: #084d8a;
     }
   }
@@ -2381,10 +2376,8 @@ $color-red: #cc1016;
 .post-media-container {
   margin: 12px 0;
 }
-
 .post-media-item {
   margin-bottom: 8px;
-
   &:last-child {
     margin-bottom: 0;
   }
