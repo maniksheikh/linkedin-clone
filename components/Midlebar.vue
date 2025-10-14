@@ -2925,7 +2925,6 @@ $color-red: #cc1016;
   &:first-child {
     margin-left: 0;
   }
-
   &:last-child {
     margin-right: 0;
   }
@@ -2933,7 +2932,6 @@ $color-red: #cc1016;
   &:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.08);
-
     .span {
       color: $color-gray-900;
       font-weight: $font-weight-semibold;
