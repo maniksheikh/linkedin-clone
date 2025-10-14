@@ -2938,7 +2938,6 @@ $color-red: #cc1016;
       color: $color-gray-900;
       font-weight: $font-weight-semibold;
     }
-
     svg {
       opacity: 0.8;
       transform: scale(1.05);
@@ -2957,7 +2956,6 @@ $color-red: #cc1016;
 .wish-match {
   color: $color-gray-500;
   transition: all 0.2s ease;
-
   .post-react:hover & {
     color: $color-gray-900;
   }
