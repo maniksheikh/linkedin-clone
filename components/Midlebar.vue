@@ -2839,7 +2839,6 @@ $color-red: #cc1016;
 .save-btn {
   background: $color-primary;
   color: white;
-
   &:hover {
     background: #084d8a;
     transform: translateY(-1px);
@@ -2850,7 +2849,6 @@ $color-red: #cc1016;
   background: transparent;
   color: $color-gray-700;
   border: 1px solid $color-gray-300;
-
   &:hover {
     background: $color-gray-100;
     border-color: $color-gray-500;
