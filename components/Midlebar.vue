@@ -3041,12 +3041,10 @@ $color-red: #cc1016;
     padding: 12px 16px;
     flex-direction: column;
     gap: 12px;
-
     .media-buttons {
       width: 100%;
       justify-content: space-around;
     }
-
     .post-btn {
       width: 100%;
     }
@@ -3064,7 +3062,6 @@ $color-red: #cc1016;
   .media-btn {
     padding: 6px 8px;
     font-size: 0.8rem;
-
     span {
       display: none;
     }
