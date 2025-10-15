@@ -3134,7 +3134,6 @@ $color-red: #cc1016;
     width: 100%;
     box-sizing: border-box;
     padding: 10px 20px;
-
     .span {
       font-size: 0.9rem;
       margin-left: 6px;
@@ -3192,7 +3191,6 @@ $color-red: #cc1016;
     min-width: 0;
     flex: 1;
     margin: 0 2px;
-
     .span {
       font-size: 0.8rem;
       margin-left: 6px;
@@ -3214,13 +3212,10 @@ $color-red: #cc1016;
   }
 
   .video-delete-btn {
-    // Make button slightly larger on mobile for easier interaction
     width: 36px;
     height: 36px;
     top: 12px;
     right: 12px;
-
-    // Always visible on mobile (no hover required)
     background: rgba(0, 0, 0, 0.8);
   }
 
@@ -3302,7 +3297,6 @@ $color-red: #cc1016;
 
   .section {
     padding: 12px;
-
     input {
       font-size: 15px;
       padding: 12px 16px;
@@ -3368,7 +3362,6 @@ $color-red: #cc1016;
 
   .post-react {
     padding: 6px 4px;
-
     .span {
       font-size: 0.75rem;
       margin-left: 4px;
