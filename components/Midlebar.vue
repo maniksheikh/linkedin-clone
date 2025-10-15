@@ -2964,7 +2964,6 @@ $color-red: #cc1016;
   border-radius: 50%;
   object-fit: cover;
   transition: all 0.2s ease;
-
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -3023,7 +3022,6 @@ $color-red: #cc1016;
       width: 40px;
       height: 40px;
     }
-
     .user-name {
       font-size: $font-size-sm;
     }
