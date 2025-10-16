@@ -3417,16 +3417,13 @@ $color-red: #cc1016;
     width: 97% !important;
     max-width: 97% !important;
   }
-
   .post-container {
     width: 97% !important;
     max-width: 97% !important;
   }
-
   .section {
     padding: 10px;
   }
-
   .post-body {
     padding: 12px;
   }
