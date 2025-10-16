@@ -3058,7 +3058,6 @@ $color-red: #cc1016;
     bottom: 10px;
     max-height: calc(100vh - 20px);
   }
-
   .media-btn {
     padding: 6px 8px;
     font-size: 0.8rem;
@@ -3311,7 +3310,6 @@ $color-red: #cc1016;
 
   .middle-section {
     padding: 8px 16px;
-
     .span {
       font-size: 0.85rem;
     }
