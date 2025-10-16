@@ -3442,7 +3442,6 @@ $color-red: #cc1016;
 
   .section {
     padding: 8px;
-
     input {
       font-size: 14px;
       padding: 10px 14px;
@@ -3457,7 +3456,6 @@ $color-red: #cc1016;
 
   .middle-section {
     padding: 6px 12px;
-
     .span {
       font-size: 0.8rem;
     }
@@ -3498,7 +3496,6 @@ $color-red: #cc1016;
 
   .post-react {
     padding: 5px 3px;
-
     .span {
       font-size: 0.7rem;
       margin-left: 3px;
