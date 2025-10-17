@@ -2698,7 +2698,6 @@ $color-red: #cc1016;
   justify-content: center;
   transition: all 0.2s ease;
   color: $color-gray-500;
-
   &:hover {
     background: rgba(204, 16, 22, 0.1);
     color: $color-red;
@@ -2725,7 +2724,6 @@ $color-red: #cc1016;
   justify-content: center;
   transition: all 0.2s ease;
   color: $color-gray-500;
-
   &:hover {
     background: rgba(0, 0, 0, 0.05);
     color: $color-gray-700;
@@ -2767,7 +2765,6 @@ $color-red: #cc1016;
     background: $color-gray-100;
     color: $color-gray-900;
   }
-
   &.delete {
     color: $color-red;
     &:hover {
@@ -2775,7 +2772,6 @@ $color-red: #cc1016;
       color: $color-red;
     }
   }
-
   svg {
     margin-right: 8px;
     width: 16px;
@@ -2925,7 +2921,6 @@ $color-red: #cc1016;
       transform: scale(1.05);
     }
   }
-
   .span {
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
