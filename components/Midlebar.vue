@@ -2573,7 +2573,6 @@ $color-red: #cc1016;
   margin: 0 4px;
   border-radius: 8px;
   transition: all 0.2s ease;
-
   &:hover {
     cursor: pointer;
     background: $color-gray-100;
@@ -2681,7 +2680,6 @@ $color-red: #cc1016;
   object-fit: cover;
   transition: all 0.2s ease;
   border: 2px solid transparent;
-
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
