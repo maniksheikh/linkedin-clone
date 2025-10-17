@@ -2534,7 +2534,6 @@ $color-red: #cc1016;
       background: $color-gray-100;
       border-color: $color-gray-500;
       color: $color-gray-900;
-
       &::placeholder {
         color: $color-gray-700;
       }
@@ -2543,7 +2542,6 @@ $color-red: #cc1016;
     &:focus {
       border-color: $color-primary;
       box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
-
       &::placeholder {
         color: $color-gray-500;
       }
@@ -2558,7 +2556,6 @@ $color-red: #cc1016;
   border-radius: 50%;
   object-fit: cover;
   transition: all 0.2s ease;
-
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -2583,7 +2580,6 @@ $color-red: #cc1016;
   &:hover {
     cursor: pointer;
     background: $color-gray-100;
-
     .span {
       color: $color-gray-900;
     }
