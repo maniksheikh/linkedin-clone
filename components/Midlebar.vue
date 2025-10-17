@@ -2782,7 +2782,6 @@ $color-red: #cc1016;
 
   &.delete {
     color: $color-red;
-
     &:hover {
       background: rgba(204, 16, 22, 0.1);
       color: $color-red;
@@ -2811,7 +2810,6 @@ $color-red: #cc1016;
   min-height: 80px;
   outline: none;
   transition: all 0.2s ease;
-
   &:focus {
     border-color: $color-primary;
     box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
@@ -3017,7 +3015,6 @@ $color-red: #cc1016;
 
   .modal-header {
     padding: 16px;
-
     .modal-avatar {
       width: 40px;
       height: 40px;
