@@ -2444,7 +2444,6 @@ $color-red: #cc1016;
 
   .file-info {
     flex: 1;
-
     .file-name {
       display: block;
       font-size: $font-size-sm;
@@ -2528,7 +2527,6 @@ $color-red: #cc1016;
       color: $color-gray-500;
       font-weight: $font-weight-normal;
     }
-
     &:hover {
       cursor: pointer;
       background: $color-gray-100;
@@ -2538,7 +2536,6 @@ $color-red: #cc1016;
         color: $color-gray-700;
       }
     }
-
     &:focus {
       border-color: $color-primary;
       box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
