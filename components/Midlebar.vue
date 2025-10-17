@@ -2652,7 +2652,6 @@ $color-red: #cc1016;
   font-size: $font-size-lg;
   font-weight: $font-weight-bold;
   transition: all 0.2s ease;
-
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -2714,7 +2713,6 @@ $color-red: #cc1016;
     color: $color-red;
     transform: scale(1.1);
   }
-
   svg {
     width: 18px;
     height: 18px;
@@ -2742,7 +2740,6 @@ $color-red: #cc1016;
     color: $color-gray-700;
     transform: scale(1.1);
   }
-
   svg {
     width: 18px;
     height: 18px;
