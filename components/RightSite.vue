@@ -338,10 +338,8 @@ div {
     
     .right-bottom {
       margin-top: 12px;
-      
       .footer {
-        padding: 10px 14px;
-        
+        padding: 10px 14px;   
         .footer-body {
           font-size: 0.6875rem;
         }
