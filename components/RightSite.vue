@@ -261,19 +261,18 @@ div {
     height: auto;
     display: block;
   } 
+  
   .footer {
     padding: 12px 16px;
     text-align: center;
-    background: $bg-white;
-    
+    background: $bg-white; 
     .footer-body {
       font-size: 0.75rem;
       font-weight: 400;
       color: $text-medium;
       display: flex;
       align-items: center;
-      justify-content: center;
-      
+      justify-content: center;   
       .linkedIn-match {
         color: $primary-color;
         margin-right: 8px;
