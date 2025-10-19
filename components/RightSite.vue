@@ -292,8 +292,7 @@ div {
 @media (max-width: 1024px) and (min-width: 769px) {
   .right-container {
     margin-top: 4rem;
-    width: 100%;
-    
+    width: 100%; 
     .right {
       padding: 12px 16px;
       .right-title {
@@ -302,8 +301,7 @@ div {
     }
     
     .right-section {
-      padding: 10px 14px;
-      
+      padding: 10px 14px;  
       .ceo-img,
       .coo-img {
         width: 40px;
@@ -315,7 +313,6 @@ div {
         .type {
           font-size: 0.875rem;
         }
-        
         .para {
           font-size: 0.75rem;
         }   
