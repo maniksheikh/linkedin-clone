@@ -1,6 +1,6 @@
 # linkedIn Clone 
 
-#### Developed a responsive Linkedin-clone web app using Vue.js and Nuxt.js, with secure functionality through Google Firebase.it seems that you are referring to a project that involves building a web application similar to LinkedIn using Vue.js, Nuxt.js, Google authentication, and Firebase. Used CSS3 grid, flexbox, transform, and BEM convention for optimal UI design. it's very useful social media.
+#### Developed a responsive Linkedin-clone web app using Vue.js and Nuxt.js, with secure functionality through Google Firebase.it seems that you are referring to a project that involves building a web application similar to LinkedIn using Vue.js, Nuxt.js, Google authentication, and Firebase Login Logout.you can anythis post image , video upload, text and image upload. Used CSS3 grid, flexbox, transform, and BEM convention for optimal UI design. it's very useful social media.
 
 
 #### [https://zippy-bombolone-3ed3cc.netlify.app/)
