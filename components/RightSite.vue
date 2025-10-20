@@ -234,7 +234,6 @@ div {
 .bottom-view {
   padding: 16px 20px;
   border-top: 1px solid $border-color;
-  
   .viw-bottom {
     font-size: 0.875rem;
     font-weight: 500;
