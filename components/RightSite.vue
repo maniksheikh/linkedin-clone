@@ -182,14 +182,12 @@ div {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  
   .type {
     font-size:1rem;
     font-weight: 700;
     color: rgb(32, 32, 32);
     display: block;
   }
-  
   .para {
     font-size: 13px;
     font-weight:500;
@@ -217,7 +215,6 @@ div {
     background: $bg-hover;
     border-color: $text-medium;
   }
-  
   .follow-match {
     margin-right: 6px;
     color: $text-medium;
