@@ -129,14 +129,12 @@ div {
   justify-content: space-between;
   padding: 16px 20px;
   border-bottom: 1px solid $border-color;
-  
   .right-title {
     font-size: 1rem;
     font-weight: 700;
     color: $text-dark;
     margin: 0;
   }
-  
   .right-match {
     cursor: pointer;
     color: $text-medium;
@@ -326,8 +324,7 @@ div {
       .viw-bottom {
         font-size: 0.75rem;
       }
-    }
-    
+    } 
     .right-bottom {
       margin-top: 12px;
       .footer {
