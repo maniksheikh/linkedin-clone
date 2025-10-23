@@ -515,13 +515,11 @@ $black: black;
       margin-bottom: 8px;
       border: 1px solid $border-color;
       cursor: pointer;
-
       .flex {
         display: flex;
         margin-top: 10px;
         padding: 0px 7px;
       }
-
       .premiun-middle {
         font-size: 0.9rem;
         color: $black;
