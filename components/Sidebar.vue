@@ -488,11 +488,9 @@ $black: black;
         padding: 5px;
         margin-bottom: 5px;
       }
-
       .view {
         color: $blue-color;
       }
-
       .first-bold {
         font-size: 0.9rem;
         color: $text-dark-gray;
@@ -679,7 +677,6 @@ $black: black;
           h2 {
             font-size: 14px;
           }
-
           .role {
             font-size: 11px;
           }
