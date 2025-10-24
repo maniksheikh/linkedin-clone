@@ -219,7 +219,6 @@ $black: black;
               font-size: 0.9rem;
               transition: all 0.2s ease;
             }
-
             .view {
               color: #0a66c2;
               font-weight: 600;
@@ -252,7 +251,6 @@ $black: black;
             font-size: 0.9rem;
             transition: all 0.2s ease;
           }
-
           .views {
             color: #0a66c2;
             font-weight: 600;
@@ -342,7 +340,6 @@ $black: black;
             width: 100%;
             text-align: left;
             transition: all 0.2s ease;
-
             &:hover {
               color: #0a66c2;
               text-decoration: underline;
