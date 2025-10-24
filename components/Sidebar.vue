@@ -381,7 +381,6 @@ $black: black;
           text-align: center;
           width: 100%;
           transition: all 0.2s ease;
-
           &:hover {
             color: #0a66c2;
             text-decoration: underline;
@@ -407,7 +406,6 @@ $black: black;
         overflow: hidden;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-
         img {
           width: 100%;
           height: 100%;
