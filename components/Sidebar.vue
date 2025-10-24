@@ -427,7 +427,6 @@ $black: black;
         overflow: hidden;
         background: #fff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
         img {
           width: 100%;
           height: 100%;
@@ -464,13 +463,11 @@ $black: black;
           align-items: center;
           justify-content: center;
           gap: 5px;
-
           img {
             width: 16px;
             height: 16px;
             border-radius: 4px;
           }
-
           span {
             font-size: 12px;
             font-weight: 600;
