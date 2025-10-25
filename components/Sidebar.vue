@@ -87,7 +87,6 @@ export default {
         console.log('Using user photoURL:', user.photoURL);
         return user.photoURL;
       }
-
       if (user && user.email) {
         const initials = this.getInitials(user.displayName || user.email);
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=0a66c2&color=fff&size=200&bold=true`;
@@ -116,12 +115,10 @@ export default {
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
       }
-
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
       }
-
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
