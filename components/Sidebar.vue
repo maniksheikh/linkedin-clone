@@ -210,7 +210,6 @@ $black: black;
           .connection-body {
             @include flex-between;
             margin-bottom: 4px;
-
             .first {
               color: #0a66c2;
               font-size: 0.9rem;
@@ -222,7 +221,6 @@ $black: black;
               transition: all 0.2s ease;
             }
           }
-
           .first-bold {
             display: block;
             font-weight: 600;
@@ -234,7 +232,6 @@ $black: black;
           @include flex-between;
           padding: 5px;
           cursor: pointer;
-
           &:hover {
             .second,
             .views {
