@@ -344,7 +344,6 @@ $black: black;
             @include flex-between;
             padding: 5px 7px;
             width: 100%;
-
             .plus {
               cursor: pointer;
               color: $text-gray;
@@ -434,19 +433,16 @@ $black: black;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-
         .role {
           font-size: 13px;
           color: #333;
           margin-bottom: 4px;
         }
-
         .location {
           font-size: 12px;
           color: #777;
           margin-bottom: 10px;
         }
-
         .company {
           display: flex;
           align-items: center;
@@ -524,7 +520,6 @@ $black: black;
       border: 1px solid $border-color;
       margin-bottom: 8px;
       cursor: pointer;
-
       svg {
         color: $text-gray;
       }
