@@ -1551,14 +1551,12 @@ export default {
       try {
         const item = localStorage.getItem(key);
         if (item && item.startsWith('COMPRESSED:')) {
-          // Decompress data
           const compressed = item.substring(11);
           return this.decompressData(compressed);
         }
         return item;
       } catch (error) {
         console.error(`Error reading from localStorage (key: ${key}):`, error);
-        // Try to recover from IndexedDB if available
         return this.fallbackGetItem(key);
       }
     },
@@ -1764,7 +1762,6 @@ export default {
       // 1. Check localStorage availability
       const health = this.checkStorageHealth();
       console.log('1. Storage Health:', health);
-      
       // 2. Check current data
       console.log('2. Current importData:', {
         totalPosts: this.importData.length,
@@ -1911,7 +1908,6 @@ export default {
               console.log(`✅ Successfully saved ${key} to IndexedDB fallback storage`);
               resolve(true);
             };
-            
             transaction.onerror = () => reject(transaction.error);
           };
         });
