@@ -294,7 +294,6 @@ export default {
         event.target.src = '/static/img/default-avatar.svg';
         return;
       }
-
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
@@ -752,7 +751,6 @@ export default {
               this.showErrorNotification(`Invalid video format: ${file.name}`);
               return;
             }
-            
             if (!this.selectedMedia[mediaIndex].url) {
               console.error(`❌ Video URL not set properly for ${file.name}`);
               this.selectedMedia[mediaIndex].url = e.target.result;
