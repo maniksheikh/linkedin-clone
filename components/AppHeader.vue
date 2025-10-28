@@ -600,6 +600,7 @@ a {
   gap: $spacing-md;
 img {
     border-radius: 50%;
+    margin: 0px 2px;
     width: 38px;
     height: 38px;
     object-fit: cover;
