@@ -750,15 +750,12 @@ img {
   .search-bar {
     display: none !important;
   }
-
   .nav {
     display: none !important;
   }
-
   .outside {
     display: none !important;
   }
-
   .mobile-menu-btn {
     display: flex !important;
     align-items: center;
