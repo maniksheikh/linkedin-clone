@@ -521,7 +521,6 @@ a {
       color: $primary-blue;
     }
   }
-
   &:focus {
     outline: 2px solid $primary-blue;
     outline-offset: 2px;
@@ -721,7 +720,6 @@ img {
     border-radius: $spacing-xs;
     transition: $transition;
     color: $text-secondary;
-
     &:hover {
       color: $primary-blue;
       background: $hover-color;
