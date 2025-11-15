@@ -252,7 +252,6 @@ export default {
       if (name.includes('@')) {
         name = name.split('@')[0];
       }
-      
       const words = name.split(' ').filter(word => word.length > 0);
       if (words.length >= 2) {
         return (words[0][0] + words[1][0]).toUpperCase();
@@ -265,13 +264,11 @@ export default {
       console.log('Image error for:', event.target.src);
       if (event.target.src.includes('placeholder.svg') || event.target.src.includes('default-avatar.svg')) {
         return;
-      }
-      
+      }  
       if (!event.target.src.includes('default-avatar.svg')) {
         event.target.src = '/static/img/default-avatar.svg';
         return;
-      }
-      
+      } 
       if (!event.target.src.includes('profile-img.jpg')) {
         event.target.src = '/static/img/profile-img.jpg';
         return;
