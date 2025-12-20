@@ -134,7 +134,6 @@ export const actions = {
 
       console.log('Final user object in setUser:', userToStore)
       console.log('=== END SET USER DEBUG ===')
-
       commit('SET_USER', userToStore)
     } else {
       commit('SET_USER', null)

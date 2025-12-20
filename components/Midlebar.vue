@@ -366,7 +366,6 @@ export default {
         console.log('  - window.debugStorageIssue() - Comprehensive storage debugging');
         console.log('🎥📷 === USE THESE TO DEBUG MEDIA ISSUES ===');
         
-        // Auto-validate media data on load
         setTimeout(async () => {
           await this.validateAndFixVideoData();
           await this.validateAndFixImageData();
