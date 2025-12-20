@@ -391,7 +391,7 @@ export default {
     }
   },
   methods: {
-    loadPostsFromStorage() {
+    async loadPostsFromStorage() {
       try {
         this.importData = [...postData];
 
@@ -400,7 +400,7 @@ export default {
           return;
         }
 
-        const savedPosts = this.safeGetItem('userPosts');
+        const savedPosts = await this.safeGetItem('userPosts');
         if (savedPosts) {
           const userPosts = JSON.parse(savedPosts);
           console.log('Loading user posts from localStorage:', userPosts.length, 'posts');
@@ -594,7 +594,7 @@ export default {
         }
 
         // Enhanced verification
-        const savedData = this.safeGetItem('userPosts');
+        const savedData = await this.safeGetItem('userPosts');
         if (savedData) {
           const parsedData = JSON.parse(savedData);
           console.log('Verification: Successfully saved', parsedData.length, 'posts to localStorage');
@@ -980,26 +980,29 @@ export default {
       }
 
       console.log('🔍 Immediate verification...');
-      const immediateCheck = this.safeGetItem('userPosts');
-      if (immediateCheck) {
-        const posts = JSON.parse(immediateCheck);
-        const justSaved = posts.find(p => p.id === newPost.id);
-          if (justSaved) {
-            console.log('✅ IMMEDIATE CHECK: Post found in localStorage');
-            if (justSaved.media && justSaved.media.length > 0) {
-              const videos = justSaved.media.filter(m => m.type.startsWith('video/'));
-              const images = justSaved.media.filter(m => m.type.startsWith('image/'));
-              console.log(`✅ IMMEDIATE CHECK: Post has ${videos.length} video(s) and ${images.length} image(s) saved`);
+      console.log('🔍 Immediate verification...');
+      // Note: verification is async now, so we can't fully block here, but we can try
+      this.safeGetItem('userPosts').then(immediateCheck => {
+        if (immediateCheck) {
+          const posts = JSON.parse(immediateCheck);
+          const justSaved = posts.find(p => p.id === newPost.id);
+            if (justSaved) {
+              console.log('✅ IMMEDIATE CHECK: Post found in localStorage/IndexedDB');
+              if (justSaved.media && justSaved.media.length > 0) {
+                const videos = justSaved.media.filter(m => m.type.startsWith('video/'));
+                const images = justSaved.media.filter(m => m.type.startsWith('image/'));
+                console.log(`✅ IMMEDIATE CHECK: Post has ${videos.length} video(s) and ${images.length} image(s) saved`);
+              }
+            } else {
+              console.log('❌ IMMEDIATE CHECK: Post NOT found in storage!');
             }
-          } else {
-            console.log('❌ IMMEDIATE CHECK: Post NOT found in localStorage!');
-          }
-      }
+        }
+      });
 
       // Delayed verification
-      setTimeout(() => {
+      setTimeout(async () => {
         console.log('🔍 Delayed verification...');
-        const savedPosts = this.safeGetItem('userPosts');
+        const savedPosts = await this.safeGetItem('userPosts');
         if (savedPosts) {
           const posts = JSON.parse(savedPosts);
           const savedPost = posts.find(p => p.id === newPost.id);
@@ -1294,7 +1297,7 @@ export default {
       }, 4000);
     },
 
-    testMediaPersistence() {
+    async testMediaPersistence() {
       console.log('=== ENHANCED MEDIA PERSISTENCE TEST ===');
 
       // Check if localStorage is available
@@ -1303,7 +1306,7 @@ export default {
         return;
       }
 
-      const savedPosts = this.safeGetItem('userPosts');
+      const savedPosts = await this.safeGetItem('userPosts');
       if (savedPosts) {
         const userPosts = JSON.parse(savedPosts);
         console.log('Found', userPosts.length, 'saved posts');
@@ -1380,14 +1383,14 @@ export default {
     },
 
     // Debug method to check localStorage video data
-    debugVideoStorage() {
+    async debugVideoStorage() {
     console.log('🎥 === VIDEO STORAGE DEBUG ===');
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for debug');
         return;
       }
 
-      const savedPosts = this.safeGetItem('userPosts');
+      const savedPosts = await this.safeGetItem('userPosts');
       if (savedPosts) {
         try {
           const posts = JSON.parse(savedPosts);
@@ -1442,7 +1445,7 @@ export default {
     },
 
     // Method to test video storage step by step
-    testVideoStorageFlow() {
+    async testVideoStorageFlow() {
       console.log('🔬 === TESTING VIDEO STORAGE FLOW ===');
 
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
@@ -1467,7 +1470,7 @@ export default {
       }
 
       console.log('4. Checking localStorage current state...');
-      const savedPosts = this.safeGetItem('userPosts');
+      const savedPosts = await this.safeGetItem('userPosts');
       if (savedPosts) {
         const posts = JSON.parse(savedPosts);
         console.log(`   Found ${posts.length} saved posts in localStorage`);
@@ -1543,13 +1546,20 @@ export default {
     },
 
     // Enhanced localStorage wrapper methods with compression and fallback
-    safeGetItem(key) {
+    // Enhanced localStorage wrapper methods with compression and fallback
+    async safeGetItem(key) {
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.warn('localStorage not available (SSR mode)');
         return null;
       }
       try {
-        const item = localStorage.getItem(key);
+        let item = localStorage.getItem(key);
+        
+        // If not in localStorage, checking fallback
+        if (!item) {
+           item = await this.fallbackGetItem(key);
+        }
+
         if (item && item.startsWith('COMPRESSED:')) {
           const compressed = item.substring(11);
           return this.decompressData(compressed);
@@ -1557,7 +1567,7 @@ export default {
         return item;
       } catch (error) {
         console.error(`Error reading from localStorage (key: ${key}):`, error);
-        return this.fallbackGetItem(key);
+        return await this.fallbackGetItem(key);
       }
     },
 
@@ -1577,41 +1587,31 @@ export default {
       } catch (error) {
         console.warn(`❌ Failed to save ${key} (attempt ${retryCount + 1}/${maxRetries + 1}):`, error.message);
         
-        if (error.name === 'QuotaExceededError' || error.message.includes('quota')) {
-          // Try compression
-          try {
-            const compressed = this.compressData(value);
-            const compressedData = 'COMPRESSED:' + compressed;
-            
-            if (compressedData.length < originalSize * 0.8) { // Only use if significantly smaller
-              localStorage.setItem(key, compressedData);
-              console.log(`✅ Successfully saved ${key} with compression (${this.formatFileSize(originalSize)} → ${this.formatFileSize(compressedData.length)})`);
-              return true;
-            }
-          } catch (compressionError) {
-            console.error('Compression failed:', compressionError);
-          }
+        // Try compression first
+        try {
+          const compressed = this.compressData(value);
+          const compressedData = 'COMPRESSED:' + compressed;
           
-          // Try cleaning up old data
-          if (retryCount === 0) {
-            console.log('🧹 Attempting to free up storage space...');
-            await this.cleanupOldData();
-            return this.safeSetItem(key, value, retryCount + 1);
+          if (compressedData.length < originalSize * 0.8) { 
+            localStorage.setItem(key, compressedData);
+            console.log(`✅ Successfully saved ${key} with compression`);
+            return true;
           }
+        } catch (e) { /* ignore */ }
           
-          // Try fallback storage
-          if (retryCount < maxRetries) {
-            console.log('💾 Attempting fallback storage...');
-            return await this.fallbackSetItem(key, value);
-          }
+        // Cleanup and retry once
+        if (retryCount === 0) {
+          console.log('🧹 Attempting to free up storage space...');
+          await this.cleanupOldData();
+          return this.safeSetItem(key, value, retryCount + 1);
         }
         
-        // Retry for other errors
+        // If all else fails (quota or ANY other error), use fallback
         if (retryCount < maxRetries) {
-          console.log(`🔄 Retrying save in ${(retryCount + 1) * 1000}ms...`);
-          await new Promise(resolve => setTimeout(resolve, (retryCount + 1) * 1000));
-          return this.safeSetItem(key, value, retryCount + 1);
-        } 
+          console.log('💾 Error encountered, attempting fallback storage...');
+          return await this.fallbackSetItem(key, value);
+        }
+        
         throw error;
       }
     },
@@ -1670,14 +1670,14 @@ export default {
     },
 
     // Debug method to check localStorage image data
-    debugImageStorage() {
+    async debugImageStorage() {
       console.log('📷 === IMAGE STORAGE DEBUG ===');
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for debug');
         return;
       }
 
-      const savedPosts = this.safeGetItem('userPosts');
+      const savedPosts = await this.safeGetItem('userPosts');
       if (savedPosts) {
         try {
           const posts = JSON.parse(savedPosts);
@@ -1756,7 +1756,7 @@ export default {
     },
 
     // Comprehensive storage debugging method
-    debugStorageIssue() {
+    async debugStorageIssue() {
       console.log('🔍 === COMPREHENSIVE STORAGE DEBUG ===');
       
       // 1. Check localStorage availability
@@ -1805,7 +1805,7 @@ export default {
       }
       
       // 5. Check existing saved posts
-      const savedPosts = this.safeGetItem('userPosts');
+      const savedPosts = await this.safeGetItem('userPosts');
       if (savedPosts) {
         try {
           const parsed = JSON.parse(savedPosts);
@@ -1924,7 +1924,7 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
-          const request = indexedDB.open('LinkedInCloneStorage', 1);
+          const request = indexedDB.open('LinkedInCloneStorage', 2);
           
           request.onerror = () => resolve(null);
           
@@ -1976,7 +1976,7 @@ export default {
         });
 
         // Compress existing posts if they're taking too much space
-        const existingPosts = this.safeGetItem('userPosts');
+        const existingPosts = await this.safeGetItem('userPosts');
         if (existingPosts && existingPosts.length > 1024 * 1024) { // > 1MB
           try {
             const compressed = this.compressData(existingPosts);
