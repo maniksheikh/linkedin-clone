@@ -22,21 +22,21 @@ export const actions = {
         displayName: userName
       })
       await userCredential.user.reload()
-      
+
       commit('SET_USER', {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
         displayName: userName,
         photoURL: userCredential.user.photoURL
       })
-      
+
       return userCredential.user
     } catch (error) {
       commit('SET_ERROR', error.message)
       throw error
     }
   },
-  
+
   async logout({ commit }) {
     try {
       await signOut(auth)
@@ -46,7 +46,7 @@ export const actions = {
       throw error
     }
   },
-  
+
   async login({ commit }, { email, password }) {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
@@ -74,7 +74,7 @@ export const actions = {
       console.log('userData.photoURL === "":', userData.photoURL === "")
 
       let finalPhotoURL = userData.photoURL;
-      
+
       if (!finalPhotoURL && userData.providerData && userData.providerData.length > 0) {
         console.log('Main photoURL is null/empty, checking provider data...')
         for (let provider of userData.providerData) {
@@ -86,17 +86,17 @@ export const actions = {
           }
         }
       }
-      
+
       const userToStore = {
         uid: userData.uid,
         email: userData.email,
         displayName: userData.displayName || userData.email?.split('@')[0],
         photoURL: finalPhotoURL || null
       }
-      
+
       console.log('Final user object to store:', userToStore)
       console.log('=== END STORE DEBUG ===')
-      
+
       commit('SET_USER', userToStore)
       return { hasAccount: true, user: userData }
     } catch (error) {
@@ -104,15 +104,15 @@ export const actions = {
       throw error
     }
   },
-  
+
   setUser({ commit }, user) {
     if (user) {
       console.log('=== SET USER DEBUG ===')
       console.log('setUser called with:', user)
       console.log('user.photoURL:', user.photoURL)
-      
+
       let finalPhotoURL = user.photoURL;
-      
+
       if (!finalPhotoURL && user.providerData && user.providerData.length > 0) {
         console.log('Main photoURL is null/empty in setUser, checking provider data...')
         for (let provider of user.providerData) {
@@ -124,17 +124,17 @@ export const actions = {
           }
         }
       }
-      
+
       const userToStore = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName || user.email?.split('@')[0],
         photoURL: finalPhotoURL
       }
-      
+
       console.log('Final user object in setUser:', userToStore)
       console.log('=== END SET USER DEBUG ===')
-      
+
       commit('SET_USER', userToStore)
     } else {
       commit('SET_USER', null)
@@ -146,19 +146,19 @@ export const actions = {
       const currentUser = auth.currentUser
       if (currentUser) {
         const oldDisplayName = currentUser.displayName
-        
+
         await updateProfile(currentUser, {
           displayName: displayName
         })
         await currentUser.reload()
-        
+
         commit('SET_USER', {
           uid: currentUser.uid,
           email: currentUser.email,
           displayName: displayName,
           photoURL: currentUser.photoURL
         })
-        
+
         try {
           const savedPosts = localStorage.getItem('userPosts')
           if (savedPosts) {
@@ -176,7 +176,7 @@ export const actions = {
           }
         } catch (storageError) {
           console.error('Error updating posts in storage:', storageError)
-        }  
+        }
         return currentUser
       }
     } catch (error) {
