@@ -391,7 +391,7 @@ export default {
       deep: true
     }
   },
-  
+
   methods: {
     async loadPostsFromStorage() {
       try {
@@ -420,7 +420,6 @@ export default {
                   isTemporary: false
                 };
 
-                // Enhanced video loading
                 if (media.type && media.type.startsWith('video/')) {
                   console.log(`Loading video: ${media.name}, type: ${media.type}, hasUrl: ${!!media.url}`);
                   if (media.url) {
@@ -446,7 +445,6 @@ export default {
             return processedPost;
           });
 
-          // Add user posts at the beginning
           this.importData = [...processedUserPosts, ...this.importData];
 
           const totalVideos = processedUserPosts.reduce((total, post) => {
@@ -455,7 +453,6 @@ export default {
 
           console.log('Successfully loaded posts from localStorage. Total posts:', this.importData.length);
           console.log(`Total videos loaded: ${totalVideos}`);
-
           processedUserPosts.forEach((post, index) => {
             if (post.media && post.media.some(m => m.type.startsWith('video/'))) {
               const videos = post.media.filter(m => m.type.startsWith('video/'));
@@ -548,7 +545,6 @@ export default {
         console.log(`Found ${videoPosts.length} posts with videos to save`);
 
         try {
-          // Pre-save validation for video data
           const videoPostsToSave = userPosts.filter(post => 
             post.media && post.media.some(m => m.type.startsWith('video/'))
           );
@@ -565,7 +561,6 @@ export default {
             });
           }
 
-          // Validate posts before saving
           const validationErrors = [];
           userPosts.forEach((post, index) => {
             const errors = this.validatePostData(post);
@@ -595,7 +590,6 @@ export default {
           return;
         }
 
-        // Enhanced verification
         const savedData = await this.safeGetItem('userPosts');
         if (savedData) {
           const parsedData = JSON.parse(savedData);
