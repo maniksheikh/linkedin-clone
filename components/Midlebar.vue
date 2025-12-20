@@ -325,6 +325,7 @@ export default {
       return hasText || hasProcessedMedia;
     }
   },
+
   data() {
     return {
       importData: [],
@@ -339,6 +340,7 @@ export default {
       dragOver: false
     }
   },
+
   mounted() {
     if (process.client) {
       this.loadPostsFromStorage()
@@ -389,6 +391,7 @@ export default {
       deep: true
     }
   },
+  
   methods: {
     async loadPostsFromStorage() {
       try {
