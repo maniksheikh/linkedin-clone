@@ -563,6 +563,7 @@ a {
   position: absolute;
   top: calc(100% + #{$spacing-sm});
   right: 0;
+  padding: 1rem;
   background: $background-white;
   border-radius: $border-radius;
   box-shadow: $shadow-medium;
