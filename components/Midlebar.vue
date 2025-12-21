@@ -1538,8 +1538,6 @@ export default {
       this.showErrorNotification(message);
     },
 
-    // Enhanced localStorage wrapper methods with compression and fallback
-    // Enhanced localStorage wrapper methods with compression and fallback
     async safeGetItem(key) {
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.warn('localStorage not available (SSR mode)');
@@ -1547,9 +1545,7 @@ export default {
       }
       try {
         let item = localStorage.getItem(key);
-        
-        // If not in localStorage, checking fallback
-        if (!item) {
+          if (!item) {
            item = await this.fallbackGetItem(key);
         }
 
@@ -1573,14 +1569,12 @@ export default {
       const originalSize = value.length;
       
       try {
-        // First attempt: try to save as-is
         localStorage.setItem(key, value);
         console.log(`✅ Successfully saved ${key} (${this.formatFileSize(originalSize)})`);
         return true;
       } catch (error) {
         console.warn(`❌ Failed to save ${key} (attempt ${retryCount + 1}/${maxRetries + 1}):`, error.message);
         
-        // Try compression first
         try {
           const compressed = this.compressData(value);
           const compressedData = 'COMPRESSED:' + compressed;
@@ -1590,7 +1584,7 @@ export default {
             console.log(`✅ Successfully saved ${key} with compression`);
             return true;
           }
-        } catch (e) { /* ignore */ }
+        } catch (e) { }
           
         // Cleanup and retry once
         if (retryCount === 0) {
