@@ -1749,7 +1749,6 @@ export default {
       // 1. Check localStorage availability
       const health = this.checkStorageHealth();
       console.log('1. Storage Health:', health);
-      // 2. Check current data
       console.log('2. Current importData:', {
         totalPosts: this.importData.length,
         postsWithMedia: this.importData.filter(p => p.media && p.media.length > 0).length,
@@ -1819,7 +1818,6 @@ export default {
           sizeMB: (dataToSave.length / 1024 / 1024).toFixed(2)
         });
         
-        // Check if data would exceed typical localStorage limits
         if (dataToSave.length > 5 * 1024 * 1024) {
           console.warn('⚠️ Data size exceeds typical 5MB localStorage limit');
         }
@@ -1943,8 +1941,6 @@ export default {
     async cleanupOldData() {
       try {
         console.log('🧹 Starting storage cleanup...');
-        
-        // Remove old temporary data
         const keysToCheck = [];
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i);
