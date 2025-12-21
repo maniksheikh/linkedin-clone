@@ -760,7 +760,6 @@ export default {
             console.log(`  Data URL starts with: ${e.target.result.substring(0, 50)}...`);
             console.log(`  Image ready for posting: ${!!e.target.result}`);
             
-            // Validate image data integrity
             if (!e.target.result || !e.target.result.startsWith('data:image/')) {
               console.error(`❌ Invalid image data format for ${file.name}`);
               this.showErrorNotification(`Invalid image format: ${file.name}`);
@@ -768,13 +767,11 @@ export default {
               return;
             }
             
-            // Double-check image URL is set properly
             if (!this.selectedMedia[mediaIndex].url) {
               console.error(`❌ Image URL not set properly for ${file.name}`);
               this.selectedMedia[mediaIndex].url = e.target.result;
             }
             
-            // Verify image data can be stored
             try {
               const testKey = `__image_test_${Date.now()}__`;
               const testData = JSON.stringify({ url: e.target.result });
