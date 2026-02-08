@@ -1871,8 +1871,7 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
-          const request = indexedDB.open('LinkedInCloneStorage', 1);
-          
+          const request = indexedDB.open('LinkedInCloneStorage', 1); 
           request.onerror = () => reject(request.error);
           
           request.onupgradeneeded = (event) => {
@@ -1909,8 +1908,7 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
-          const request = indexedDB.open('LinkedInCloneStorage', 2);
-          
+          const request = indexedDB.open('LinkedInCloneStorage', 2) 
           request.onerror = () => resolve(null);
           
           request.onsuccess = (event) => {
