@@ -1061,7 +1061,6 @@ export default {
           this.showStorageErrorNotification('save');
         }
       }
-
       this.hideDropdown(post);
       if (this.editingPost === post) {
         this.cancelEdit();
@@ -1074,7 +1073,6 @@ export default {
         ...this.showDropdown,
         [key]: !this.showDropdown[key]
       };
-
       Object.keys(this.showDropdown).forEach(k => {
         if (k !== key.toString()) {
           this.showDropdown[k] = false;
