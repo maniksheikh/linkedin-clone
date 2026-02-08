@@ -1328,7 +1328,7 @@ export default {
 
           if (post.media && post.media.length > 0) {
             post.media.forEach((media, mediaIndex) => {
-              console.log(`  Media ${mediaIndex + 1}:`, {
+              console.log(`Media ${mediaIndex + 1}:`, {
                 type: media.type,
                 name: media.name,
                 size: media.size,
@@ -1340,7 +1340,7 @@ export default {
               });
 
               if (media.type.startsWith('video/')) {
-                console.log(`    🎥 VIDEO DETAILS:`, {
+                console.log(`🎥 VIDEO DETAILS:`, {
                   canPlay: !!media.url,
                   urlValid: media.url && (media.url.startsWith('data:') || media.url.startsWith('blob:')),
                   previewMatches: media.preview === media.url
@@ -1408,7 +1408,6 @@ export default {
               console.log(`URL Length: ${video.url?.length || 0} characters`);
             });
           });
-
           return videoPosts;
         } catch (error) {
           console.error('Error parsing localStorage data:', error);
