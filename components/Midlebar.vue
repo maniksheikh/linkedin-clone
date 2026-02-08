@@ -1597,8 +1597,7 @@ export default {
         if (retryCount < maxRetries) {
           console.log('💾 Error encountered, attempting fallback storage...');
           return await this.fallbackSetItem(key, value);
-        }
-        
+        }  
         throw error;
       }
     },
@@ -1677,8 +1676,7 @@ export default {
             const images = post.media.filter(m => m.type.startsWith('image/'));
             console.log(`Image Post ${index + 1} (ID: ${post.id}):`);
             console.log(`  Description: ${post.description?.substring(0, 50)}...`);
-            console.log(`  Images: ${images.length}`);
-
+            console.log(`  Images: ${images.length}`
             images.forEach((image, iIndex) => {
               console.log(`Image ${iIndex + 1}:`);
               console.log(`Name: ${image.name}`);
