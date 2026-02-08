@@ -902,7 +902,6 @@ img {
   .main-container {
     min-height: 52px;
   }
-
   .navbar-content {
     min-height: 52px;
     padding: 0 8px !important;
@@ -949,4 +948,5 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
 </style>
