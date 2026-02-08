@@ -1291,9 +1291,7 @@ export default {
     },
 
     async testMediaPersistence() {
-      console.log('=== ENHANCED MEDIA PERSISTENCE TEST ===');
-
-      // Check if localStorage is available
+      console.log('=== ENHANCED MEDIA PERSISTENCE TEST ===')
       if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
         console.error('localStorage not available for testing');
         return;
