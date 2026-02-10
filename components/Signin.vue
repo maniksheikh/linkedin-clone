@@ -49,6 +49,7 @@ export default {
             },
         }
     },
+    
     methods: {
         hideorderform() {
             this.showModal = false;
