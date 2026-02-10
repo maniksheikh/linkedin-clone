@@ -155,7 +155,6 @@ div {
   }
 }
 
-// Profile images
 .ceo-img,
 .coo-img {
   width: 48px;
@@ -208,7 +207,6 @@ div {
   transition: all 0.2s ease;
   width: 100px;
   justify-content: center;
-  
   &:hover {
     background: $bg-hover;
     border-color: $text-medium;
