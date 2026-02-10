@@ -109,7 +109,7 @@ export default {
       }
       return 'U';
     },
-    
+
     handleImageError(event) {
       console.log('Image error for:', event.target.src);
 
@@ -199,7 +199,6 @@ $black: black;
           padding: 8px 12px;
           cursor: pointer;
           &:hover {
-
             .first,
             .view,
             .first-bold {
@@ -292,7 +291,6 @@ $black: black;
         border: 1px solid $border-color;
         margin-bottom: 8px;
         cursor: pointer;
-
         &:hover {
           .last {
             color: #0a66c2;
@@ -302,7 +300,6 @@ $black: black;
             color: #0a66c2;
           }
         }
-
         .last {
           font-size: 0.9rem;
           color: $text-gray;
