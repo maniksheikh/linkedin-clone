@@ -527,7 +527,6 @@ $black: black;
         color: $text-gray;
         margin-left: 10px;
       }
-
       &:hover {
         .last {
           color: #0a66c2;
@@ -564,7 +563,6 @@ $black: black;
           width: 100%;
           text-align: left;
           transition: all 0.2s ease;
-
           &:hover {
             color: #0a66c2;
             text-decoration: underline;
@@ -580,7 +578,6 @@ $black: black;
             cursor: pointer;
             color: $text-gray;
             transition: all 0.2s ease;
-
             &:hover {
               color: #0a66c2;
             }
