@@ -46,6 +46,7 @@ export default {
             return this.$store.getters.isAuthenticated;
         }
     },
+
     methods: {
         async logout() {
             try {
@@ -223,8 +224,7 @@ export default {
     width: 100%;
     justify-content: center;
     gap: 0.5rem;
-    text-align: center;
-    
+    text-align: center; 
     span {
         display: block;
         white-space: nowrap;
