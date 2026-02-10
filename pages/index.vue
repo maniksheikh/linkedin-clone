@@ -49,6 +49,7 @@ export default {
     Signin,
     SignUp,
   },
+
   data() {
     return {
       show: false,
@@ -61,6 +62,7 @@ export default {
       rememberMe: false,
     };
   },
+
   methods: {
     showModal() {
       this.show = !this.show;
@@ -93,6 +95,7 @@ export default {
         this.clearForm();
       }
     },
+    
     async signInWithGoogle() {
       this.error = '';
       try {
