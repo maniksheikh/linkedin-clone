@@ -82,7 +82,6 @@ export default {
   methods: {
     getUserProfileImage(user) {
       console.log('getUserProfileImage called with user:', user);
-
       if (user && user.photoURL && user.photoURL !== null && user.photoURL !== '') {
         console.log('Using user photoURL:', user.photoURL);
         return user.photoURL;
@@ -95,6 +94,7 @@ export default {
       }
       return '/static/img/profile-img.jpg';
     },
+
     getInitials(name) {
       if (!name) return 'U';
       if (name.includes('@')) {
@@ -109,6 +109,7 @@ export default {
       }
       return 'U';
     },
+    
     handleImageError(event) {
       console.log('Image error for:', event.target.src);
 
