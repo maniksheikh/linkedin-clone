@@ -538,8 +538,7 @@ footer {
   }
   
   footer {
-    padding: 0.5rem 0 0 0;
-    
+    padding: 0.5rem 0 0 0;   
     p, .create-content {
       font-size: 0.75rem;
     }
@@ -575,8 +574,7 @@ footer {
   input[type=password] {
     padding: 0.5rem;
     font-size: 0.85rem;
-  }
-  
+  } 
   button {
     padding: 0.5rem 0.75rem;
     font-size: 0.85rem;
